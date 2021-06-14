@@ -1,0 +1,57 @@
+{
+	"d": {
+		"results": [{
+			"Gender": "2",
+			"ExFlag": "Y",
+			"ExFormType": "P",
+			"ExHodName": "Mr Partha Bhattacharya",
+			"Pernr": "40000051",
+			"AssignmentText": "",
+			"ExHolName": "Mr Ashutosh Dixit",
+			"ExConfFlag": false,
+			"ExEmpSubgroup": "11",
+			"ExDob": "\/Date(113788800000)\/",
+			"ExDoj": "\/Date(1154390400000)\/",
+			"ExServiceDeptYear": "14.0000",
+			"ExServiceDeptMonth": "8.0000",
+			"ExServiceDeptDay": "1",
+			"ExServiceCompYear": "14.0000",
+			"ExServiceCompMonth": "8.0000",
+			"ExServiceCompDay": "1",
+			"ExQualification": "B. Sc (Hons), GNIIT, Oracle, DBM",
+			"ExPromYear": "2020",
+			"ExPromPeriodYear": "1.0000",
+			"ExPromPeriodMonth": "3.0000",
+			"ExPromPeriodDay": "1",
+			"ExPeriod": "00",
+			"ExName": "Mrs Bidula Banerjee Ghatak",
+			"ExLocation": "Kolkata",
+			"ExHol": "40000121",
+			"ExHod": "40000144",
+			"ExDivision": "GIL,Kolkata",
+			"ExDesignation": "Manager - Systems",
+			"ExDepartment": "Systems",
+			"ExCurrBasic": "31635.000",
+			"ExAgeYear": "47.0000",
+			"ExAgeMonth": "10.0000",
+			"ExAgeDay": "0",
+			"ToItems": {
+				"results": [{
+					"Pernr": "40000051",
+					"Position": "Dyputy Manager - Systems",
+					"PeriodYear": "8.0000",
+					"PeriodMonth": "8.0000",
+					"PeriodDay": "0",
+					"Location": "Delhi"
+				}, {
+					"Pernr": "40000051",
+					"Position": "Dyputy Manager - Systems",
+					"PeriodYear": "4.0000",
+					"PeriodMonth": "9.0000",
+					"PeriodDay": "0",
+					"Location": "Delhi"
+				}]
+			}
+		}]
+	}
+}

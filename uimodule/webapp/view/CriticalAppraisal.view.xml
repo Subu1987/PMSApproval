@@ -1,0 +1,26 @@
+<mvc:View controllerName="com.infocus.PMSApproval.controller.CriticalAppraisal" displayBlock="true" xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Page id="page" showHeader="false" showFooter="true" height="100%">
+			<customHeader>
+				<Bar id="bar">
+					<contentLeft>
+						<Avatar id="_IDGenAvatar981" src="sap-icon://unwired" displaySize="M" displayShape="Square" press="onPress"/>
+						<Title id="page_title33" text="Appraisal of Critical Attributes" level="H3"/>
+					</contentLeft>
+					<contentRight>
+						<Button id="edit" text="Edit" press="handleEditPress"/>
+						<Button id="save" text="Save" type="Emphasized" visible="false" press="handleSavePress"/>
+						<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress"/>
+					</contentRight>
+				</Bar>
+			</customHeader>
+			<footer>
+				<OverflowToolbar id="otbFooter">
+					<Button id="btnPrev" type="Emphasized" text="&lt; Back" visible="false" press="handlePrevPress"/>
+					<ToolbarSpacer/>
+					<Button id="btnNext" type="Emphasized" text="Next &gt;" press="handleNextPress"/>
+					<Button id="btnSave" type="Emphasized" text="SaveAll" press="handleSaveAllPress"/>
+				</OverflowToolbar>
+			</footer>
+		</Page>̥
+</mvc:View>

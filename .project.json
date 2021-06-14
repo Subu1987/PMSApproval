@@ -1,0 +1,13 @@
+{
+  "translation": {
+    "translationDomain": "",
+    "supportedLanguages": "",
+    "defaultLanguage": "",
+    "defaultI18NPropertyFile": "",
+    "resourceModelName": ""
+  },
+  "deploy": {
+    "destination": "GDG",
+    "name": "ZPMS_APPROVAL"
+  }
+}

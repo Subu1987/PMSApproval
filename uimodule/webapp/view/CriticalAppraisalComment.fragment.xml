@@ -1,0 +1,79 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" height="100%">
+	<VBox  class="sapUiMediumMargin">
+		
+		<f:Form id="FormChange480_Trial" editable="true">
+			<f:title>
+				<core:Title text="Self Appraisal details by the employee"/>
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+					emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Comment on Major Tasks Achived">
+					<f:formElements>
+						<f:FormElement>
+							<f:fields>
+								<TextArea editable="false" rows="2" value="{/Acheivements/0}" id="input-ach-1"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:fields text="Hello">
+								<TextArea rows="2" value="{SupplierName}" id="input-comm-1"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:fields>
+								<TextArea editable="false" rows="2" value="{/Acheivements/1}" id="input-ach-2"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:fields>
+								<TextArea rows="2" value="{SupplierName}" id="input-comm-2"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:fields>
+								<TextArea editable="false" rows="2" value="{/Acheivements/2}" id="input-ach-3"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:fields>
+								<TextArea rows="2" value="{SupplierName}" id="input-comm-33"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<f:Form id="FormChange480_Trial2" editable="true">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+					emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="Constraints faced during performance">
+					<f:formElements>
+						<f:FormElement >
+							<TextArea rows="6" editable="false" value="{/Acheivements/0}" id="input-constraints"/>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Major failures">
+					<f:formElements>
+						<f:FormElement >
+							<TextArea rows="6" editable="false" value="{/Acheivements/0}" id="input-failures"/>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="Training and Development needs required for being more effective">
+					<f:formElements>
+						<f:FormElement >
+							<TextArea rows="4" editable="false" value="{/Acheivements/0}" id="input-training"/>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>
