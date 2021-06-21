@@ -1,0 +1,87 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZPMS_APPROVAL_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="Factor" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PmsForm"/>
+                </Key>
+                <Property Name="PmsForm" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="PMS Form Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="AssignmentText" Type="Edm.String" MaxLength="255" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="FactorType" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Factor Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FactorId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Factor ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FactorDesc" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Factor Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CriticalAttr" Type="Edm.String" Nullable="false" MaxLength="200" sap:unicode="false" sap:label="Critical Attribute" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="ToMarks" Relationship="ZPMS_APPROVAL_SRV.ToMarks" FromRole="FromRole_ToMarks" ToRole="ToRole_ToMarks"/>
+                <NavigationProperty Name="ToGrade" Relationship="ZPMS_APPROVAL_SRV.ToGrade" FromRole="FromRole_ToGrade" ToRole="ToRole_ToGrade"/>
+            </EntityType>
+            <EntityType Name="Grade" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PmsForm"/>
+                </Key>
+                <Property Name="PmsForm" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="PMS Form Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="AssignmentText" Type="Edm.String" MaxLength="255" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Geade" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="ASSESMENT GRADE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Minmarks" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Min Marks" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Maxmarks" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Maximium marks as per grade" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Grade Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Marks" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PmsForm"/>
+                </Key>
+                <Property Name="PmsForm" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="PMS Form Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="AssignmentText" Type="Edm.String" MaxLength="255" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="MarksGuid" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="MARKS GUIDLINE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MarksGuidDesc" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Grade Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="ToMarks" sap:content-version="1">
+                <End Type="ZPMS_APPROVAL_SRV.Factor" Multiplicity="*" Role="FromRole_ToMarks"/>
+                <End Type="ZPMS_APPROVAL_SRV.Marks" Multiplicity="*" Role="ToRole_ToMarks"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ToMarks">
+                        <PropertyRef Name="PmsForm"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ToMarks">
+                        <PropertyRef Name="PmsForm"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ToGrade" sap:content-version="1">
+                <End Type="ZPMS_APPROVAL_SRV.Factor" Multiplicity="*" Role="FromRole_ToGrade"/>
+                <End Type="ZPMS_APPROVAL_SRV.Grade" Multiplicity="*" Role="ToRole_ToGrade"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ToGrade">
+                        <PropertyRef Name="PmsForm"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ToGrade">
+                        <PropertyRef Name="PmsForm"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZPMS_APPROVAL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="FactorSet" EntityType="ZPMS_APPROVAL_SRV.Factor" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="GradeSet" EntityType="ZPMS_APPROVAL_SRV.Grade" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="MarksSet" EntityType="ZPMS_APPROVAL_SRV.Marks" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="ToMarksSet" Association="ZPMS_APPROVAL_SRV.ToMarks" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FactorSet" Role="FromRole_ToMarks"/>
+                    <End EntitySet="MarksSet" Role="ToRole_ToMarks"/>
+                </AssociationSet>
+                <AssociationSet Name="ToGradeSet" Association="ZPMS_APPROVAL_SRV.ToGrade" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FactorSet" Role="FromRole_ToGrade"/>
+                    <End EntitySet="GradeSet" Role="ToRole_ToGrade"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://gilfioritest.graphiteindia.com:44300/sap/opu/odata/sap/ZPMS_APPROVAL_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://gilfioritest.graphiteindia.com:44300/sap/opu/odata/sap/ZPMS_APPROVAL_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

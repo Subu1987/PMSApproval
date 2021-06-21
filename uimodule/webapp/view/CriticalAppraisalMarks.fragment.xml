@@ -1,44 +1,44 @@
 <core:FragmentDefinition xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
 		
-		<Table rows="{/CreticalAttributes}" selectionMode="None" visibleRowCount="4" ariaLabelledBy="title">
+		<Table rows="{dataSet>/factors}" selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
 			<extension>
 				<m:OverflowToolbar style="Clear">
 					<m:Title id="change_title" text="Factors for Performance Evaluation"/>
 				</m:OverflowToolbar>
 			</extension>
 			<columns>
-				<Column width="4rem">
+				<Column width="3rem">
 					<m:Label text="Sl No."/>
 					<template>
-						<m:Text text="{SlNo}" wrapping="false"/>
+						<m:Text text="{dataSet>SlNo}" wrapping="false"/>
 					</template>
 				</Column>
-				<Column width="10rem">
+				<Column width="13rem">
 					<m:Label text="Factor"/>
 					<template>
-						<m:Text text="{Factor}"/>
+						<m:Text text="{dataSet>FactorDesc}"/>
 					</template>
 				</Column>
 				<Column>
 					<m:Label text="Critical Attributes"/>
 					<template>
-						<m:Text text="{CriticalAttr}"/>
+						<m:Text text="{dataSet>CriticalAttr}"/>
 					</template>
 				</Column>
-				<Column width="8rem" hAlign="Center">
+				<Column width="5rem" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Input value="{M1}"/>
 					</template>
 				</Column>
-				<Column width="8rem" hAlign="Center">
+				<Column width="5rem" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Input value="{M2}"/>
 					</template>
 				</Column>
-				<Column width="8rem" hAlign="Center">
+				<Column width="5rem" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Input value="{M3}"/>

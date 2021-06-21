@@ -1,32 +1,27 @@
 <core:View xmlns:core="sap.ui.core" xmlns="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" height="100%">
 	<ObjectPageLayout id="ObjectPageLayout" isChildPage="true">
 		<headerTitle>
-			<ObjectPageHeader id="headerForTest" headerDesign="Light" objectTitle="Denise Smith"
-				objectSubtitle="Example of a child page in ObjectPage terms" objectImageShape="Circle"
-				objectImageURI="./test-resources/sap/uxap/images/imageID_275314.png">
-				<!--<actions>
-					<ObjectPageHeaderActionButton icon="sap-icon://action" text="action"/>
-					<ObjectPageHeaderActionButton icon="sap-icon://action-settings" text="settings"/>
-					<ObjectPageHeaderActionButton icon="sap-icon://edit" text="edit"/>
-					<ObjectPageHeaderActionButton icon="sap-icon://save" text="save" visible="false"/>
-					<ObjectPageHeaderActionButton icon="sap-icon://refresh" text="{buttons>/text}"/>
-					<ObjectPageHeaderActionButton icon="{buttons>/icon}" text="{path:'/text', model:'buttons', formatter:'.onFormat'}"/>
-				</actions>-->
-				<!--<breadCrumbsLinks>
-					<m:Link text="Page 2 long link" press="handleLink2Press"/>
-				</breadCrumbsLinks>-->
-			</ObjectPageHeader>
+			<ObjectPageHeader id="headerForTest" headerDesign="Light" objectTitle="{emp>/ExName}" objectSubtitle="{emp>/ExDesignation}"
+				showTitleSelector="true" titleSelectorPress="onDesignationPress"></ObjectPageHeader>
 		</headerTitle>
 		<headerContent>
 			<layout:VerticalLayout>
-				<m:ObjectStatus title="User ID" text="12345678"/>
-				<m:ObjectStatus title="Functional Area" text="Developement"/>
-				<m:ObjectStatus title="Cost Center" text="PI DFA GD Programs and Product"/>
-				<m:ObjectStatus title="Email" text="email@address.com"/>
+				<m:ObjectAttribute title="Period of last promotion" text="{emp>/PeriodOfLastPromotion}"/>
+				<m:ObjectAttribute title="Year of last promotion" text="{emp>/ExPromYear}"/>
+				<m:ObjectAttribute title="Date of Birth" text="{emp>/ExDOBText}"/>
+				<m:ObjectAttribute title="Qualifications" text="{emp>/ExQualification}"/>
+				<m:ObjectAttribute title="Department" text="{emp>/ExDepartment}"/>
+				<m:ObjectAttribute title="Service in Department" text="{emp>/ServiceInDepartment}"/>
+				<m:ObjectAttribute title="Current Basic Pay" text="{emp>/ExCurrBasic}"/>
 			</layout:VerticalLayout>
-			<m:Text width="200px" text="Hi, I'm Denise. I am passionate about what I do and I'll go the extra mile to make the customer win."/>
-			<m:ObjectStatus text="In Stock" state="Error"/>
-			<m:ObjectStatus title="Label" text="In Stock" state="Warning"/>
+			<layout:VerticalLayout>
+				<m:ObjectAttribute title="Period of Review" text="{emp>/ExPeriod}"/>
+				<m:ObjectAttribute title="Division" text="{emp>/ExDivision}"/>
+				<m:ObjectAttribute title="Location" text="{emp>/ExLocation}"/>
+				<m:ObjectAttribute title="Date of Joining" text="{emp>/ExDOJText}"/>
+				<m:ObjectAttribute title="Head of Department" text="{emp>/ExHodName}"/>
+				<m:ObjectAttribute title="Head of Location" text="{emp>/ExHolName}"/>
+			</layout:VerticalLayout>
 		</headerContent>
 		<sections>
 			<ObjectPageSection title="Self Appraisal">
