@@ -65,6 +65,14 @@ sap.ui.define([
 				"Designation": "Manager - Systems"
 			}];
 
+			_self.dataSet.recommendation = [{
+				"type": "Job Rotation"
+			}, {
+				"type": "Promotion"
+			}, {
+				"type": "Increment"
+			}];
+
 			_self.dataSet.EmpData = {
 				"Gender": "2",
 				"ExFlag": "N",
@@ -138,10 +146,19 @@ sap.ui.define([
 							//On seccess collect the grade set.
 							_self.dataSet.gradeSet = response.results;
 
+							for (let item in _self.dataSet.gradeSet) {
+								var min=_self.dataSet.gradeSet[item].Minmarks;
+								var max=_self.dataSet.gradeSet[item].Maxmarks;
+								_self.dataSet.gradeSet[item].marks = min +" - "+max;
+							}
+
 							_model.read(marksSetURI, {
 								success: function(response) {
 									sap.ui.core.BusyIndicator.hide();
 									_self.dataSet.marksSet = response.results;
+
+									_self.getView().setModel(new JSONModel(_self.dataSet), "dataSet");
+									console.log(_self.dataSet);
 
 								},
 								error: function(error) {
@@ -159,8 +176,6 @@ sap.ui.define([
 						}
 					});
 
-					_self.getView().setModel(new JSONModel(_self.dataSet), "dataSet");
-					console.log(_self.dataSet);
 				},
 				error: function(error) {
 					sap.ui.core.BusyIndicator.hide();
@@ -184,7 +199,6 @@ sap.ui.define([
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(aFilters, "Application");
 		},
-
 		onSelectionChange: function(oEvent) {
 			var oList = oEvent.getSource();
 			//var oLabel = this.byId("idFilterLabel");
@@ -204,6 +218,11 @@ sap.ui.define([
 			var sText = oList._oSelectedItem.mProperties.title;
 
 			MessageToast.show("Selected Employee: " + sText);
+
+			var eventBus = sap.ui.getCore().getEventBus();
+			eventBus.publish("DetailView", "ShowDetailView", {
+				empName: sText
+			});
 
 			//MessageToast.show(aContexts[0].sPath);
 		},
@@ -329,6 +348,9 @@ sap.ui.define([
 			_self.empDetails.ExCurrBasic=oFormat.format(_self.empDetails.ExCurrBasic, "RS"); // "Ƀ 123.457"*/
 
 			_self.getView().setModel(new JSONModel(_self.empDetails), "emp");
+		},
+		onExit: function() {
+			console.log("Exit called: MainView");
 		}
 	});
 });

@@ -1,11 +1,12 @@
-<core:View xmlns:core="sap.ui.core" xmlns="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" height="100%">
+<core:View xmlns:core="sap.ui.core" controllerName="com.infocus.PMSApproval.controller.DetailView" xmlns="sap.uxap"
+	xmlns:layout="sap.ui.layout" xmlns:m="sap.m" xmlns:f="sap.ui.layout.form" height="100%">
 	<ObjectPageLayout id="ObjectPageLayout" isChildPage="true">
 		<headerTitle>
 			<ObjectPageHeader id="headerForTest" headerDesign="Light" objectTitle="{emp>/ExName}" objectSubtitle="{emp>/ExDesignation}"
 				showTitleSelector="true" titleSelectorPress="onDesignationPress">
-				<actions>
+				<!--<actions>
 					<ObjectPageHeaderActionButton press="onDesignationPress" icon="sap-icon://pull-down" text="show section" type="Emphasized"/>
-				</actions>
+				</actions>-->
 			</ObjectPageHeader>
 		</headerTitle>
 		<headerContent>
@@ -37,8 +38,15 @@
 			</ObjectPageSection>
 			<ObjectPageSection title="Critial Attributes">
 				<subSections>
-					<ObjectPageSubSection title="Appraisal of Critical Attributes">
+					<ObjectPageSubSection title="(A) Appraisal of Critical Attributes">
 						<core:Fragment fragmentName="com.infocus.PMSApproval.view.CriticalAppraisalMarks" type="XML"/>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Critial Attribute">
+				<subSections>
+					<ObjectPageSubSection title="Recommendations">
+						<core:Fragment fragmentName="com.infocus.PMSApproval.view.RecommendationView" type="XML"/>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>
