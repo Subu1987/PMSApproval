@@ -4,57 +4,88 @@
 		<f:SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanL="1" labelSpanM="1" adjustLabelSpan="true" emptySpanL="1"
 			emptySpanM="1" columnsL="1" columnsM="1">
 			<f:content>
-				<m:Label text="Achievement 1"/>
-				<m:TextArea rows="2" editable="false" maxLength="150" id="achievement1" value="{/Acheivements/0}"/>
-				<m:Label text="Comment for Achievement 1"/>
-				<m:TextArea rows="2" maxLength="150" id="comment1" value="Appraisal Comment 1"/>
-			</f:content>
-			<f:content>
-				<m:Label text="Constraints Faced {i18n>notMoreThan150}">
+				<m:Label text="Comment on Achievements {i18n>notMoreThan150}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Label>
-				<m:TextArea rows="4" maxLength="150" value="{appraisalData>/ConstrainFaced}">
+				<m:Text text="{dataSet>/SelfAppraisal/MajorTask1}">
+					<m:layoutData>
+						<layout:GridData span="L12 M12 S12"/>
+					</m:layoutData>
+				</m:Text>
+				<m:TextArea rows="2" maxLength="150" placeholder="Comment for 1st Achievement" value="">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:TextArea>
-			</f:content>
-			<f:content>
-				<m:Label text="Major Failures (Not less than two) {i18n>notMoreThan150}">
+				<m:Text text="{dataSet>/SelfAppraisal/MajorTask2}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
-				</m:Label>
-				<m:TextArea rows="2" maxLength="150" id="failure1" value="{appraisalData>/Failure1}">
-					<m:layoutData>
-						<layout:GridData span="L12 M12 S12"/>
-					</m:layoutData>
-				</m:TextArea>
-				<m:TextArea rows="2" maxLength="150" id="failure2" value="{appraisalData>/Failure2}">
+				</m:Text>
+				<m:TextArea rows="2" maxLength="150" placeholder="Comment for 2nd Achievement" value="">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:TextArea>
-				<m:TextArea rows="2" maxLength="150" id="failure3" value="{appraisalData>/Failure3}">
+				<m:Text text="{dataSet>/SelfAppraisal/MajorTask3}">
+					<m:layoutData>
+						<layout:GridData span="L12 M12 S12"/>
+					</m:layoutData>
+				</m:Text>
+				<m:TextArea rows="2" maxLength="150" placeholder="Comment for 3rd Achievement" value="">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:TextArea>
 			</f:content>
 			<f:content>
-				<m:Label text="Training &amp; Development needs required for being more effective {i18n>notMoreThan150}">
-					<m:layoutData>
-						<layout:GridData span="L12 M12 S12"/>
-					</m:layoutData>
-				</m:Label>
-				<m:TextArea rows="4" maxLength="150" value="{appraisalData>/TrainingDevNeed}">
-					<m:layoutData>
-						<layout:GridData span="L12 M12 S12"/>
-					</m:layoutData>
-				</m:TextArea>
-			</f:content>
+			<m:Label text="Constraints Faced">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Label>
+			<m:Text id="ne_constrainFaced" text="{dataSet>/SelfAppraisal/ConstrainFaced}">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Text>
+		</f:content>
+		<f:content>
+			<m:Label text="Major Failures (Not less than two)">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Label>
+			<m:Text id="ne_failure1" text="{dataSet>/SelfAppraisal/Failure1}">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Text>
+			<m:Text id="ne_failure2" text="{dataSet>/SelfAppraisal/Failure2}">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Text>
+			<m:Text id="ne_failure3" text="{dataSet>/SelfAppraisal/Failure3}">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Text>
+		</f:content>
+		<f:content>
+			<m:Label text="Training &amp; Development needs required for being more effective">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Label>
+			<m:Text id="ne_trainingDevNeed" text="{dataSet>/SelfAppraisal/TrainingDevNeed}">
+				<m:layoutData>
+					<layout:GridData span="L12 M12 S12"/>
+				</m:layoutData>
+			</m:Text>
+		</f:content>
 		</f:SimpleForm>
 	</m:VBox>
 </core:FragmentDefinition>

@@ -11,14 +11,15 @@
 						<OverflowToolbar>
 							<SearchField liveChange=".onSearch" width="100%"/>
 						</OverflowToolbar>
-						<List id="idList" items="{/employees}" selectionChange=".onSelectionChange" mode="SingleSelectMaster" growing="true"
+						<List id="idList" items="{dataSet>/employees}" selectionChange=".onSelectionChange" mode="SingleSelectMaster" growing="true"
 							growingThreshold="50" includeItemInSelection="true">
-							<StandardListItem title="{Name}" description="{Designation}" icon="{ProductPicUrl}" iconDensityAware="false" iconInset="false"/>
+							<StandardListItem title="{dataSet>Name}" description="{dataSet>Designation}" icon="{ProductPicUrl}" iconDensityAware="false" iconInset="false"/>
 						</List>
 					</content>
 				</Panel>
 				<Panel id="_IDGenPanel2" height="100%" class="sapUiNoContentPadding">
 				<mvc:XMLView  id="_IDGenXMLView4" height="100%" viewName="com.infocus.PMSApproval.view.DetailView"/>
+				
 				</Panel>
 			</l:contentAreas>
 		</l:Splitter>

@@ -16,6 +16,7 @@ sap.ui.define([
 	return Controller.extend("com.infocus.PMSApproval.controller.MainView", {
 		onInit: function() {
 			var _self = this;
+			_self.dataSet = {};
 
 			var _model = _self.getView().getModel();
 			var factorSetURI = "/FactorSet";
@@ -37,11 +38,93 @@ sap.ui.define([
 				}
 				
 			});*/
-			
+
+			_self.dataSet.SelfAppraisal = {
+				"Empid": "40000051",
+				"Saveflag": "Y",
+				"Period": "01",
+				"MajorTask1": "1111111111111111111111111ABAP DEVELOPMENT 1 3",
+				"MajorTask2": " Hello MM FUNCTIONAL 2",
+				"MajorTask3": " ABAP DEVELOPMENT3",
+				"AppraiserId": "00000000",
+				"ApprComm1": "",
+				"ApprComm2": "",
+				"ApprComm3": "",
+				"ConstrainFaced": "12345       TEST CONSTRA",
+				"Failure1": "This is test 1",
+				"Failure2": "2 Test FailureÄ«",
+				"Failure3": "TEST FAILURE 3",
+				"TrainingDevNeed": "FUNCTIONAL TRAINING NEEDED"
+			};
+
+			_self.dataSet.employees = [{
+				"Name": "Mrs Bidula Banerjee Ghatak",
+				"Designation": "Manager - Systems"
+			}, {
+				"Name": "Mr Partha Bhattacharya",
+				"Designation": "Manager - Systems"
+			}];
+
+			_self.dataSet.EmpData = {
+				"Gender": "2",
+				"ExFlag": "N",
+				"ExFormType": "P",
+				"ExHodName": "Mr Partha Bhattacharya",
+				"Pernr": "40000051",
+				"AssignmentText": "",
+				"ExHolName": "Mr Ashutosh Dixit",
+				"ExConfFlag": false,
+				"ExEmpSubgroup": "11",
+				"ExDob": "2014-12-07T00:00:00",
+				"ExDoj": "2014-12-07T00:00:00",
+				"ExServiceDeptYear": "14.0000",
+				"ExServiceDeptMonth": "8.0000",
+				"ExServiceDeptDay": "1",
+				"ExServiceCompYear": "14.0000",
+				"ExServiceCompMonth": "8.0000",
+				"ExServiceCompDay": "1",
+				"ExQualification": "B. Sc (Hons), GNIIT, Oracle, DBM",
+				"ExPromYear": "2020",
+				"ExPromPeriodYear": "1.0000",
+				"ExPromPeriodMonth": "3.0000",
+				"ExPromPeriodDay": "1",
+				"ExPeriod": "00",
+				"ExName": "Mrs Bidula Banerjee Ghatak",
+				"ExLocation": "Kolkata",
+				"ExHol": "40000121",
+				"ExHod": "40000144",
+				"ExDivision": "GIL,Kolkata",
+				"ExDesignation": "Manager - Systems",
+				"ExDepartment": "Systems",
+				"ExCurrBasic": "31635.000",
+				"ExAgeYear": "47.0000",
+				"ExAgeMonth": "10.0000",
+				"ExAgeDay": "13",
+				"ToItems": {
+					"results": [{
+						"Pernr": "40000051",
+						"Position": "Dyputy Manager - Systems",
+						"PeriodYear": "8.0000",
+						"PeriodMonth": "8.0000",
+						"PeriodDay": "0",
+						"Location": "Delhi"
+					}, {
+						"Pernr": "40000051",
+						"Position": "Dyputy Manager - Systems",
+						"PeriodYear": "4.0000",
+						"PeriodMonth": "9.0000",
+						"PeriodDay": "0",
+						"Location": "Delhi"
+					}]
+				}
+			};
+
+			_self.formatAllEmpData(_self.dataSet.EmpData);
+
 			sap.ui.core.BusyIndicator.show();
 			_model.read(factorSetURI, {
 				success: function(response) {
-					_self.dataSet = {};
+
 					_self.dataSet.factors = response.results;
 
 					var slNo = 1;
@@ -58,13 +141,12 @@ sap.ui.define([
 							_model.read(marksSetURI, {
 								success: function(response) {
 									sap.ui.core.BusyIndicator.hide();
-									_self.dataSet.marksSet=response.results;
-									
-									
+									_self.dataSet.marksSet = response.results;
+
 								},
 								error: function(error) {
 									sap.ui.core.BusyIndicator.hide();
-									console.log('Error on /employees GET');
+									console.log('Error on /marksSet GET');
 									console.log(error);
 								}
 							});
@@ -72,7 +154,7 @@ sap.ui.define([
 						},
 						error: function(error) {
 							sap.ui.core.BusyIndicator.hide();
-							console.log('Error on /employees GET');
+							console.log('Error on /gradeSet GET');
 							console.log(error);
 						}
 					});
@@ -82,7 +164,7 @@ sap.ui.define([
 				},
 				error: function(error) {
 					sap.ui.core.BusyIndicator.hide();
-					console.log('Error on /employees GET');
+					console.log('Error on /factors set GET');
 					console.log(error);
 				}
 			});
@@ -126,6 +208,7 @@ sap.ui.define([
 			//MessageToast.show(aContexts[0].sPath);
 		},
 		onDesignationPress: function() {
+			console.log(this.getView().getModel('posititons'))
 
 			var that = this;
 			if (!that.resizableDialog) {
@@ -205,9 +288,9 @@ sap.ui.define([
 			_self.getView().setModel(new JSONModel(_self.empDetails.ToItems), "positions");
 
 			//DOB as Text
-			/*var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
 				pattern: "dd-MM-yyyy"
-			});*/
+			});
 			/*_self.empDetails.ExDOBText = oDateFormat.format(_self.empDetails.ExDob);
 			_self.empDetails.ExDOJText = oDateFormat.format(_self.empDetails.ExDoj);*/
 

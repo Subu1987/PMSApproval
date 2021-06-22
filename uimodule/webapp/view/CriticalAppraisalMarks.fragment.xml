@@ -1,6 +1,5 @@
 <core:FragmentDefinition xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
-		
 		<Table rows="{dataSet>/factors}" selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
 			<extension>
 				<m:OverflowToolbar style="Clear">
@@ -26,19 +25,19 @@
 						<m:Text text="{dataSet>CriticalAttr}"/>
 					</template>
 				</Column>
-				<Column width="5rem" hAlign="Center">
+				<Column width="6rem" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Input value="{M1}"/>
 					</template>
 				</Column>
-				<Column width="5rem" hAlign="Center">
+				<Column width="6rem" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Input value="{M2}"/>
 					</template>
 				</Column>
-				<Column width="5rem" hAlign="Center">
+				<Column width="6rem" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Input value="{M3}"/>
@@ -46,7 +45,7 @@
 				</Column>
 			</columns>
 		</Table>
-		<Table rows="{/CreticalAttributes}" selectionMode="None" visibleRowCount="4" ariaLabelledBy="title">
+		<!--<Table rows="{/CreticalAttributes}" selectionMode="None" visibleRowCount="4" ariaLabelledBy="title">
 			<extension>
 				<m:OverflowToolbar style="Clear">
 					<m:Title id="change_title2" text="Factors for Potential Evaluation"/>
@@ -90,6 +89,6 @@
 					</template>
 				</Column>
 			</columns>
-		</Table>
+		</Table>-->
 	</m:VBox>
 </core:FragmentDefinition>

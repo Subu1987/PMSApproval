@@ -2,7 +2,11 @@
 	<ObjectPageLayout id="ObjectPageLayout" isChildPage="true">
 		<headerTitle>
 			<ObjectPageHeader id="headerForTest" headerDesign="Light" objectTitle="{emp>/ExName}" objectSubtitle="{emp>/ExDesignation}"
-				showTitleSelector="true" titleSelectorPress="onDesignationPress"></ObjectPageHeader>
+				showTitleSelector="true" titleSelectorPress="onDesignationPress">
+				<actions>
+					<ObjectPageHeaderActionButton press="onDesignationPress" icon="sap-icon://pull-down" text="show section" type="Emphasized"/>
+				</actions>
+			</ObjectPageHeader>
 		</headerTitle>
 		<headerContent>
 			<layout:VerticalLayout>
@@ -39,5 +43,12 @@
 				</subSections>
 			</ObjectPageSection>
 		</sections>
+		<footer>
+			<m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+				<m:Button type="Accept" text="Accept"/>
+				<m:Button type="Reject" text="Reject"/>
+			</m:OverflowToolbar>
+		</footer>
 	</ObjectPageLayout>
 </core:View>
