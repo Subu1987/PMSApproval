@@ -16,6 +16,10 @@ sap.ui.define([
 		onInit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
+			
+			//Show the floating footer...
+			var oObjectPage = this.getView().byId("ObjectPageLayout");
+			oObjectPage.setShowFooter(true);
 		},
 		onDesignationPress: function() {
 			console.log('Designation press called...');
@@ -85,9 +89,49 @@ sap.ui.define([
 
 			//this._getDialog().open();
 		},
+		onEditToggleButtonPress: function() {
+			var oObjectPage = this.getView().byId("ObjectPageLayout"),
+				bCurrentShowFooterState = oObjectPage.getShowFooter();
+
+			oObjectPage.setShowFooter(!bCurrentShowFooterState);
+		},
+		handleSaveAppraisalPress: function() {
+			//Calling the save data function.
+			this._oPopover.close();
+			
+		},
+		handleCancelAppraisalPress: function() {
+			this._oPopover.close();
+		},
+		handleSaveAsDraft: function() {
+
+			
+		},
+		onAgreeSelectionChanged: function(oEvent) {
+			this.IAgreeCheckboxSelected = oEvent.getParameters().selected;
+			this.byId("agree").setEnabled(this.IAgreeCheckboxSelected);
+		},	
+		handleIAgreePopoverPress: function(oEvent) {
+			//console.log(oEvent);
+			var oButton = oEvent.getSource(),
+				oView = this.getView();
+				
+			// create popover
+			if (!this._oPopover) {
+				this._oPopover = sap.ui.xmlfragment(oView.getId(), "com.infocus.PMSApproval.view.AgreePopover", this)
+				oView.addDependent(this._oPopover);
+			}
+
+			this._oPopover.openBy(oButton);
+		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.unsubscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
+			
+			//Clean up the popovers...
+			if (this._oPopover) {
+				this._oPopover.destroy();
+			}
 		}
 	});
 });

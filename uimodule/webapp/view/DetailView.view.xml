@@ -5,7 +5,7 @@
 			<ObjectPageHeader id="headerForTest" headerDesign="Light" objectTitle="{emp>/ExName}" objectSubtitle="{emp>/ExDesignation}"
 				showTitleSelector="true" titleSelectorPress="onDesignationPress">
 				<!--<actions>
-					<ObjectPageHeaderActionButton press="onDesignationPress" icon="sap-icon://pull-down" text="show section" type="Emphasized"/>
+					<ObjectPageHeaderActionButton press=".onEditToggleButtonPress" icon="sap-icon://save" text="show section" type="Emphasized"/>
 				</actions>-->
 			</ObjectPageHeader>
 		</headerTitle>
@@ -54,8 +54,8 @@
 		<footer>
 			<m:OverflowToolbar>
 				<m:ToolbarSpacer/>
-				<m:Button type="Accept" text="Accept"/>
-				<m:Button type="Reject" text="Reject"/>
+				<m:Button type="Emphasized" text="Save As Draft" press="handleSaveAsDraft"/>
+					<m:Button type="Emphasized" text="Save" press="handleIAgreePopoverPress"/>
 			</m:OverflowToolbar>
 		</footer>
 	</ObjectPageLayout>
