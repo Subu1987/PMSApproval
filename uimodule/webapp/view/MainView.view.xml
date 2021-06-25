@@ -1,6 +1,6 @@
 <mvc:View controllerName="com.infocus.PMSApproval.controller.MainView" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core" xmlns="sap.m" height="100%"  displayBlock="true">
-	<App id="idAppControl"  height="100%">
+	<App id="app"  height="100%">
 		<l:Splitter id="_IDGenSplitter1" height="100%">
 			<l:contentAreas>
 				<Panel id="_IDGenPanel1" height="100%" class="sapUiNoContentPadding">
@@ -18,8 +18,7 @@
 					</content>
 				</Panel>
 				<Panel id="_IDGenPanel2" height="100%" class="sapUiNoContentPadding">
-				<mvc:XMLView  id="_IDGenXMLView4" height="100%" viewName="com.infocus.PMSApproval.view.DetailView"/>
-				
+				<mvc:XMLView  id="DetailView" height="100%" viewName="com.infocus.PMSApproval.view.DetailView"/>
 				</Panel>
 			</l:contentAreas>
 		</l:Splitter>

@@ -10,44 +10,47 @@ sap.ui.define([
 	'sap/m/Dialog',
 	'sap/m/List',
 	'sap/m/StandardListItem',
-], function(Controller, JSONModel, Filter, FilterOperator, MessageToast, MessageBox, Fragment, Button, Dialog, List, StandardListItem) {
+	'sap/m/Label',
+	'sap/m/Text',
+	'sap/m/TextArea',
+	'sap/ui/layout/HorizontalLayout',
+	'sap/ui/layout/VerticalLayout'
+], function(Controller, JSONModel, Filter, FilterOperator, MessageToast, MessageBox,
+	Fragment, Button, Dialog, List, StandardListItem, Label, Text, TextArea, HorizontalLayout, VerticalLayout) {
 	"use strict";
 	return Controller.extend("com.infocus.PMSApproval.controller.DetailView", {
 		onInit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
-			
+
 			//Show the floating footer...
 			var oObjectPage = this.getView().byId("ObjectPageLayout");
 			oObjectPage.setShowFooter(true);
-		},
-		onDesignationPress: function() {
-			console.log('Designation press called...');
+			
+			console.log("Inside detail view....");
 		},
 		onShowDetailView: function(source, event, data) {
 			MessageBox.show("Showing data for:" + data.empName)
 		},
 		onDesignationPress: function() {
-			console.log(this.getView().getModel('posititons'))
-
 			var that = this;
 			if (!that.resizableDialog) {
-				var oTable = new sap.m.Table("tab-1", {
+				var oTable = new sap.m.Table("tab-pos", {
 					inset: true,
 					mode: sap.m.ListMode.None,
 					includeItemInSelection: false,
 				});
-				var col1 = new sap.m.Column("col1", {
+				var col1 = new sap.m.Column("col1-pos", {
 					header: new sap.m.Label({
 						text: "Position"
 					})
 				});
-				var col2 = new sap.m.Column("col2", {
+				var col2 = new sap.m.Column("col2-pos", {
 					header: new sap.m.Label({
 						text: "Period"
 					})
 				});
-				var col3 = new sap.m.Column("col3", {
+				var col3 = new sap.m.Column("col3-pos", {
 					header: new sap.m.Label({
 						text: "Location"
 					})
@@ -86,8 +89,6 @@ sap.ui.define([
 			}
 
 			that.resizableDialog.open();
-
-			//this._getDialog().open();
 		},
 		onEditToggleButtonPress: function() {
 			var oObjectPage = this.getView().byId("ObjectPageLayout"),
@@ -98,24 +99,23 @@ sap.ui.define([
 		handleSaveAppraisalPress: function() {
 			//Calling the save data function.
 			this._oPopover.close();
-			
+
 		},
 		handleCancelAppraisalPress: function() {
 			this._oPopover.close();
 		},
 		handleSaveAsDraft: function() {
 
-			
 		},
 		onAgreeSelectionChanged: function(oEvent) {
 			this.IAgreeCheckboxSelected = oEvent.getParameters().selected;
 			this.byId("agree").setEnabled(this.IAgreeCheckboxSelected);
-		},	
+		},
 		handleIAgreePopoverPress: function(oEvent) {
 			//console.log(oEvent);
 			var oButton = oEvent.getSource(),
 				oView = this.getView();
-				
+
 			// create popover
 			if (!this._oPopover) {
 				this._oPopover = sap.ui.xmlfragment(oView.getId(), "com.infocus.PMSApproval.view.AgreePopover", this)
@@ -124,10 +124,50 @@ sap.ui.define([
 
 			this._oPopover.openBy(oButton);
 		},
+		onSubmitDialogPress: function() {
+			var _self = this;
+			if (!this.oSubmitDialog) {
+				this.oSubmitDialog = new Dialog({
+					type: sap.m.DialogType.Message,
+					title: "Confirm",
+					content: [
+						/*new Label({
+							text: "Do you want to submit this order?",
+							labelFor: "submissionNote"
+						}),*/
+						new sap.m.CheckBox("checkbox1", {
+							width: "100%",
+							text: "I agree to save the self appraisal for the approval",
+							select: function(oEvent) {
+								this.oSubmitDialog.getBeginButton().setEnabled(oEvent.getParameters().selected);
+							}.bind(this)
+						})
+					],
+					beginButton: new Button({
+						type: sap.m.ButtonType.Emphasized,
+						text: "Submit",
+						enabled: false,
+						press: function() {
+
+							MessageToast.show("Note is: ");
+							this.oSubmitDialog.close();
+						}.bind(this)
+					}),
+					endButton: new Button({
+						text: "Cancel",
+						press: function() {
+							this.oSubmitDialog.close();
+						}.bind(this)
+					})
+				});
+			}
+
+			this.oSubmitDialog.open();
+		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.unsubscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
-			
+
 			//Clean up the popovers...
 			if (this._oPopover) {
 				this._oPopover.destroy();

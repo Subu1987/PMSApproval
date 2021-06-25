@@ -71,7 +71,7 @@
 			"viewName": "com.infocus.PMSApproval.view.MainView",
 			"type": "XML",
 			"async": true,
-			"id": "idAppControl"
+			"id": "app"
 		},
 		"dependencies": {
 			"minUI5Version": "1.52.9",

@@ -18,6 +18,8 @@ sap.ui.define([
 			var _self = this;
 			_self.dataSet = {};
 
+			console.log("Inside main view....");
+
 			var _model = _self.getView().getModel();
 			var factorSetURI = "/FactorSet";
 			var gradeSetURI = "/GradeSet";
@@ -128,62 +130,15 @@ sap.ui.define([
 			};
 
 			_self.formatAllEmpData(_self.dataSet.EmpData);
+			_self.dataSet.appraiserLevel = "1";
 
-			sap.ui.core.BusyIndicator.show();
-			_model.read(factorSetURI, {
-				success: function(response) {
+			_self.getView().setModel(new JSONModel(_self.dataSet), "dataSet");
+			console.log(_self.dataSet);
 
-					_self.dataSet.factors = response.results;
-
-					var slNo = 1;
-					for (let item in _self.dataSet.factors) {
-						_self.dataSet.factors[item].SlNo = slNo;
-						slNo += 1;
-					}
-
-					_model.read(gradeSetURI, {
-						success: function(response) {
-							//On seccess collect the grade set.
-							_self.dataSet.gradeSet = response.results;
-
-							for (let item in _self.dataSet.gradeSet) {
-								var min=_self.dataSet.gradeSet[item].Minmarks;
-								var max=_self.dataSet.gradeSet[item].Maxmarks;
-								_self.dataSet.gradeSet[item].marks = min +" - "+max;
-							}
-
-							_model.read(marksSetURI, {
-								success: function(response) {
-									sap.ui.core.BusyIndicator.hide();
-									_self.dataSet.marksSet = response.results;
-
-									_self.getView().setModel(new JSONModel(_self.dataSet), "dataSet");
-									console.log(_self.dataSet);
-
-								},
-								error: function(error) {
-									sap.ui.core.BusyIndicator.hide();
-									console.log('Error on /marksSet GET');
-									console.log(error);
-								}
-							});
-
-						},
-						error: function(error) {
-							sap.ui.core.BusyIndicator.hide();
-							console.log('Error on /gradeSet GET');
-							console.log(error);
-						}
-					});
-
-				},
-				error: function(error) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log('Error on /factors set GET');
-					console.log(error);
-				}
+			var eventBus = sap.ui.getCore().getEventBus();
+			eventBus.publish("MarksView", "showFactors", {
+				message: 'MODEL INITIALIZED....'
 			});
-
 		},
 		onSearch: function(oEvent) {
 			// add filter for search

@@ -1,11 +1,14 @@
 <core:FragmentDefinition xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
 		<Table rows="{dataSet>/factors}" selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
-			<extension>
-				<m:OverflowToolbar style="Clear">
-					<m:Title id="change_title" text="Factors for Performance Evaluation"/>
-				</m:OverflowToolbar>
-			</extension>
+			<toolbar>
+				<m:Toolbar>
+					<m:Title id="title" text="Factors for Performance Evaluation"></m:Title>
+					<m:ToolbarSpacer/>
+					<m:Button icon="sap-icon://show" tooltip="" type="Emphasized"/>
+					<m:Button icon="sap-icon://show" tooltip="" type="Emphasized"/>
+				</m:Toolbar>
+			</toolbar>
 			<columns>
 				<Column width="3rem">
 					<m:Label text="Sl No."/>
@@ -45,7 +48,7 @@
 				</Column>
 			</columns>
 		</Table>
-		<l:VerticalLayout width="100%" class="mt2">
+		<l:VerticalLayout width="100%" class="mt2" visible="true">
 			<l:BlockLayout id="BlockLayout" background="Default">
 				<l:BlockLayoutRow accentCells="Accent1">
 					<l:BlockLayoutCell title="{i18n>guidelinesForGrade}">
