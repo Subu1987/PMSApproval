@@ -30,6 +30,8 @@ sap.ui.define([
 			console.log("Inside detail view....");
 		},
 		onShowDetailView: function(source, event, data) {
+			//Binding data dynamically from the controller.....
+			//--------------------------------------------------------------------------------
 			/*var form = this.getView().byId('container-PMSApproval---app--DetailView--comments--commentsForm');
 			console.log(form);
 			form.bindElement({
@@ -47,11 +49,17 @@ sap.ui.define([
 					}
 				}
 			});*/
-			var _self=this;
+			//--------------------------------------------------------------------------------
+
+			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			
-			var empDetailsURI="/ConcurrentEmploymentSet('"+data.Pernr+"')";
+			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
+			_self.publishApproverLevelToMarksView({
+				approverLevel: data.CurrAssgnLvl
+			});
+
+			var empDetailsURI = "/ConcurrentEmploymentSet('" + data.Pernr + "')";
 			sap.ui.core.BusyIndicator.show();
 			_self.getView().getModel().read(empDetailsURI, {
 				urlParameters: {
@@ -63,7 +71,7 @@ sap.ui.define([
 					console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/EmpData", response);
-					_self.formatAllEmpData(response);                      
+					_self.formatAllEmpData(response);
 				},
 				error: function(error) {
 					sap.ui.core.BusyIndicator.hide();
@@ -189,7 +197,6 @@ sap.ui.define([
 				//to get access to the global model
 				this.getView().addDependent(that.resizableDialog);
 			}
-
 			that.resizableDialog.open();
 		},
 		onEditToggleButtonPress: function() {
@@ -198,16 +205,33 @@ sap.ui.define([
 
 			oObjectPage.setShowFooter(!bCurrentShowFooterState);
 		},
+		publishApproverLevelToMarksView: function(data) {
+			var eventBus = sap.ui.getCore().getEventBus();
+			eventBus.publish("DetailsView", "updateApproverLevel", data);
+		},
 		handleSaveAppraisalPress: function() {
 			//Calling the save data function.
-			this._oPopover.close();
-
+			//this._oPopover.close();
+			this.saveApprovalData('Y');
 		},
 		handleCancelAppraisalPress: function() {
 			this._oPopover.close();
 		},
 		handleSaveAsDraft: function() {
-
+			this.saveApprovalData('D');
+		},
+		saveApprovalData: function(saveFlag) {
+			var isValid = this.validateAll();
+			if (!isValid) {
+				MessageBox.alert('Some fields contains invalid values. Please fill all of them correctly.');
+			} else {
+				MessageBox.success('The appraisal saved correctly.');
+			}
+		},
+		validateAll: function() {
+			var factors = this.getView().getModel("dataSet").getProperty("/factors");
+			console.log(factors);
+			return true;
 		},
 		onAgreeSelectionChanged: function(oEvent) {
 			this.IAgreeCheckboxSelected = oEvent.getParameters().selected;
@@ -251,7 +275,7 @@ sap.ui.define([
 						enabled: false,
 						press: function() {
 
-							MessageToast.show("Note is: ");
+							_self.handleSaveAppraisalPress();
 							this.oSubmitDialog.close();
 						}.bind(this)
 					}),

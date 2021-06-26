@@ -7,11 +7,12 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("com.infocus.PMSApproval.controller.MarksView", {
 		onInit: function() {
-			this.updateFactorTable(3);
 			console.log("Inside marks view....");
 
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("MarksView", "showFactors", this.onShowFactors, this);
+			eventBus.subscribe("DetailsView", "updateApproverLevel", this.updateAppraiserLevel, this);
+			
 		},
 		onShowFactors: function() {
 			var _self = this;
@@ -48,20 +49,21 @@ sap.ui.define([
 				}
 			});
 		},
-		updateFactorTable: function(appraiserLevel) {
+		updateAppraiserLevel: function(source, event, data) {
+			var approverLevel=parseInt(data.approverLevel);                         
 			var factTable = this.getView().byId("factor-table");
 			var c = 1;
 			while (c <= 3) {
 				var id = "app-" + c + "-marks-noneditable";
-				if (appraiserLevel == c) {
+				if (approverLevel == c) {
 					id = "app-" + c + "-marks"
 				}
 				var col = this.getView().byId(id);
-				if (appraiserLevel >= c) {
-					console.log("app=" + appraiserLevel + " c=" + c + " True...");
+				if (approverLevel >= c) {
+					console.log("app=" + approverLevel + " c=" + c + " True...");
 					col.setVisible(true);
 				} else {
-					console.log("app=" + appraiserLevel + " c=" + c + " False...");
+					console.log("app=" + approverLevel + " c=" + c + " False...");
 					col.setVisible(false);
 				}
 
@@ -241,17 +243,18 @@ sap.ui.define([
 			var val = _oInput.getValue();
 			val = val.replace(/[^\d]/g, '');
 			_oInput.setValue(val);
-			if (val < 0 || val > 5) {
+			var isNotValid=val < 0 || val > 5;
+			if (isNotValid) {
 				_oInput.setValueState(sap.ui.core.ValueState.Error);
 			}else{
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
 			}
-
+			console.log(_oInput);
 		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.unsubscribe("MarksView", "showFactors", this.onShowFactors, this);
-
+			eventBus.subscribe("DetailsView", "updateApproverLevel", this.updateAppraiserLevel, this);
 		}
 	});
 });

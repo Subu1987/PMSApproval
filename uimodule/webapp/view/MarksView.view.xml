@@ -31,7 +31,7 @@
 				<Column id="app-1-marks" width="7rem" visible="false" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
-						<m:Input value="{dataSet>M1}" textAlign="Center"/>
+						<m:Input value="{dataSet>M1}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
 				<Column id="app-1-marks-noneditable" visible="false" width="7rem" hAlign="Center">
@@ -44,7 +44,7 @@
 				<Column id="app-2-marks" width="7rem" visible="false" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
-						<m:Input value="{dataSet>M2}" textAlign="Center"/>
+						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
 				<Column id="app-2-marks-noneditable" visible="false" width="7rem" hAlign="Center">
