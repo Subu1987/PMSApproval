@@ -34,7 +34,7 @@
 			<ObjectPageSection title="Self Appraisal">
 				<subSections>
 					<ObjectPageSubSection title=" ">
-						<core:Fragment fragmentName="com.infocus.PMSApproval.view.SelfAppraisalComments" type="XML"/>
+						<core:Fragment id="comments" fragmentName="com.infocus.PMSApproval.view.SelfAppraisalComments" type="XML"/>
 					</ObjectPageSubSection>
 				</subSections>
 			</ObjectPageSection>

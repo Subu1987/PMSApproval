@@ -29,7 +29,7 @@
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
-					"localUri": "model/metadata.xml"
+					"localUri": "localService/metadata.xml"
 				}
 			},
 			"ZPMS_SELF_SRV": {
@@ -101,7 +101,8 @@
 				"settings": {
 					"defaultOperationMode": "Server",
 					"defaultBuindingMode": "OneWay",
-					"defaultCountMode": "Request"
+					"defaultCountMode": "Request",
+					"defaultBindingMode": "TwoWay"
 				},
 				"dataSource": "ZPMS_APPROVAL_SRV",
 				"preload": true
@@ -119,11 +120,9 @@
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -134,15 +133,11 @@
 				"controlAggregation": "pages",
 				"async": true
 			},
-			"routes": [
-				{
-					"name": "RouteMainView",
-					"pattern": "RouteMainView",
-					"target": [
-						"TargetMainView"
-					]
-				}
-			],
+			"routes": [{
+				"name": "RouteMainView",
+				"pattern": "RouteMainView",
+				"target": ["TargetMainView"]
+			}],
 			"targets": {
 				"TargetMainView": {
 					"viewType": "XML",

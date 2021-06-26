@@ -29,9 +29,10 @@ sap.ui.define([
 						slNo += 1;
 
 						//Dummy random marks by the appraisers
-						factors[item].M1 = Math.floor(Math.random() * 10) + 1;
-						factors[item].M2 = Math.floor(Math.random() * 10) + 1;
-						factors[item].M3 = Math.floor(Math.random() * 10) + 1;
+						var maxMarks = 5;
+						factors[item].M1 = Math.floor(Math.random() * maxMarks) + 1;
+						factors[item].M2 = Math.floor(Math.random() * maxMarks) + 1;
+						factors[item].M3 = Math.floor(Math.random() * maxMarks) + 1;
 					}
 
 					var dataSetModel = _self.getView().getModel("dataSet");
@@ -51,9 +52,9 @@ sap.ui.define([
 			var factTable = this.getView().byId("factor-table");
 			var c = 1;
 			while (c <= 3) {
-				var id="app-" + c + "-marks-noneditable"; 
-				if(appraiserLevel==c){
-					id="app-" + c + "-marks"
+				var id = "app-" + c + "-marks-noneditable";
+				if (appraiserLevel == c) {
+					id = "app-" + c + "-marks"
 				}
 				var col = this.getView().byId(id);
 				if (appraiserLevel >= c) {
@@ -234,6 +235,18 @@ sap.ui.define([
 			}
 
 			that.resizableDialog.open();
+		},
+		handleMarksInput: function(oEvent) {
+			var _oInput = oEvent.getSource();
+			var val = _oInput.getValue();
+			val = val.replace(/[^\d]/g, '');
+			_oInput.setValue(val);
+			if (val < 0 || val > 5) {
+				_oInput.setValueState(sap.ui.core.ValueState.Error);
+			}else{
+				_oInput.setValueState(sap.ui.core.ValueState.Success);
+			}
+
 		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();

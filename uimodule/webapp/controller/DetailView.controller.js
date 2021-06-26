@@ -26,11 +26,113 @@ sap.ui.define([
 			//Show the floating footer...
 			var oObjectPage = this.getView().byId("ObjectPageLayout");
 			oObjectPage.setShowFooter(true);
-			
+
 			console.log("Inside detail view....");
 		},
 		onShowDetailView: function(source, event, data) {
-			MessageBox.show("Showing data for:" + data.empName)
+			/*var form = this.getView().byId('container-PMSApproval---app--DetailView--comments--commentsForm');
+			console.log(form);
+			form.bindElement({
+				path: "dataSet>/SelfAppraisal",
+				events: {
+					change: function() {
+						//triggers on error too I think
+						form.setBusy(false);
+					},
+					dataRequested: function() {
+						form.setBusy(true);
+					},
+					dataReceived: function(oEv) {
+						console.log('data received...');
+					}
+				}
+			});*/
+			var _self=this;
+			var dataModel = _self.getView().getModel("dataSet");
+			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
+			
+			var empDetailsURI="/ConcurrentEmploymentSet('"+data.Pernr+"')";
+			sap.ui.core.BusyIndicator.show();
+			_self.getView().getModel().read(empDetailsURI, {
+				urlParameters: {
+					"$expand": "ToItems"
+				},
+				success: function(response) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log("Emp full Details Service Response...");
+					console.log(response);
+					var dataSetModel = _self.getView().getModel("dataSet");
+					dataSetModel.setProperty("/EmpData", response);
+					_self.formatAllEmpData(response);                      
+				},
+				error: function(error) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log('Error in fetching employeeset...');
+					console.log(error);
+				}
+
+			});
+		},
+		formatAllEmpData: function(emp) {
+			var _self = this;
+			_self.empDetails = emp;
+			//console.log(emp);
+			//console.log(this.empDetails);
+			for (let item in _self.empDetails.ToItems.results) {
+				var pDay = parseInt(_self.empDetails.ToItems.results[item].PeriodDay);
+				pDay = pDay > 0 ? (pDay + " Day" + (pDay > 1 ? "s" : "")) : "";
+				var pMonth = parseFloat(_self.empDetails.ToItems.results[item].PeriodMonth, 0);
+				pMonth = pMonth > 0 ? (pMonth + " Month" + (pMonth > 1 ? "s" : "")) : "";
+				var pYear = parseFloat(_self.empDetails.ToItems.results[item].PeriodYear, 0);
+				pYear = pYear > 0 ? (pYear + " Year" + (pYear > 1 ? "s" : "")) : "";
+
+				_self.empDetails.ToItems.results[item].Period = pYear + " " + pMonth + " " + pDay;
+			}
+
+			_self.getView().setModel(new JSONModel(_self.empDetails.ToItems), "positions");
+
+			//DOB as Text
+			var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				pattern: "dd-MM-yyyy"
+			});
+			_self.empDetails.ExDOBText = oDateFormat.format(_self.empDetails.ExDob);
+			_self.empDetails.ExDOJText = oDateFormat.format(_self.empDetails.ExDoj);
+
+			//Period of Promotion
+			var proDay = parseInt(_self.empDetails.ExPromPeriodDay);
+			proDay = proDay > 0 ? (proDay + " Day" + (proDay > 1 ? "s" : "")) : "";
+			var proMonth = parseFloat(_self.empDetails.ExPromPeriodMonth, 0);
+			proMonth = proMonth > 0 ? (proMonth + " Month" + (proMonth > 1 ? "s" : "")) : "";
+			var proYear = parseFloat(_self.empDetails.ExPromPeriodYear, 0);
+			proYear = proYear > 0 ? (proYear + " Year" + (proYear > 1 ? "s" : "")) : "";
+			_self.empDetails.PeriodOfLastPromotion = proYear + " " + proMonth + " " + proDay;
+
+			//Service In Department
+			var srvDay = parseInt(_self.empDetails.ExServiceCompDay, 0)
+			srvDay = srvDay > 0 ? (srvDay + " Day" + (srvDay > 1 ? "s" : "")) : "";
+			var srvMonth = parseFloat(_self.empDetails.ExServiceCompMonth, 0);
+			srvMonth = srvMonth > 0 ? (srvMonth + " Month" + (srvMonth > 1 ? "s" : "")) : "";
+			var srvYear = parseFloat(_self.empDetails.ExServiceCompYear, 0);
+			srvYear = srvYear > 0 ? (srvYear + " Year" + (srvYear > 1 ? "s" : "")) : "";
+			_self.empDetails.ServiceInDepartment = srvYear + " " + srvMonth + " " + srvDay;
+
+			var basicPay = parseFloat(_self.empDetails.ExCurrBasic).toFixed(2);
+			_self.empDetails.ExCurrBasic = basicPay;
+
+			//Basic Pay format
+			/*var oFormat = NumberFormat.getCurrencyInstance({
+				"currencyCode": false,
+				"customCurrencies": {
+					"RS": {
+						"symbol": "\u0243",
+						"decimals": 2
+					}
+				}
+			});
+
+			_self.empDetails.ExCurrBasic=oFormat.format(_self.empDetails.ExCurrBasic, "RS"); // "Ƀ 123.457"*/
+
+			_self.getView().setModel(new JSONModel(_self.empDetails), "emp");
 		},
 		onDesignationPress: function() {
 			var that = this;

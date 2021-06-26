@@ -13,7 +13,7 @@
 						</OverflowToolbar>
 						<List id="idList" items="{dataSet>/employees}" selectionChange=".onSelectionChange" mode="SingleSelectMaster" growing="true"
 							growingThreshold="50" includeItemInSelection="true">
-							<StandardListItem title="{dataSet>Name}" description="{dataSet>Designation}" icon="{ProductPicUrl}" iconDensityAware="false" iconInset="false"/>
+							<StandardListItem title="{dataSet>EmpName}" description="{dataSet>EmpDesg}" icon="{ProductPicUrl}" iconDensityAware="false" iconInset="false"/>
 						</List>
 					</content>
 				</Panel>

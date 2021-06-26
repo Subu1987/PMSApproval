@@ -24,24 +24,10 @@ sap.ui.define([
 			var factorSetURI = "/FactorSet";
 			var gradeSetURI = "/GradeSet";
 			var marksSetURI = "/MarksSet";
+			var employmentSetURL = "/empdetailsSet";
+			
 
-			/*var empId="40000051";
-				var employmentSetURL = "/ConcurrentEmploymentSet";
-			_self.getView().getModel("self").read(employmentSetURL, {
-				urlParameters: {
-					"$expand": "ToItems"
-				},
-				success: function(response) {
-					console.log(response);
-					_self.formatAllEmpData(response.results[0]);
-				},error:function(error){
-					console.log('Error in fetching employeeset...');
-					console.log(error);
-				}
-				
-			});*/
-
-			_self.dataSet.SelfAppraisal = {
+			/*_self.dataSet.SelfAppraisal = {
 				"Empid": "40000051",
 				"Saveflag": "Y",
 				"Period": "01",
@@ -57,15 +43,15 @@ sap.ui.define([
 				"Failure2": "2 Test FailureÄ«",
 				"Failure3": "TEST FAILURE 3",
 				"TrainingDevNeed": "FUNCTIONAL TRAINING NEEDED"
-			};
+			};*/
 
-			_self.dataSet.employees = [{
+			/*_self.dataSet.employees = [{
 				"Name": "Mrs Bidula Banerjee Ghatak",
 				"Designation": "Manager - Systems"
 			}, {
 				"Name": "Mr Partha Bhattacharya",
 				"Designation": "Manager - Systems"
-			}];
+			}];*/
 
 			_self.dataSet.recommendation = [{
 				"type": "Job Rotation"
@@ -75,7 +61,7 @@ sap.ui.define([
 				"type": "Increment"
 			}];
 
-			_self.dataSet.EmpData = {
+			/*_self.dataSet.EmpData = {
 				"Gender": "2",
 				"ExFlag": "N",
 				"ExFormType": "P",
@@ -127,10 +113,24 @@ sap.ui.define([
 						"Location": "Delhi"
 					}]
 				}
-			};
+			};*/
+			
+			_self.getView().getModel().read(employmentSetURL, {
+				urlParameters: {
+					"$expand": "ToDetails"
+				},
+				success: function(response) {
+					//console.log("Emp Details Service Response...");
+					//console.log(response);
+					var dataSetModel = _self.getView().getModel("dataSet");
+					dataSetModel.setProperty("/employees", response.results);
+				},
+				error: function(error) {
+					console.log('Error in fetching employeeset...');
+					console.log(error);
+				}
 
-			_self.formatAllEmpData(_self.dataSet.EmpData);
-			_self.dataSet.appraiserLevel = "1";
+			});
 
 			_self.getView().setModel(new JSONModel(_self.dataSet), "dataSet");
 			console.log(_self.dataSet);
@@ -145,7 +145,7 @@ sap.ui.define([
 			var aFilters = [];
 			var sQuery = oEvent.getSource().getValue();
 			if (sQuery && sQuery.length > 0) {
-				var filter = new Filter("Name", FilterOperator.Contains, sQuery);
+				var filter = new Filter("EmpName", FilterOperator.Contains, sQuery);
 				aFilters.push(filter);
 			}
 
@@ -155,92 +155,30 @@ sap.ui.define([
 			oBinding.filter(aFilters, "Application");
 		},
 		onSelectionChange: function(oEvent) {
-			var oList = oEvent.getSource();
-			//var oLabel = this.byId("idFilterLabel");
-			//var oInfoToolbar = this.byId("idInfoToolbar");
+			// var oList = oEvent.getSource();
+			// //var oLabel = this.byId("idFilterLabel");
+			// //var oInfoToolbar = this.byId("idInfoToolbar");
 
-			// With the 'getSelectedContexts' function you can access the context paths
-			// of all list items that have been selected, regardless of any current
-			// filter on the aggregation binding.
-			var aContexts = oList.getSelectedContexts(true);
+			// // With the 'getSelectedContexts' function you can access the context paths
+			// // of all list items that have been selected, regardless of any current
+			// // filter on the aggregation binding.
+			// var aContexts = oList.getSelectedContexts(true);
 
-			// update UI
-			var bSelected = (aContexts && aContexts.length > 0);
-			//var sText = (bSelected) ? aContexts.length + " selected" : null;
-			//oInfoToolbar.setVisible(bSelected);
-			//oLabel.setText(sText);
+			// // update UI
+			// var bSelected = (aContexts && aContexts.length > 0);
+			// //var sText = (bSelected) ? aContexts.length + " selected" : null;
+			// //oInfoToolbar.setVisible(bSelected);
+			// //oLabel.setText(sText);
 
-			var sText = oList._oSelectedItem.mProperties.title;
-
-			MessageToast.show("Selected Employee: " + sText);
+			// var sText = oList._oSelectedItem.mProperties.title;
+			
+			var oSelectedItem = oEvent.getParameter("listItem");
+			var selectedEmpData=oSelectedItem.getBindingContext("dataSet").getObject();
 
 			var eventBus = sap.ui.getCore().getEventBus();
-			eventBus.publish("DetailView", "ShowDetailView", {
-				empName: sText
-			});
+			eventBus.publish("DetailView", "ShowDetailView", selectedEmpData);
 
 			//MessageToast.show(aContexts[0].sPath);
-		},
-		formatAllEmpData: function(emp) {
-			var _self = this;
-			this.empDetails = emp;
-			//console.log(emp);
-			//console.log(this.empDetails);
-			for (let item in _self.empDetails.ToItems.results) {
-				var pDay = parseInt(_self.empDetails.ToItems.results[item].PeriodDay);
-				pDay = pDay > 0 ? (pDay + " Day" + (pDay > 1 ? "s" : "")) : "";
-				var pMonth = parseFloat(_self.empDetails.ToItems.results[item].PeriodMonth, 0);
-				pMonth = pMonth > 0 ? (pMonth + " Month" + (pMonth > 1 ? "s" : "")) : "";
-				var pYear = parseFloat(_self.empDetails.ToItems.results[item].PeriodYear, 0);
-				pYear = pYear > 0 ? (pYear + " Year" + (pYear > 1 ? "s" : "")) : "";
-
-				_self.empDetails.ToItems.results[item].Period = pYear + " " + pMonth + " " + pDay;
-			}
-
-			_self.getView().setModel(new JSONModel(_self.empDetails.ToItems), "positions");
-
-			//DOB as Text
-			var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-				pattern: "dd-MM-yyyy"
-			});
-			/*_self.empDetails.ExDOBText = oDateFormat.format(_self.empDetails.ExDob);
-			_self.empDetails.ExDOJText = oDateFormat.format(_self.empDetails.ExDoj);*/
-
-			//Period of Promotion
-			var proDay = parseInt(_self.empDetails.ExPromPeriodDay);
-			proDay = proDay > 0 ? (proDay + " Day" + (proDay > 1 ? "s" : "")) : "";
-			var proMonth = parseFloat(_self.empDetails.ExPromPeriodMonth, 0);
-			proMonth = proMonth > 0 ? (proMonth + " Month" + (proMonth > 1 ? "s" : "")) : "";
-			var proYear = parseFloat(_self.empDetails.ExPromPeriodYear, 0);
-			proYear = proYear > 0 ? (proYear + " Year" + (proYear > 1 ? "s" : "")) : "";
-			_self.empDetails.PeriodOfLastPromotion = proYear + " " + proMonth + " " + proDay;
-
-			//Service In Department
-			var srvDay = parseInt(_self.empDetails.ExServiceCompDay, 0)
-			srvDay = srvDay > 0 ? (srvDay + " Day" + (srvDay > 1 ? "s" : "")) : "";
-			var srvMonth = parseFloat(_self.empDetails.ExServiceCompMonth, 0);
-			srvMonth = srvMonth > 0 ? (srvMonth + " Month" + (srvMonth > 1 ? "s" : "")) : "";
-			var srvYear = parseFloat(_self.empDetails.ExServiceCompYear, 0);
-			srvYear = srvYear > 0 ? (srvYear + " Year" + (srvYear > 1 ? "s" : "")) : "";
-			_self.empDetails.ServiceInDepartment = srvYear + " " + srvMonth + " " + srvDay;
-
-			var basicPay = parseFloat(_self.empDetails.ExCurrBasic).toFixed(2);
-			_self.empDetails.ExCurrBasic = basicPay;
-
-			//Basic Pay format
-			/*var oFormat = NumberFormat.getCurrencyInstance({
-				"currencyCode": false,
-				"customCurrencies": {
-					"RS": {
-						"symbol": "\u0243",
-						"decimals": 2
-					}
-				}
-			});
-
-			_self.empDetails.ExCurrBasic=oFormat.format(_self.empDetails.ExCurrBasic, "RS"); // "Ƀ 123.457"*/
-
-			_self.getView().setModel(new JSONModel(_self.empDetails), "emp");
 		},
 		onExit: function() {
 			console.log("Exit called: MainView");
