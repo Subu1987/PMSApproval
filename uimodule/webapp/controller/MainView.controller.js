@@ -25,7 +25,6 @@ sap.ui.define([
 			var gradeSetURI = "/GradeSet";
 			var marksSetURI = "/MarksSet";
 			var employmentSetURL = "/empdetailsSet";
-			
 
 			/*_self.dataSet.SelfAppraisal = {
 				"Empid": "40000051",
@@ -114,7 +113,7 @@ sap.ui.define([
 					}]
 				}
 			};*/
-			
+
 			_self.getView().getModel().read(employmentSetURL, {
 				urlParameters: {
 					"$expand": "ToDetails"
@@ -124,6 +123,11 @@ sap.ui.define([
 					//console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/employees", response.results);
+
+					var oList = _self.getView().byId('container-PMSApproval---app--idList');
+					//console.log(oList);
+					oList.setSelectedItem(oList.getItems()[0], true);
+					_self.publishToDetailView(response.results[0]);
 				},
 				error: function(error) {
 					console.log('Error in fetching employeeset...');
@@ -139,6 +143,10 @@ sap.ui.define([
 			eventBus.publish("MarksView", "showFactors", {
 				message: 'MODEL INITIALIZED....'
 			});
+		},
+		publishToDetailView: function(data) {
+			var eventBus = sap.ui.getCore().getEventBus();
+			eventBus.publish("DetailView", "ShowDetailView", data);
 		},
 		onSearch: function(oEvent) {
 			// add filter for search
@@ -171,12 +179,14 @@ sap.ui.define([
 			// //oLabel.setText(sText);
 
 			// var sText = oList._oSelectedItem.mProperties.title;
-			
-			var oSelectedItem = oEvent.getParameter("listItem");
-			var selectedEmpData=oSelectedItem.getBindingContext("dataSet").getObject();
 
+			var oSelectedItem = oEvent.getParameter("listItem");
+			var selectedEmpData = oSelectedItem.getBindingContext("dataSet").getObject();
+			
+			this.publishToDetailView(selectedEmpData);
+/*
 			var eventBus = sap.ui.getCore().getEventBus();
-			eventBus.publish("DetailView", "ShowDetailView", selectedEmpData);
+			eventBus.publish("DetailView", "ShowDetailView", selectedEmpData);*/
 
 			//MessageToast.show(aContexts[0].sPath);
 		},
