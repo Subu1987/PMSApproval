@@ -184,8 +184,8 @@ sap.ui.define([
 			var selectedEmpData = oSelectedItem.getBindingContext("dataSet").getObject();
 			
 			this.publishToDetailView(selectedEmpData);
-/*
-			var eventBus = sap.ui.getCore().getEventBus();
+
+			/*var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.publish("DetailView", "ShowDetailView", selectedEmpData);*/
 
 			//MessageToast.show(aContexts[0].sPath);

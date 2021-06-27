@@ -54,6 +54,7 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
+			data.CurrAssgnLvl=2;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 			_self.publishApproverLevelToMarksView({
 				approverLevel: data.CurrAssgnLvl
@@ -229,8 +230,17 @@ sap.ui.define([
 			}
 		},
 		validateAll: function() {
-			var factors = this.getView().getModel("dataSet").getProperty("/factors");
-			console.log(factors);
+			var _dataModel= this.getView().getModel("dataSet");
+			var factors =_dataModel.getProperty("/factors");
+			var appraiserLevel=_dataModel.getProperty("/AppraiserLevel");
+			for(let item of factors){
+				var val=appraiserLevel==1?item.M1:appraiserLevel==2?item.M2:item.M3;
+				if(val < 0 || val > 5){
+					return false;
+				}
+				console.log(val);
+			}
+			console.log(appraiserLevel);
 			return true;
 		},
 		onAgreeSelectionChanged: function(oEvent) {

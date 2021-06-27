@@ -31,9 +31,13 @@ sap.ui.define([
 
 						//Dummy random marks by the appraisers
 						var maxMarks = 5;
-						factors[item].M1 = Math.floor(Math.random() * maxMarks) + 1;
+						/*factors[item].M1 = Math.floor(Math.random() * maxMarks) + 1;
 						factors[item].M2 = Math.floor(Math.random() * maxMarks) + 1;
-						factors[item].M3 = Math.floor(Math.random() * maxMarks) + 1;
+						factors[item].M3 = Math.floor(Math.random() * maxMarks) + 1;*/
+						
+						factors[item].M1 ='0';
+						factors[item].M2 ='0';
+						factors[item].M3 ='0';
 					}
 
 					var dataSetModel = _self.getView().getModel("dataSet");
@@ -60,10 +64,10 @@ sap.ui.define([
 				}
 				var col = this.getView().byId(id);
 				if (approverLevel >= c) {
-					console.log("app=" + approverLevel + " c=" + c + " True...");
+					//console.log("app=" + approverLevel + " c=" + c + " True...");
 					col.setVisible(true);
 				} else {
-					console.log("app=" + approverLevel + " c=" + c + " False...");
+					//console.log("app=" + approverLevel + " c=" + c + " False...");
 					col.setVisible(false);
 				}
 
@@ -249,7 +253,6 @@ sap.ui.define([
 			}else{
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
 			}
-			console.log(_oInput);
 		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
