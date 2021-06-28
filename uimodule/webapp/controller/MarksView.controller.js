@@ -73,6 +73,7 @@ sap.ui.define([
 
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/factors", factors);
+					dataSetModel.setProperty("/empty", []);
 
 					//console.log(_self.getView().byId("container-PMSApproval---app--DetailView--marksView--factorsTable"));
 
@@ -93,13 +94,19 @@ sap.ui.define([
 				if (approverLevel == c) {
 					id = "app-" + c + "-marks"
 				}
-				var col = this.getView().byId(id);
+				var col1 = this.getView().byId(id);
+				var col2 = this.getView().byId(id+"-B");
+				var col3 = this.getView().byId(id+"-C");
 				if (approverLevel >= c) {
 					//console.log("app=" + approverLevel + " c=" + c + " True...");
-					col.setVisible(true);
+					col1.setVisible(true);
+					col2.setVisible(true);
+					col3.setVisible(true);
 				} else {
 					//console.log("app=" + approverLevel + " c=" + c + " False...");
-					col.setVisible(false);
+					col1.setVisible(false);
+					col2.setVisible(false);
+					col3.setVisible(false);
 				}
 
 				/*if(appraiserLevel!=c){

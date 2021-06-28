@@ -1,6 +1,8 @@
-<core:View controllerName="com.infocus.PMSApproval.controller.MarksView" xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+<core:View controllerName="com.infocus.PMSApproval.controller.MarksView" xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
-		<Table id="factorsTable" rows="{dataSet>/factors}" selectionMode="None" visibleRowCount="17" ariaLabelledBy="title">
+		<Table id="factorsTable" rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'A'} ] }"
+			selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
 			<toolbar>
 				<m:Toolbar>
 					<m:Title id="title" text="Factors for Performance Evaluation"></m:Title>
@@ -40,7 +42,6 @@
 						<m:Text text="{dataSet>M1}"/>
 					</template>
 				</Column>
-				
 				<Column id="app-2-marks" width="7rem" visible="false" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
@@ -53,14 +54,150 @@
 						<m:Text text="{dataSet>M2}"/>
 					</template>
 				</Column>
-				
 				<Column id="app-3-marks" width="7rem" visible="false" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
-						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput" />
+						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
 				<Column id="app-3-marks-noneditable" visible="false" width="7rem" hAlign="Center">
+					<m:Label text="3rd Appraiser"/>
+					<template>
+						<m:Text text="{dataSet>M3}"/>
+					</template>
+				</Column>
+			</columns>
+		</Table>
+
+		<Table id="factorsTable2" class="pt4"
+			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'B'} ] }" selectionMode="None"
+			visibleRowCount="8" ariaLabelledBy="title">
+			<toolbar>
+				<m:Toolbar>
+					<m:Title text="Factors for Potential Evaluation"></m:Title>
+					<!--<m:ToolbarSpacer/>
+					<m:Button icon="sap-icon://measure" tooltip="{i18n>overallAssessment}" type="Emphasized" press="onOverAllAssessmentPressed"/>
+					<m:Button icon="sap-icon://approvals" tooltip="{i18n>guidelinesForGrade}" type="Emphasized" press="onGuideLineForGradePressed"/>-->
+				</m:Toolbar>
+			</toolbar>
+			<columns>
+				<Column width="3rem">
+					<m:Label text="Sl No."/>
+					<template>
+						<m:Text text="{dataSet>SlNo}" wrapping="false"/>
+					</template>
+				</Column>
+				<Column width="11rem">
+					<m:Label text="Factor"/>
+					<template>
+						<m:Text text="{dataSet>FactorDesc}"/>
+					</template>
+				</Column>
+				<Column>
+					<m:Label text="Critical Attributes"/>
+					<template>
+						<m:Text text="{dataSet>CriticalAttr}"/>
+					</template>
+				</Column>
+				<Column id="app-1-marks-B" width="7rem" visible="false" hAlign="Center">
+					<m:Label text="1st Appraiser"/>
+					<template>
+						<m:Input value="{dataSet>M1}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+					</template>
+				</Column>
+				<Column id="app-1-marks-noneditable-B" visible="false" width="7rem" hAlign="Center">
+					<m:Label text="1st Appraiser"/>
+					<template>
+						<m:Text text="{dataSet>M1}"/>
+					</template>
+				</Column>
+				<Column id="app-2-marks-B" width="7rem" visible="false" hAlign="Center">
+					<m:Label text="2nd Appraiser"/>
+					<template>
+						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+					</template>
+				</Column>
+				<Column id="app-2-marks-noneditable-B" visible="false" width="7rem" hAlign="Center">
+					<m:Label text="2nd Appraiser"/>
+					<template>
+						<m:Text text="{dataSet>M2}"/>
+					</template>
+				</Column>
+				<Column id="app-3-marks-B" width="7rem" visible="false" hAlign="Center">
+					<m:Label text="3rd Appraiser"/>
+					<template>
+						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+					</template>
+				</Column>
+				<Column id="app-3-marks-noneditable-B" visible="false" width="7rem" hAlign="Center">
+					<m:Label text="3rd Appraiser"/>
+					<template>
+						<m:Text text="{dataSet>M3}"/>
+					</template>
+				</Column>
+			</columns>
+		</Table>
+		<Table id="factorsTable3" class="pt4"
+			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'C'} ] }" selectionMode="None"
+			visibleRowCount="1" ariaLabelledBy="title">
+			<!--<toolbar>
+				<m:Toolbar>
+					<m:Title text="Factors for Potential Evaluation"></m:Title>
+					<m:ToolbarSpacer/>
+					<m:Button icon="sap-icon://measure" tooltip="{i18n>overallAssessment}" type="Emphasized" press="onOverAllAssessmentPressed"/>
+					<m:Button icon="sap-icon://approvals" tooltip="{i18n>guidelinesForGrade}" type="Emphasized" press="onGuideLineForGradePressed"/>
+				</m:Toolbar>
+			</toolbar>-->
+			<columns>
+				<Column width="3rem">
+					<m:Label text="Sl No."/>
+					<template>
+						<m:Text text="{dataSet>SlNo}" wrapping="false"/>
+					</template>
+				</Column>
+				<Column width="11rem">
+					<m:Label text="Factor"/>
+					<template>
+						<m:Text text="{dataSet>FactorDesc}"/>
+					</template>
+				</Column>
+				<Column>
+					<m:Label text="Critical Attributes"/>
+					<template>
+						<m:Text text="{dataSet>CriticalAttr}"/>
+					</template>
+				</Column>
+				<Column id="app-1-marks-C" width="7rem" visible="false" hAlign="Center">
+					<m:Label text="1st Appraiser"/>
+					<template>
+						<m:Input value="{dataSet>M1}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+					</template>
+				</Column>
+				<Column id="app-1-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
+					<m:Label text="1st Appraiser"/>
+					<template>
+						<m:Text text="{dataSet>M1}"/>
+					</template>
+				</Column>
+				<Column id="app-2-marks-C" width="7rem" visible="false" hAlign="Center">
+					<m:Label text="2nd Appraiser"/>
+					<template>
+						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+					</template>
+				</Column>
+				<Column id="app-2-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
+					<m:Label text="2nd Appraiser"/>
+					<template>
+						<m:Text text="{dataSet>M2}"/>
+					</template>
+				</Column>
+				<Column id="app-3-marks-C" width="7rem" visible="false" hAlign="Center">
+					<m:Label text="3rd Appraiser"/>
+					<template>
+						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+					</template>
+				</Column>
+				<Column id="app-3-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M3}"/>

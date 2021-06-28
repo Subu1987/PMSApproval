@@ -226,6 +226,7 @@ sap.ui.define([
 		saveApprovalData: function(saveFlag) {
 			var _self = this;
 			var isValid = _self.validateAll();
+			//var isValid = true;
 			var rootModel = _self.getView().getModel();
 			var dataModel = _self.getView().getModel("dataSet");
 			if (!isValid) {
@@ -233,34 +234,41 @@ sap.ui.define([
 			} else {
 				var dataModel = _self.getView().getModel("dataSet")
 					//------------------------ Save all Marks --------------------
-				var empID = "";
-				var saveMarksURI = "/Toempmarks";
-				var saveCommentsURI = "";
-
-				//Prepare marks datamodel
-				//-------------------------------------------------------------
-				/*FactorId: "BA01"
-				  Marks: "5"
-				  Pernr: "40000051"*/
 				var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
+				var AppraiserID = dataModel.getProperty("/AppraiserID");
 				var factors = dataModel.getProperty("/factors");
 				var empID = dataModel.getProperty('/EmpID');
-				var marksData = [];
+
+				var marksList = [];
 				for (let i in factors) {
 					var marks = AppraiserLevel === "1" ? factors[i].M1 : AppraiserLevel === "2" ? factors[i].M2 : factors[i].M3;
-					marksData.push({
+					marksList.push({
 						FactorId: factors[i].FactorId,
 						Marks: marks,
 						Pernr: empID
 					});
 				}
+
+				var marksData = {
+					Pernr: empID,
+					ApprId: AppraiserID,
+					ApprLevel : "1",
+					Toempmarks: marksList
+				}
 				console.log(marksData);
 
-				rootModel.create(saveMarksURI,marksData, {
+				var saveMarksURI = "/empSet('" + empID + "')";
+				var saveCommentsURI = "";
+				sap.ui.core.BusyIndicator.show();
+				rootModel.create(saveMarksURI, marksData, {
 					success: function(response) {
+						sap.ui.core.BusyIndicator.hide();
 						console.log(response);
+						MessageBox.success('The appraisal saved correctly.');
 					},
 					error: function(error) {
+						sap.ui.core.BusyIndicator.hide();
+						MessageBox.alert('Save appraisal data failed.');
 						console.log('Error in fetching employeeset...');
 						console.log(error);
 					}
@@ -268,7 +276,6 @@ sap.ui.define([
 
 				//------------------------------------------------------------
 
-				MessageBox.success('The appraisal saved correctly.');
 			}
 		},
 		validateAll: function() {
