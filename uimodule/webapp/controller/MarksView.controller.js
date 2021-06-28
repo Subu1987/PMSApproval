@@ -12,11 +12,12 @@ sap.ui.define([
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("MarksView", "showFactors", this.onShowFactors, this);
 			eventBus.subscribe("DetailsView", "updateApproverLevel", this.updateAppraiserLevel, this);
-			
+
 		},
 		onShowFactors: function() {
 			var _self = this;
 			var _model = _self.getView().getModel();
+
 			sap.ui.core.BusyIndicator.show();
 			var factorSetURI = "/FactorSet";
 			_model.read(factorSetURI, {
@@ -30,15 +31,45 @@ sap.ui.define([
 						slNo += 1;
 
 						//Dummy random marks by the appraisers
-						var maxMarks = 5;
-						/*factors[item].M1 = Math.floor(Math.random() * maxMarks) + 1;
-						factors[item].M2 = Math.floor(Math.random() * maxMarks) + 1;
-						factors[item].M3 = Math.floor(Math.random() * maxMarks) + 1;*/
+						//var maxMarks = 5;
+						//factors[item].M1 = Math.floor(Math.random() * maxMarks) + 1;
+						//factors[item].M2 = Math.floor(Math.random() * maxMarks) + 1;
+						//factors[item].M3 = Math.floor(Math.random() * maxMarks) + 1;*
 						
 						factors[item].M1 ='0';
 						factors[item].M2 ='0';
 						factors[item].M3 ='0';
 					}
+					var dataModel = _self.getView().getModel('dataSet');
+					var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
+					var factorMarksAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
+					sap.ui.core.BusyIndicator.show();
+					_model.read(factorMarksAPI, {
+						urlParameters: {
+							"$expand": "Toempmarks"
+						},
+						success: function(response) {
+							sap.ui.core.BusyIndicator.hide();
+							dataModel = _self.getView().getModel('dataSet');
+							var marksList = response.Toempmarks.results;
+							console.log(marksList);
+							for (let i in marksList) {
+								if (AppraiserLevel === "1") {
+									factors[i].M1 = marksList[i].Marks;
+								} else if (AppraiserLevel === "2") {
+									factors[i].M2 = marksList[i].Marks;
+								} else if (AppraiserLevel === "3") {
+									factors[i].M3 = marksList[i].Marks;
+								}
+							}
+							dataModel.setProperty("/factors", factors);
+						},
+						error: function() {
+							sap.ui.core.BusyIndicator.hide();
+							console.log('Error on /empSet set GET');
+							console.log(error);
+						}
+					});
 
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/factors", factors);
@@ -54,7 +85,7 @@ sap.ui.define([
 			});
 		},
 		updateAppraiserLevel: function(source, event, data) {
-			var approverLevel=parseInt(data.approverLevel);                         
+			var approverLevel = parseInt(data.approverLevel);
 			var factTable = this.getView().byId("factor-table");
 			var c = 1;
 			while (c <= 3) {
@@ -247,10 +278,10 @@ sap.ui.define([
 			var val = _oInput.getValue();
 			val = val.replace(/[^\d]/g, '');
 			_oInput.setValue(val);
-			var isNotValid=val < 0 || val > 5;
+			var isNotValid = val < 0 || val > 5;
 			if (isNotValid) {
 				_oInput.setValueState(sap.ui.core.ValueState.Error);
-			}else{
+			} else {
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
 			}
 		},

@@ -14,7 +14,7 @@
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Text>
-				<m:TextArea rows="2" maxLength="150" placeholder="Comment for 1st Achievement" value="">
+				<m:TextArea id="comment1" rows="2" maxLength="150" placeholder="Comment for 1st Achievement" value="{dataSet>/SelfAppraisal/Mta1Comment1}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
@@ -24,7 +24,7 @@
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Text>
-				<m:TextArea rows="2" maxLength="150" placeholder="Comment for 2nd Achievement" value="">
+				<m:TextArea id="comment2" rows="2" maxLength="150" placeholder="Comment for 2nd Achievement" value="{dataSet>/SelfAppraisal/Mta2Comment1}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
@@ -34,7 +34,7 @@
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Text>
-				<m:TextArea rows="2" maxLength="150" placeholder="Comment for 3rd Achievement" value="">
+				<m:TextArea id="comment3" rows="2" maxLength="150" placeholder="Comment for 3rd Achievement" value="{dataSet>/SelfAppraisal/Mta3Comment1}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>

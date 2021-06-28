@@ -1,6 +1,6 @@
 <core:View controllerName="com.infocus.PMSApproval.controller.MarksView" xmlns="sap.ui.table" xmlns:m="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
-		<Table id="factorsTable" rows="{dataSet>/factors}" selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
+		<Table id="factorsTable" rows="{dataSet>/factors}" selectionMode="None" visibleRowCount="17" ariaLabelledBy="title">
 			<toolbar>
 				<m:Toolbar>
 					<m:Title id="title" text="Factors for Performance Evaluation"></m:Title>

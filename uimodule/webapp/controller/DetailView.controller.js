@@ -54,8 +54,10 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			data.CurrAssgnLvl=2;
+			//data.CurrAssgnLvl = 3;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
+			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
+			dataModel.setProperty("/EmpID", data.Pernr);
 			_self.publishApproverLevelToMarksView({
 				approverLevel: data.CurrAssgnLvl
 			});
@@ -222,26 +224,82 @@ sap.ui.define([
 			this.saveApprovalData('D');
 		},
 		saveApprovalData: function(saveFlag) {
-			var isValid = this.validateAll();
+			var _self = this;
+			var isValid = _self.validateAll();
+			var rootModel = _self.getView().getModel();
+			var dataModel = _self.getView().getModel("dataSet");
 			if (!isValid) {
 				MessageBox.alert('Some fields contains invalid values. Please fill all of them correctly.');
 			} else {
+				var dataModel = _self.getView().getModel("dataSet")
+					//------------------------ Save all Marks --------------------
+				var empID = "";
+				var saveMarksURI = "/Toempmarks";
+				var saveCommentsURI = "";
+
+				//Prepare marks datamodel
+				//-------------------------------------------------------------
+				/*FactorId: "BA01"
+				  Marks: "5"
+				  Pernr: "40000051"*/
+				var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
+				var factors = dataModel.getProperty("/factors");
+				var empID = dataModel.getProperty('/EmpID');
+				var marksData = [];
+				for (let i in factors) {
+					var marks = AppraiserLevel === "1" ? factors[i].M1 : AppraiserLevel === "2" ? factors[i].M2 : factors[i].M3;
+					marksData.push({
+						FactorId: factors[i].FactorId,
+						Marks: marks,
+						Pernr: empID
+					});
+				}
+				console.log(marksData);
+
+				rootModel.create(saveMarksURI,marksData, {
+					success: function(response) {
+						console.log(response);
+					},
+					error: function(error) {
+						console.log('Error in fetching employeeset...');
+						console.log(error);
+					}
+				});
+
+				//------------------------------------------------------------
+
 				MessageBox.success('The appraisal saved correctly.');
 			}
 		},
 		validateAll: function() {
-			var _dataModel= this.getView().getModel("dataSet");
-			var factors =_dataModel.getProperty("/factors");
-			var appraiserLevel=_dataModel.getProperty("/AppraiserLevel");
-			for(let item of factors){
-				var val=appraiserLevel==1?item.M1:appraiserLevel==2?item.M2:item.M3;
-				if(val < 0 || val > 5){
+			var _dataModel = this.getView().getModel("dataSet");
+			var factors = _dataModel.getProperty("/factors");
+			var appraiserLevel = _dataModel.getProperty("/AppraiserLevel");
+			for (let item of factors) {
+				var val = appraiserLevel == 1 ? item.M1 : appraiserLevel == 2 ? item.M2 : item.M3;
+				if (val < 0 || val > 5) {
 					return false;
 				}
-				console.log(val);
 			}
-			console.log(appraiserLevel);
-			return true;
+
+			var i = 1;
+			var isFormValid = true;
+			while (i <= 3) {
+				var selfAppraisal = _dataModel.getProperty("/SelfAppraisal/Mta" + i + "Comment1");
+				var commControl = this.getView().byId('container-PMSApproval---app--DetailView--comments--comment' + i);
+				commControl.setValueState(sap.ui.core.ValueState.Error);
+
+				if (!selfAppraisal || (selfAppraisal && selfAppraisal.trim().length == 0)) {
+					commControl.setValueState(sap.ui.core.ValueState.Error);
+					isFormValid = false;
+				} else {
+					commControl.setValueState(sap.ui.core.ValueState.Syccess);
+				}
+				//console.log(commControl);
+				i += 1;
+			}
+
+			return isFormValid;
 		},
 		onAgreeSelectionChanged: function(oEvent) {
 			this.IAgreeCheckboxSelected = oEvent.getParameters().selected;
