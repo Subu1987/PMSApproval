@@ -75,7 +75,7 @@ sap.ui.define([
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/EmpData", response);
 					_self.formatAllEmpData(response);
-					
+
 					_self.fetchAllCommentsAndRecommendation();
 				},
 				error: function(error) {
@@ -240,7 +240,21 @@ sap.ui.define([
 				var AppraiserID = dataModel.getProperty("/AppraiserID");
 				var factors = dataModel.getProperty("/factors");
 				var empID = dataModel.getProperty('/EmpID');
-
+				
+				//----Collecting comments for update to server------------
+				var comments=dataModel.getProperty('/comments');
+				/*var recommendations = [{
+						Appraiser: "1st Appraiser",
+						ApprCommIncr: comments.ApprCommIncr,
+						ApprCommProm: comments.ApprCommProm,
+						ApprCommJob: comments.ApprCommJob
+					}];*/
+				var currRecomm=dataModel.getProperty('/recommendations/'+(parseInt(AppraiserLevel)-1));
+				comments.ApprCommIncr=currRecomm.ApprCommIncr;
+				comments.ApprCommProm=currRecomm.ApprCommProm;
+				comments.ApprCommJob=currRecomm.ApprCommJob;
+				
+			
 				var marksList = [];
 				for (let i in factors) {
 					var marks = AppraiserLevel === "1" ? factors[i].M1 : AppraiserLevel === "2" ? factors[i].M2 : factors[i].M3;
@@ -257,6 +271,9 @@ sap.ui.define([
 					ApprLevel: "1",
 					Toempmarks: {
 						results: marksList
+					},
+					Tocomments:{
+						results: [comments]
 					}
 				}
 				console.log(marksData);
@@ -296,7 +313,8 @@ sap.ui.define([
 			var i = 1;
 			var isFormValid = true;
 			while (i <= 3) {
-				var selfAppraisal = _dataModel.getProperty("/SelfAppraisal/Mta" + i + "Comment1");
+				var selfAppraisal = _dataModel.getProperty("/comments/ApprCommMta"+i);
+				//console.log('Comment data: '+selfAppraisal);
 				var commControl = this.getView().byId('container-PMSApproval---app--DetailView--comments--comment' + i);
 				commControl.setValueState(sap.ui.core.ValueState.Error);
 
@@ -311,6 +329,18 @@ sap.ui.define([
 			}
 
 			return isFormValid;
+		},
+		handleLiveChange: function(oEvent) {
+			var _oInput = oEvent.getSource();
+			var val = _oInput.getValue();
+			//val = val.replace(/[^\d]/g, '');
+			//_oInput.setValue(val);
+			var isValid = val.length>0;
+			if (!isValid) {
+				_oInput.setValueState(sap.ui.core.ValueState.Error);
+			} else {
+				_oInput.setValueState(sap.ui.core.ValueState.Success);
+			}
 		},
 		onAgreeSelectionChanged: function(oEvent) {
 			this.IAgreeCheckboxSelected = oEvent.getParameters().selected;
@@ -370,8 +400,8 @@ sap.ui.define([
 			this.oSubmitDialog.open();
 		},
 		fetchAllCommentsAndRecommendation: function() {
-			var _self=this;
-			var _model=_self.getView().getModel();
+			var _self = this;
+			var _model = _self.getView().getModel();
 			var dataModel = _self.getView().getModel('dataSet');
 			var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
 			var commentsAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
@@ -384,18 +414,16 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					console.log('Comments received:');
 					console.log(response);
-					var comments=response.Tocomments.results[0];
-					dataModel.setProperty('/comments',comments);
-					
-					var recommendations=[
-						{
-							Appraiser: "1st Appraiser",
-							ApprCommIncr: comments.ApprCommIncr,
-							ApprCommProm: comments.ApprCommProm,
-							ApprCommJob: comments.ApprCommJob
-						}
-					];
-					dataModel.setProperty('/recommendations',recommendations);
+					var comments = response.Tocomments.results[0];
+					dataModel.setProperty('/comments', comments);
+
+					var recommendations = [{
+						Appraiser: "1st Appraiser",
+						ApprCommIncr: comments.ApprCommIncr,
+						ApprCommProm: comments.ApprCommProm,
+						ApprCommJob: comments.ApprCommJob
+					}];
+					dataModel.setProperty('/recommendations', recommendations);
 				},
 				error: function() {
 					sap.ui.core.BusyIndicator.hide();

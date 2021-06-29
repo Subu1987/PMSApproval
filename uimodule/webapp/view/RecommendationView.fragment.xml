@@ -47,7 +47,7 @@
 				</m:OverflowToolbar>
 			</extension>
 			<columns>
-				<Column width="15rem">
+				<Column width="7rem">
 					<m:Label text=""/>
 					<template>
 						<m:Text text="{dataSet>Appraiser}"/>
