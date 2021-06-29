@@ -75,6 +75,8 @@ sap.ui.define([
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/EmpData", response);
 					_self.formatAllEmpData(response);
+					
+					_self.fetchAllCommentsAndRecommendation();
 				},
 				error: function(error) {
 					sap.ui.core.BusyIndicator.hide();
@@ -252,12 +254,14 @@ sap.ui.define([
 				var marksData = {
 					Pernr: empID,
 					ApprId: AppraiserID,
-					ApprLevel : "1",
-					Toempmarks: marksList
+					ApprLevel: "1",
+					Toempmarks: {
+						results: marksList
+					}
 				}
 				console.log(marksData);
 
-				var saveMarksURI = "/empSet('" + empID + "')";
+				var saveMarksURI = "/empSet";
 				var saveCommentsURI = "";
 				sap.ui.core.BusyIndicator.show();
 				rootModel.create(saveMarksURI, marksData, {
@@ -364,6 +368,41 @@ sap.ui.define([
 			}
 
 			this.oSubmitDialog.open();
+		},
+		fetchAllCommentsAndRecommendation: function() {
+			var _self=this;
+			var _model=_self.getView().getModel();
+			var dataModel = _self.getView().getModel('dataSet');
+			var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
+			var commentsAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
+			sap.ui.core.BusyIndicator.show();
+			_model.read(commentsAPI, {
+				urlParameters: {
+					"$expand": "Tocomments"
+				},
+				success: function(response) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log('Comments received:');
+					console.log(response);
+					var comments=response.Tocomments.results[0];
+					dataModel.setProperty('/comments',comments);
+					
+					var recommendations=[
+						{
+							Appraiser: "1st Appraiser",
+							ApprCommIncr: comments.ApprCommIncr,
+							ApprCommProm: comments.ApprCommProm,
+							ApprCommJob: comments.ApprCommJob
+						}
+					];
+					dataModel.setProperty('/recommendations',recommendations);
+				},
+				error: function() {
+					sap.ui.core.BusyIndicator.hide();
+					console.log('Error on /empSet set GET');
+					console.log(error);
+				}
+			});
 		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();

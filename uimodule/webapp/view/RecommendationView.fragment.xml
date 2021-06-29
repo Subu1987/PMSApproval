@@ -9,7 +9,7 @@
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Label>
-				<m:TextArea rows="2" maxLength="150" value="">
+				<m:TextArea rows="2" maxLength="150" value="{dataSet>/comments/ApprCommPotential}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
@@ -21,7 +21,7 @@
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Label>
-				<m:TextArea rows="2" maxLength="150" value="">
+				<m:TextArea rows="2" maxLength="150" value="{dataSet>/comments/ApprCommWork}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
@@ -33,14 +33,14 @@
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:Label>
-				<m:TextArea rows="2" maxLength="150" value="">
+				<m:TextArea rows="2" maxLength="150" value="{dataSet>/comments/ApprCommConcern}">
 					<m:layoutData>
 						<layout:GridData span="L12 M12 S12"/>
 					</m:layoutData>
 				</m:TextArea>
 			</f:content>
 		</f:SimpleForm>
-		<Table rows="{dataSet>/recommendation}" selectionMode="None" visibleRowCount="4" ariaLabelledBy="title">
+		<Table rows="{dataSet>/recommendations}" selectionMode="None" visibleRowCount="4" ariaLabelledBy="title">
 			<extension>
 				<m:OverflowToolbar style="Clear">
 					<m:Title id="change_title2" text="{i18n>recommendationTitle}"/>
@@ -50,25 +50,25 @@
 				<Column width="15rem">
 					<m:Label text=""/>
 					<template>
-						<m:Text text="{dataSet>type}"/>
+						<m:Text text="{dataSet>Appraiser}"/>
 					</template>
 				</Column>
 				<Column hAlign="Center">
-					<m:Label text="1st Appraiser"/>
+					<m:Label text="Job Rotation"/>
 					<template>
-						<m:Input value="{M1}" textAlign="Center"/>
+						<m:Input value="{dataSet>ApprCommJob}" textAlign="Center"/>
 					</template>
 				</Column>
 				<Column hAlign="Center">
-					<m:Label text="2nd Appraiser"/>
+					<m:Label text="Promotion"/>
 					<template>
-						<m:Input value="{M2}" textAlign="Center"/>
+						<m:Input value="{dataSet>ApprCommProm}" textAlign="Center"/>
 					</template>
 				</Column>
 				<Column hAlign="Center">
-					<m:Label text="3rd Appraiser"/>
+					<m:Label text="Increment"/>
 					<template>
-						<m:Input value="{M3}" textAlign="Center"/>
+						<m:Input value="{dataSet>ApprCommIncr}" textAlign="Center"/>
 					</template>
 				</Column>
 				<!--<Column>

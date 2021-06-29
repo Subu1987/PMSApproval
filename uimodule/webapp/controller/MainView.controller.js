@@ -52,13 +52,13 @@ sap.ui.define([
 				"Designation": "Manager - Systems"
 			}];*/
 
-			_self.dataSet.recommendation = [{
+			/*_self.dataSet.recommendation = [{
 				"type": "Job Rotation"
 			}, {
 				"type": "Promotion"
 			}, {
 				"type": "Increment"
-			}];
+			}];*/
 
 			/*_self.dataSet.EmpData = {
 				"Gender": "2",
