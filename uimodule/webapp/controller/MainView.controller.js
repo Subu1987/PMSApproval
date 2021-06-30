@@ -123,8 +123,11 @@ sap.ui.define([
 					//console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/employees", response.results);
-
-					var oList = _self.getView().byId('container-PMSApproval---app--idList');
+					
+					//console.log(_self.byId('idList'));
+					
+					//application-zpms_approval-approve-component---app
+					var oList = _self.byId('idList');
 					//console.log(oList);
 					oList.setSelectedItem(oList.getItems()[0], true);
 					_self.publishToDetailView(response.results[0]);

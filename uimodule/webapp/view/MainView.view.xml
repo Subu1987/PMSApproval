@@ -5,7 +5,7 @@
 			<l:contentAreas>
 				<Panel id="_IDGenPanel1" height="100%" class="sapUiNoContentPadding">
 					<layoutData>
-						<l:SplitterLayoutData size="25%"/>
+						<l:SplitterLayoutData size="20%"/>
 					</layoutData>
 					<content>
 						<OverflowToolbar>

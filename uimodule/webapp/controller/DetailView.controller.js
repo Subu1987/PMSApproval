@@ -24,7 +24,7 @@ sap.ui.define([
 			eventBus.subscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
 
 			//Show the floating footer...
-			var oObjectPage = this.getView().byId("ObjectPageLayout");
+			var oObjectPage = this.byId("ObjectPageLayout");
 			oObjectPage.setShowFooter(true);
 
 			console.log("Inside detail view....");
@@ -205,7 +205,7 @@ sap.ui.define([
 			that.resizableDialog.open();
 		},
 		onEditToggleButtonPress: function() {
-			var oObjectPage = this.getView().byId("ObjectPageLayout"),
+			var oObjectPage = this.byId("ObjectPageLayout"),
 				bCurrentShowFooterState = oObjectPage.getShowFooter();
 
 			oObjectPage.setShowFooter(!bCurrentShowFooterState);
@@ -276,7 +276,7 @@ sap.ui.define([
 						results: [comments]
 					}
 				}
-				console.log(marksData);
+				//console.log(marksData);
 
 				var saveMarksURI = "/empSet";
 				var saveCommentsURI = "";
@@ -284,7 +284,7 @@ sap.ui.define([
 				rootModel.create(saveMarksURI, marksData, {
 					success: function(response) {
 						sap.ui.core.BusyIndicator.hide();
-						console.log(response);
+						//console.log(response);
 						MessageBox.success('The appraisal saved correctly.');
 					},
 					error: function(error) {
@@ -315,7 +315,9 @@ sap.ui.define([
 			while (i <= 3) {
 				var selfAppraisal = _dataModel.getProperty("/comments/ApprCommMta"+i);
 				//console.log('Comment data: '+selfAppraisal);
-				var commControl = this.getView().byId('container-PMSApproval---app--DetailView--comments--comment' + i);
+				var fragId= this.getView().createId("comments");;
+				console.log('Fragment id:'+fragId);
+				var commControl = sap.ui.core.Fragment.byId(fragId, 'comment' + i);
 				commControl.setValueState(sap.ui.core.ValueState.Error);
 
 				if (!selfAppraisal || (selfAppraisal && selfAppraisal.trim().length == 0)) {

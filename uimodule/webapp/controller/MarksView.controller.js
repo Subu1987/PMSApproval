@@ -35,10 +35,10 @@ sap.ui.define([
 						//factors[item].M1 = Math.floor(Math.random() * maxMarks) + 1;
 						//factors[item].M2 = Math.floor(Math.random() * maxMarks) + 1;
 						//factors[item].M3 = Math.floor(Math.random() * maxMarks) + 1;*
-						
-						factors[item].M1 ='0';
-						factors[item].M2 ='0';
-						factors[item].M3 ='0';
+
+						factors[item].M1 = '0';
+						factors[item].M2 = '0';
+						factors[item].M3 = '0';
 					}
 					var dataModel = _self.getView().getModel('dataSet');
 					var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
@@ -63,6 +63,7 @@ sap.ui.define([
 								}
 							}
 							dataModel.setProperty("/factors", factors);
+							_self.calcTotalFactorsByType(factors);
 						},
 						error: function() {
 							sap.ui.core.BusyIndicator.hide();
@@ -75,8 +76,6 @@ sap.ui.define([
 					dataSetModel.setProperty("/factors", factors);
 					dataSetModel.setProperty("/empty", []);
 
-					//console.log(_self.getView().byId("container-PMSApproval---app--DetailView--marksView--factorsTable"));
-
 				},
 				error: function(error) {
 					sap.ui.core.BusyIndicator.hide();
@@ -85,18 +84,67 @@ sap.ui.define([
 				}
 			});
 		},
+		calcTotalFactorsByType: function(factors) {
+			var _self=this;
+			/*var dataModel = this.getView().getModel('dataSet');
+			var factors = dataModel.getProperty('/factors');*/
+			var total1 = 0;
+			var total2 = 0;
+			var total3 = 0;
+
+			for (let item of factors) {
+				if (item.FactorType === 'A') {
+					console.log(item.M1+"");
+					console.log(item);
+					total1 += parseInt(item.M1);
+				} else if (item.FactorType === 'B') {
+					total2 += parseInt(item.M1);
+				} else if (item.FactorType === 'C') {
+					total3 += parseInt(item.M1);
+				}
+			}
+			console.log('Toatal 1: '+ total1);
+			console.log('Toatal 2: '+ total2);
+			console.log('Toatal 3: '+ total3);
+			
+			_self.addTotal('factorsTable', total1, 'Total Marks (out of 40)');
+			_self.addTotal('factorsTable2', total2, 'Total Marks (out of 40)');
+			_self.addTotal('factorsTable3', total3,'Total Marks (out of 20)');
+			
+		},
+		addTotal: function(tableID, value, msg) {
+			var _self = this;
+			var fBox = new sap.m.FlexBox({
+				height: "30px",
+				alignItems: "Center",
+				justifyContent: "End"
+			});
+			fBox.addItem(new sap.m.Label({
+				text: msg,
+				width: "15rem",
+				class: "thick"
+			}));
+			fBox.addItem(new sap.m.Label({
+				text: value,
+				width: "3rem",
+				hAlign: "Center",
+				class: "thick"
+			}));
+			var table1 = _self.byId(tableID);
+			table1.setFooter(fBox);
+		},
 		updateAppraiserLevel: function(source, event, data) {
 			var approverLevel = parseInt(data.approverLevel);
-			var factTable = this.getView().byId("factor-table");
+			var factTable = this.byId("factor-table");
 			var c = 1;
 			while (c <= 3) {
 				var id = "app-" + c + "-marks-noneditable";
 				if (approverLevel == c) {
 					id = "app-" + c + "-marks"
 				}
-				var col1 = this.getView().byId(id);
-				var col2 = this.getView().byId(id+"-B");
-				var col3 = this.getView().byId(id+"-C");
+				var col1 = this.byId(id);
+				var col2 = this.byId(id + "-B");
+				var col3 = this.byId(id + "-C");
 				if (approverLevel >= c) {
 					//console.log("app=" + approverLevel + " c=" + c + " True...");
 					col1.setVisible(true);

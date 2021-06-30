@@ -120,9 +120,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -133,11 +135,15 @@
 				"controlAggregation": "pages",
 				"async": true
 			},
-			"routes": [{
-				"name": "RouteMainView",
-				"pattern": "RouteMainView",
-				"target": ["TargetMainView"]
-			}],
+			"routes": [
+				{
+					"name": "RouteMainView",
+					"pattern": "RouteMainView",
+					"target": [
+						"TargetMainView"
+					]
+				}
+			],
 			"targets": {
 				"TargetMainView": {
 					"viewType": "XML",

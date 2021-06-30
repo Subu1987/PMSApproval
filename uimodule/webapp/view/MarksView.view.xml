@@ -68,7 +68,6 @@
 				</Column>
 			</columns>
 		</Table>
-
 		<Table id="factorsTable2" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'B'} ] }" selectionMode="None"
 			visibleRowCount="8" ariaLabelledBy="title">
