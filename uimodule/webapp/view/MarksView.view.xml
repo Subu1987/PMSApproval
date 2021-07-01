@@ -203,6 +203,35 @@
 					</template>
 				</Column>
 			</columns>
+			<footer>
+				<m:Table class="test">
+					<m:columns>
+						<m:Column hAlign="End"></m:Column>
+						<m:Column hAlign="Center" width="7.5rem"></m:Column>
+						<m:Column hAlign="Center" width="8.5rem"></m:Column>
+						<m:Column hAlign="Center" width="5rem"></m:Column>
+					</m:columns>
+					<m:items>
+						<m:ColumnListItem>
+							<m:cells>
+								<m:Text text="Total (out of 20)"/>
+								<m:Text text="{/factorTotal/0/m1}"/>
+								<m:Text text="{/factorTotal/0/m1}"/>
+								<m:Text text="{/factorTotal/0/m1}"/>
+							</m:cells>
+						</m:ColumnListItem>
+					</m:items>
+				</m:Table>
+			</footer>
 		</Table>
+		<m:Panel>
+			<m:FlexBox height="50px" alignItems="Center" justifyContent="Center">
+				<m:Label class="thick" text="Grand Total (out of 100):"/>
+				<m:Label class="thick" text="{dataSet>/GrandTotalMarks}"></m:Label>
+				<m:Label class="thick" width="12rem"></m:Label>
+				<m:Label class="thick" text="Overall Assesment Grade:"/>
+				<m:Label class="thick" text="{dataSet>/Grade}"></m:Label>
+			</m:FlexBox>
+		</m:Panel>
 	</m:VBox>
 </core:View>

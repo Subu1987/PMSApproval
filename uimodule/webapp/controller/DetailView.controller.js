@@ -54,7 +54,7 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			//data.CurrAssgnLvl = 3;
+			data.CurrAssgnLvl = 2;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
 			dataModel.setProperty("/EmpID", data.Pernr);

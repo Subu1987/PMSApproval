@@ -9,9 +9,16 @@
 	margin-top:20px;
 }
 .thick {
-  font-size: 18px;	
+  font-size: 14px;	
   font-weight: bold;
+  padding-right:10px;
 }
 .big{
-	font-size:18px;
+	font-size:14px;
+}
+
+.test{
+	background-color:green;
+	margin:0px;
+	padding:0px;
 }

@@ -63,7 +63,7 @@ sap.ui.define([
 								}
 							}
 							dataModel.setProperty("/factors", factors);
-							_self.calcTotalFactorsByType(factors);
+							_self.calcTotalFactorsByType();
 						},
 						error: function() {
 							sap.ui.core.BusyIndicator.hide();
@@ -84,18 +84,19 @@ sap.ui.define([
 				}
 			});
 		},
-		calcTotalFactorsByType: function(factors) {
-			var _self=this;
-			/*var dataModel = this.getView().getModel('dataSet');
-			var factors = dataModel.getProperty('/factors');*/
+		calcTotalFactorsByType: function() {
+			var _self = this;
+			var dataModel = this.getView().getModel('dataSet');
+			var factors = dataModel.getProperty('/factors');
 			var total1 = 0;
 			var total2 = 0;
 			var total3 = 0;
 
 			for (let item of factors) {
+				if (item.M1 == '') {
+					item.M1 = 0;
+				}
 				if (item.FactorType === 'A') {
-					console.log(item.M1+"");
-					console.log(item);
 					total1 += parseInt(item.M1);
 				} else if (item.FactorType === 'B') {
 					total2 += parseInt(item.M1);
@@ -103,18 +104,20 @@ sap.ui.define([
 					total3 += parseInt(item.M1);
 				}
 			}
-			console.log('Toatal 1: '+ total1);
-			console.log('Toatal 2: '+ total2);
-			console.log('Toatal 3: '+ total3);
-			
+			console.log('Toatal 1: ' + total1);
+			console.log('Toatal 2: ' + total2);
+			console.log('Toatal 3: ' + total3);
+
 			_self.addTotal('factorsTable', total1, 'Total Marks (out of 40)');
 			_self.addTotal('factorsTable2', total2, 'Total Marks (out of 40)');
-			_self.addTotal('factorsTable3', total3,'Total Marks (out of 20)');
-			
+			_self.addTotal('factorsTable3', total3, 'Total Marks (out of 20)');
+
+			dataModel.setProperty('/GrandTotalMarks', (total1 + total2 + total3))
 		},
 		addTotal: function(tableID, value, msg) {
 			var _self = this;
-			var fBox = new sap.m.FlexBox({
+			var flbID = tableID + '-FLB';
+			var fBox = new sap.m.FlexBox(flbID, {
 				height: "30px",
 				alignItems: "Center",
 				justifyContent: "End"
@@ -130,6 +133,7 @@ sap.ui.define([
 				hAlign: "Center",
 				class: "thick"
 			}));
+
 			var table1 = _self.byId(tableID);
 			table1.setFooter(fBox);
 		},
@@ -338,6 +342,7 @@ sap.ui.define([
 				_oInput.setValueState(sap.ui.core.ValueState.Error);
 			} else {
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
+				this.calcTotalFactorsByType();
 			}
 		},
 		onExit: function() {

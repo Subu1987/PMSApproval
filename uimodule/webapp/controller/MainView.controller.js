@@ -119,8 +119,8 @@ sap.ui.define([
 					"$expand": "ToDetails"
 				},
 				success: function(response) {
-					//console.log("Emp Details Service Response...");
-					//console.log(response);
+					console.log("Emp Details Service Response...");
+					console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/employees", response.results);
 					
