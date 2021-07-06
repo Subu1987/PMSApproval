@@ -26,6 +26,7 @@ sap.ui.define([
 					var factors = response.results;
 
 					var slNo = 1;
+					var factCounts={c1:0,c2:0,c3:0};
 					for (let item in factors) {
 						factors[item].SlNo = slNo;
 						slNo += 1;
@@ -39,7 +40,21 @@ sap.ui.define([
 						factors[item].M1 = '0';
 						factors[item].M2 = '0';
 						factors[item].M3 = '0';
+						
+						if(factors[item].FactorType==='A'){
+							factCounts.c1+=1;
+						}
+						if(factors[item].FactorType==='B'){
+							factCounts.c2+=1;
+						}
+						if(factors[item].FactorType==='C'){
+							factCounts.c3+=1;
+						}
 					}
+					factCounts.showTypeA=factCounts.c1>0;
+					factCounts.showTypeB=factCounts.c2>0;
+					factCounts.showTypeC=factCounts.c3>0;
+					
 					var dataModel = _self.getView().getModel('dataSet');
 					var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
 					var factorMarksAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
@@ -52,6 +67,8 @@ sap.ui.define([
 							sap.ui.core.BusyIndicator.hide();
 							dataModel = _self.getView().getModel('dataSet');
 							var marksList = response.Toempmarks.results;
+							
+							
 							console.log(marksList);
 							for (let i in marksList) {
 								if (AppraiserLevel === "1") {
@@ -63,6 +80,8 @@ sap.ui.define([
 								}
 							}
 							dataModel.setProperty("/factors", factors);
+							
+						
 							_self.calcTotalFactorsByType();
 						},
 						error: function() {
@@ -74,6 +93,7 @@ sap.ui.define([
 
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/factors", factors);
+					dataModel.setProperty("/factCounts", factCounts);
 					dataSetModel.setProperty("/empty", []);
 
 				},
@@ -117,21 +137,18 @@ sap.ui.define([
 		addTotal: function(tableID, value, msg) {
 			var _self = this;
 			var flbID = tableID + '-FLB';
-			var fBox = new sap.m.FlexBox(flbID, {
+			var fBox = new sap.m.FlexBox(/*flbID, */{
 				height: "30px",
 				alignItems: "Center",
 				justifyContent: "End"
 			});
 			fBox.addItem(new sap.m.Label({
 				text: msg,
-				width: "15rem",
-				class: "thick"
+				width: "15rem"
 			}));
 			fBox.addItem(new sap.m.Label({
 				text: value,
-				width: "3rem",
-				hAlign: "Center",
-				class: "thick"
+				width: "3rem"
 			}));
 
 			var table1 = _self.byId(tableID);

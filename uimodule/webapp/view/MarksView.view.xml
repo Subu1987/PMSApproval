@@ -2,7 +2,7 @@
 	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
 		<Table id="factorsTable" rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'A'} ] }"
-			selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
+			selectionMode="None" visible="{dataSet>/factCounts/showTypeA}" visibleRowCount="{dataSet>/factCounts/c1}" ariaLabelledBy="title">
 			<toolbar>
 				<m:Toolbar>
 					<m:Title id="title" text="Factors for Performance Evaluation"></m:Title>
@@ -70,7 +70,7 @@
 		</Table>
 		<Table id="factorsTable2" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'B'} ] }" selectionMode="None"
-			visibleRowCount="8" ariaLabelledBy="title">
+			visibleRowCount="8" ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeB}">
 			<toolbar>
 				<m:Toolbar>
 					<m:Title text="Factors for Potential Evaluation"></m:Title>
@@ -138,7 +138,7 @@
 		</Table>
 		<Table id="factorsTable3" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'C'} ] }" selectionMode="None"
-			visibleRowCount="1" ariaLabelledBy="title">
+			visibleRowCount="1" ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeC}">
 			<!--<toolbar>
 				<m:Toolbar>
 					<m:Title text="Factors for Potential Evaluation"></m:Title>
