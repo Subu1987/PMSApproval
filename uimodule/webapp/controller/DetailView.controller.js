@@ -240,21 +240,20 @@ sap.ui.define([
 				var AppraiserID = dataModel.getProperty("/AppraiserID");
 				var factors = dataModel.getProperty("/factors");
 				var empID = dataModel.getProperty('/EmpID');
-				
+
 				//----Collecting comments for update to server------------
-				var comments=dataModel.getProperty('/comments');
+				var comments = dataModel.getProperty('/comments');
 				/*var recommendations = [{
 						Appraiser: "1st Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
 						ApprCommJob: comments.ApprCommJob
 					}];*/
-				var currRecomm=dataModel.getProperty('/recommendations/'+(parseInt(AppraiserLevel)-1));
-				comments.ApprCommIncr=currRecomm.ApprCommIncr;
-				comments.ApprCommProm=currRecomm.ApprCommProm;
-				comments.ApprCommJob=currRecomm.ApprCommJob;
-				
-			
+				var currRecomm = dataModel.getProperty('/recommendations/' + (parseInt(AppraiserLevel) - 1));
+				comments.ApprCommIncr = currRecomm.ApprCommIncr;
+				comments.ApprCommProm = currRecomm.ApprCommProm;
+				comments.ApprCommJob = currRecomm.ApprCommJob;
+
 				var marksList = [];
 				for (let i in factors) {
 					var marks = AppraiserLevel === "1" ? factors[i].M1 : AppraiserLevel === "2" ? factors[i].M2 : factors[i].M3;
@@ -266,17 +265,17 @@ sap.ui.define([
 				}
 
 				var marksData = {
-					Pernr: empID,
-					ApprId: AppraiserID,
-					ApprLevel: "1",
-					Toempmarks: {
-						results: marksList
-					},
-					Tocomments:{
-						results: [comments]
+						Pernr: empID,
+						ApprId: AppraiserID,
+						ApprLevel: "1",
+						Toempmarks: {
+							results: marksList
+						},
+						Tocomments: {
+							results: [comments]
+						}
 					}
-				}
-				//console.log(marksData);
+					//console.log(marksData);
 
 				var saveMarksURI = "/empSet";
 				var saveCommentsURI = "";
@@ -313,10 +312,10 @@ sap.ui.define([
 			var i = 1;
 			var isFormValid = true;
 			while (i <= 3) {
-				var selfAppraisal = _dataModel.getProperty("/comments/ApprCommMta"+i);
+				var selfAppraisal = _dataModel.getProperty("/comments/ApprCommMta" + i);
 				//console.log('Comment data: '+selfAppraisal);
-				var fragId= this.getView().createId("comments");;
-				console.log('Fragment id:'+fragId);
+				var fragId = this.getView().createId("comments");;
+				console.log('Fragment id:' + fragId);
 				var commControl = sap.ui.core.Fragment.byId(fragId, 'comment' + i);
 				commControl.setValueState(sap.ui.core.ValueState.Error);
 
@@ -337,7 +336,7 @@ sap.ui.define([
 			var val = _oInput.getValue();
 			//val = val.replace(/[^\d]/g, '');
 			//_oInput.setValue(val);
-			var isValid = val.length>0;
+			var isValid = val.length > 0;
 			if (!isValid) {
 				_oInput.setValueState(sap.ui.core.ValueState.Error);
 			} else {
@@ -417,7 +416,26 @@ sap.ui.define([
 					console.log('Comments received:');
 					console.log(response);
 					var comments = response.Tocomments.results[0];
+					if (!comments) {
+						comments = {
+							ApprCommIncr: "",
+							ApprCommProm: "",
+							ApprCommJob: "",
+						};
+					}
 					dataModel.setProperty('/comments', comments);
+
+					if (!comments.ApprCommIncr) {
+						comments.ApprCommIncr = "";
+					}
+
+					if (!comments.ApprCommProm) {
+						comments.ApprCommProm = "";
+					}
+
+					if (!comments.ApprCommJob) {
+						comments.ApprCommJob = "";
+					}
 
 					var recommendations = [{
 						Appraiser: "1st Appraiser",

@@ -26,6 +26,11 @@ sap.ui.define([
 					var factors = response.results;
 
 					var slNo = 1;
+					var factCounts = {
+						c1: 0,
+						c2: 0,
+						c3: 0
+					};
 					for (let item in factors) {
 						factors[item].SlNo = slNo;
 						slNo += 1;
@@ -39,7 +44,27 @@ sap.ui.define([
 						factors[item].M1 = '0';
 						factors[item].M2 = '0';
 						factors[item].M3 = '0';
+						
+						if(slNo%2==0){
+							factors[item].FactorType='B';
+						}else if(slNo%5==0){
+							factors[item].FactorType='C'
+						}
+
+						if (factors[item].FactorType === 'A') {
+							factCounts.c1 += 1;
+						}
+						if (factors[item].FactorType === 'B') {
+							factCounts.c2 += 1;
+						}
+						if (factors[item].FactorType === 'C') {
+							factCounts.c3 += 1;
+						}
 					}
+					factCounts.showTypeA = factCounts.c1 > 0;
+					factCounts.showTypeB = factCounts.c2 > 0;
+					factCounts.showTypeC = factCounts.c3 > 0;
+
 					var dataModel = _self.getView().getModel('dataSet');
 					var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
 					var factorMarksAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
@@ -52,6 +77,7 @@ sap.ui.define([
 							sap.ui.core.BusyIndicator.hide();
 							dataModel = _self.getView().getModel('dataSet');
 							var marksList = response.Toempmarks.results;
+
 							console.log(marksList);
 							for (let i in marksList) {
 								if (AppraiserLevel === "1") {
@@ -63,6 +89,7 @@ sap.ui.define([
 								}
 							}
 							dataModel.setProperty("/factors", factors);
+
 							_self.calcTotalFactorsByType();
 						},
 						error: function() {
@@ -74,6 +101,7 @@ sap.ui.define([
 
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/factors", factors);
+					dataModel.setProperty("/factCounts", factCounts);
 					dataSetModel.setProperty("/empty", []);
 
 				},
@@ -86,52 +114,71 @@ sap.ui.define([
 		},
 		calcTotalFactorsByType: function() {
 			var _self = this;
+
 			var dataModel = this.getView().getModel('dataSet');
+			var level = dataModel.getProperty("/AppraiserLevel");
 			var factors = dataModel.getProperty('/factors');
-			var total1 = 0;
-			var total2 = 0;
-			var total3 = 0;
+			var totalSet = {
+				TypeA: dataModel.getProperty('/factCounts/c1') * 5,
+				TypeA_M1: 0,
+				TypeA_M2: 0,
+				TypeA_M3: 0,
+				TypeB: dataModel.getProperty('/factCounts/c2') * 5,
+				TypeB_M1: 0,
+				TypeB_M2: 0,
+				TypeB_M3: 0,
+				TypeC: dataModel.getProperty('/factCounts/c3') * 5,
+				TypeC_M1: 0,
+				TypeC_M2: 0,
+				TypeC_M3: 0,
+			};
 
 			for (let item of factors) {
 				if (item.M1 == '') {
 					item.M1 = 0;
 				}
 				if (item.FactorType === 'A') {
-					total1 += parseInt(item.M1);
+					totalSet.TypeA_M1 += parseInt(item.M1);
+					totalSet.TypeA_M2 += parseInt(item.M2);
+					totalSet.TypeA_M3 += parseInt(item.M3);
 				} else if (item.FactorType === 'B') {
-					total2 += parseInt(item.M1);
+					totalSet.TypeB_M1 += parseInt(item.M1);
+					totalSet.TypeB_M2 += parseInt(item.M2);
+					totalSet.TypeB_M3 += parseInt(item.M3);
 				} else if (item.FactorType === 'C') {
-					total3 += parseInt(item.M1);
+					totalSet.TypeC_M1 += parseInt(item.M1);
+					totalSet.TypeC_M2 += parseInt(item.M2);
+					totalSet.TypeC_M3 += parseInt(item.M3);
 				}
 			}
-			console.log('Toatal 1: ' + total1);
-			console.log('Toatal 2: ' + total2);
-			console.log('Toatal 3: ' + total3);
+			console.log(totalSet);
 
-			_self.addTotal('factorsTable', total1, 'Total Marks (out of 40)');
+			/*_self.addTotal('factorsTable', total1, 'Total Marks (out of 40)');
 			_self.addTotal('factorsTable2', total2, 'Total Marks (out of 40)');
-			_self.addTotal('factorsTable3', total3, 'Total Marks (out of 20)');
+			_self.addTotal('factorsTable3', total3, 'Total Marks (out of 20)');*/
 
-			dataModel.setProperty('/GrandTotalMarks', (total1 + total2 + total3))
+			var a1Total = totalSet.TypeA_M1 + totalSet.TypeB_M1 + totalSet.TypeC_M1;
+			var a2Total = totalSet.TypeA_M2 + totalSet.TypeB_M2 + totalSet.TypeC_M2;
+			var a3Total = totalSet.TypeA_M3 + totalSet.TypeB_M3 + totalSet.TypeC_M3;
+
+			dataModel.setProperty('/TotalSet', totalSet);
+			dataModel.setProperty('/GrandTotalMarks', level == 1 ? a1Total : a2Total);
 		},
 		addTotal: function(tableID, value, msg) {
 			var _self = this;
 			var flbID = tableID + '-FLB';
-			var fBox = new sap.m.FlexBox(flbID, {
+			var fBox = new sap.m.FlexBox( /*flbID, */ {
 				height: "30px",
 				alignItems: "Center",
 				justifyContent: "End"
 			});
 			fBox.addItem(new sap.m.Label({
 				text: msg,
-				width: "15rem",
-				class: "thick"
+				width: "15rem"
 			}));
 			fBox.addItem(new sap.m.Label({
 				text: value,
-				width: "3rem",
-				hAlign: "Center",
-				class: "thick"
+				width: "3rem"
 			}));
 
 			var table1 = _self.byId(tableID);
@@ -140,6 +187,32 @@ sap.ui.define([
 		updateAppraiserLevel: function(source, event, data) {
 			var approverLevel = parseInt(data.approverLevel);
 			var factTable = this.byId("factor-table");
+			var dataModel=this.getView().getModel("dataSet");
+			var totalVisibleSet = {
+				TypeA_M1: true,
+				TypeA_M2: true,
+				TypeA_M3: true,
+				TypeB_M1: true,
+				TypeB_M2: true,
+				TypeB_M3: true,
+				TypeC_M1: true,
+				TypeC_M2: true,
+				TypeC_M3: true,
+			};
+			if(approverLevel==1){
+				totalVisibleSet.TypeA_M2=false;
+				totalVisibleSet.TypeB_M2=false;
+				totalVisibleSet.TypeC_M2=false;
+				totalVisibleSet.TypeA_M3=false;
+				totalVisibleSet.TypeB_M3=false;
+				totalVisibleSet.TypeC_M3=false;
+			} else if(approverLevel==2){
+				totalVisibleSet.TypeA_M3=false;
+				totalVisibleSet.TypeB_M3=false;
+				totalVisibleSet.TypeC_M3=false;
+			}
+			dataModel.setProperty("/TotalVisibleSet",totalVisibleSet);
+			
 			var c = 1;
 			while (c <= 3) {
 				var id = "app-" + c + "-marks-noneditable";
@@ -161,11 +234,9 @@ sap.ui.define([
 					col3.setVisible(false);
 				}
 
-				/*if(appraiserLevel!=c){
-					col.setEditable(false);
-				}*/
 				c++;
 			}
+
 		},
 		onGuideLineForGradePressed: function() {
 			var _self = this;

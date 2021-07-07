@@ -123,14 +123,19 @@ sap.ui.define([
 					console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/employees", response.results);
-					
+
 					//console.log(_self.byId('idList'));
-					
+
 					//application-zpms_approval-approve-component---app
 					var oList = _self.byId('idList');
 					//console.log(oList);
 					oList.setSelectedItem(oList.getItems()[0], true);
 					_self.publishToDetailView(response.results[0]);
+
+					var eventBus = sap.ui.getCore().getEventBus();
+					eventBus.publish("MarksView", "showFactors", {
+						message: 'MODEL INITIALIZED....'
+					});
 				},
 				error: function(error) {
 					console.log('Error in fetching employeeset...');
@@ -141,11 +146,6 @@ sap.ui.define([
 
 			_self.getView().setModel(new JSONModel(_self.dataSet), "dataSet");
 			console.log(_self.dataSet);
-
-			var eventBus = sap.ui.getCore().getEventBus();
-			eventBus.publish("MarksView", "showFactors", {
-				message: 'MODEL INITIALIZED....'
-			});
 		},
 		publishToDetailView: function(data) {
 			var eventBus = sap.ui.getCore().getEventBus();
@@ -185,7 +185,7 @@ sap.ui.define([
 
 			var oSelectedItem = oEvent.getParameter("listItem");
 			var selectedEmpData = oSelectedItem.getBindingContext("dataSet").getObject();
-			
+
 			this.publishToDetailView(selectedEmpData);
 
 			/*var eventBus = sap.ui.getCore().getEventBus();

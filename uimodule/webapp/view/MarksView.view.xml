@@ -2,7 +2,7 @@
 	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 	<m:VBox id="_IDGenVBox116" class="sapUiMediumMargin">
 		<Table id="factorsTable" rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'A'} ] }"
-			selectionMode="None" visibleRowCount="8" ariaLabelledBy="title">
+			selectionMode="None" visible="{dataSet>/factCounts/showTypeA}" visibleRowCount="{dataSet>/factCounts/c1}" ariaLabelledBy="title">
 			<toolbar>
 				<m:Toolbar>
 					<m:Title id="title" text="Factors for Performance Evaluation"></m:Title>
@@ -12,6 +12,12 @@
 				</m:Toolbar>
 			</toolbar>
 			<columns>
+				<Column width="1rem">
+					<m:Label text=""/>
+					<template>
+						<m:Text text=""/>
+					</template>
+				</Column>
 				<Column width="3rem">
 					<m:Label text="Sl No."/>
 					<template>
@@ -66,11 +72,37 @@
 						<m:Text text="{dataSet>M3}"/>
 					</template>
 				</Column>
+				<Column width="1rem">
+					<m:Label text=""/>
+					<template>
+						<m:Text text=""/>
+					</template>
+				</Column>
 			</columns>
+			<footer>
+				<m:Table>
+					<m:columns>
+						<m:Column hAlign="End"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeA_M1}" hAlign="Center" width="7rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeA_M2}" hAlign="Center" width="7rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeA_M3}" hAlign="Center" width="7rem"></m:Column>
+					</m:columns>
+					<m:items>
+						<m:ColumnListItem>
+							<m:cells>
+								<m:Text text="Total (out of {dataSet>/TotalSet/TypeA})"/>
+								<m:Text text="{dataSet>/TotalSet/TypeA_M1}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeA_M2}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeA_M3}"/>
+							</m:cells>
+						</m:ColumnListItem>
+					</m:items>
+				</m:Table>
+			</footer>
 		</Table>
 		<Table id="factorsTable2" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'B'} ] }" selectionMode="None"
-			visibleRowCount="8" ariaLabelledBy="title">
+			ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeB}" visibleRowCount="{dataSet>/factCounts/c2}">
 			<toolbar>
 				<m:Toolbar>
 					<m:Title text="Factors for Potential Evaluation"></m:Title>
@@ -80,6 +112,12 @@
 				</m:Toolbar>
 			</toolbar>
 			<columns>
+				<Column width="1rem">
+					<m:Label text=""/>
+					<template>
+						<m:Text text=""/>
+					</template>
+				</Column>
 				<Column width="3rem">
 					<m:Label text="Sl No."/>
 					<template>
@@ -134,11 +172,37 @@
 						<m:Text text="{dataSet>M3}"/>
 					</template>
 				</Column>
+				<Column width="1rem">
+					<m:Label text=""/>
+					<template>
+						<m:Text text=""/>
+					</template>
+				</Column>
 			</columns>
+			<footer>
+				<m:Table>
+					<m:columns>
+						<m:Column hAlign="End"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M1}" hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M2}" hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M3}" hAlign="Center" width="5rem"></m:Column>
+					</m:columns>
+					<m:items>
+						<m:ColumnListItem>
+							<m:cells>
+								<m:Text text="Total (out of {dataSet>/TotalSet/TypeB})"/>
+								<m:Text text="{dataSet>/TotalSet/TypeB_M1}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeB_M2}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeB_M3}"/>
+							</m:cells>
+						</m:ColumnListItem>
+					</m:items>
+				</m:Table>
+			</footer>
 		</Table>
 		<Table id="factorsTable3" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'C'} ] }" selectionMode="None"
-			visibleRowCount="1" ariaLabelledBy="title">
+			ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeC}" visibleRowCount="{dataSet>/factCounts/c3}">
 			<!--<toolbar>
 				<m:Toolbar>
 					<m:Title text="Factors for Potential Evaluation"></m:Title>
@@ -148,6 +212,12 @@
 				</m:Toolbar>
 			</toolbar>-->
 			<columns>
+				<Column width="1rem">
+					<m:Label text=""/>
+					<template>
+						<m:Text text=""/>
+					</template>
+				</Column>
 				<Column width="3rem">
 					<m:Label text="Sl No."/>
 					<template>
@@ -202,22 +272,28 @@
 						<m:Text text="{dataSet>M3}"/>
 					</template>
 				</Column>
+				<Column width="1rem">
+					<m:Label text=""/>
+					<template>
+						<m:Text text=""/>
+					</template>
+				</Column>
 			</columns>
 			<footer>
-				<m:Table class="test">
+				<m:Table>
 					<m:columns>
 						<m:Column hAlign="End"></m:Column>
-						<m:Column hAlign="Center" width="7.5rem"></m:Column>
-						<m:Column hAlign="Center" width="8.5rem"></m:Column>
-						<m:Column hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M1}" hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M2}" hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M3}" hAlign="Center" width="5rem"></m:Column>
 					</m:columns>
 					<m:items>
 						<m:ColumnListItem>
 							<m:cells>
-								<m:Text text="Total (out of 20)"/>
-								<m:Text text="{/factorTotal/0/m1}"/>
-								<m:Text text="{/factorTotal/0/m1}"/>
-								<m:Text text="{/factorTotal/0/m1}"/>
+								<m:Text text="Total (out of {dataSet>/TotalSet/TypeC})"/>
+								<m:Text text="{dataSet>/TotalSet/TypeC_M1}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeC_M2}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeC_M3}"/>
 							</m:cells>
 						</m:ColumnListItem>
 					</m:items>
