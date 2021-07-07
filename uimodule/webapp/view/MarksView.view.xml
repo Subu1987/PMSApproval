@@ -183,9 +183,9 @@
 				<m:Table>
 					<m:columns>
 						<m:Column hAlign="End"></m:Column>
-						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M1}" hAlign="Center" width="5rem"></m:Column>
-						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M2}" hAlign="Center" width="5rem"></m:Column>
-						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M3}" hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M1}" hAlign="Center" width="7rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M2}" hAlign="Center" width="7rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeB_M3}" hAlign="Center" width="7rem"></m:Column>
 					</m:columns>
 					<m:items>
 						<m:ColumnListItem>
@@ -283,9 +283,9 @@
 				<m:Table>
 					<m:columns>
 						<m:Column hAlign="End"></m:Column>
-						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M1}" hAlign="Center" width="5rem"></m:Column>
-						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M2}" hAlign="Center" width="5rem"></m:Column>
-						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M3}" hAlign="Center" width="5rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M1}" hAlign="Center" width="7rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M2}" hAlign="Center" width="7rem"></m:Column>
+						<m:Column visible="{dataSet>/TotalVisibleSet/TypeC_M3}" hAlign="Center" width="7rem"></m:Column>
 					</m:columns>
 					<m:items>
 						<m:ColumnListItem>
@@ -302,7 +302,7 @@
 		</Table>
 		<m:Panel>
 			<m:FlexBox height="50px" alignItems="Center" justifyContent="Center">
-				<m:Label class="thick" text="Grand Total (out of 100):"/>
+				<m:Label class="thick" text="Grand Total (out of {dataSet>/GrandTotalFullMarks}):"/>
 				<m:Label class="thick" text="{dataSet>/GrandTotalMarks}"></m:Label>
 				<m:Label class="thick" width="12rem"></m:Label>
 				<m:Label class="thick" text="Overall Assesment Grade:"/>

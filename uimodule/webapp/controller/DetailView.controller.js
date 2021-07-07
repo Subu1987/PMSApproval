@@ -255,8 +255,10 @@ sap.ui.define([
 				comments.ApprCommJob = currRecomm.ApprCommJob;
 
 				var marksList = [];
+				console.log('Saving from factors data: ');
+				console.log(factors);
 				for (let i in factors) {
-					var marks = AppraiserLevel === "1" ? factors[i].M1 : AppraiserLevel === "2" ? factors[i].M2 : factors[i].M3;
+					var marks = AppraiserLevel == "1" ? factors[i].M1 : AppraiserLevel == "2" ? factors[i].M2 : factors[i].M3;
 					marksList.push({
 						FactorId: factors[i].FactorId,
 						Marks: marks,
@@ -267,7 +269,7 @@ sap.ui.define([
 				var marksData = {
 						Pernr: empID,
 						ApprId: AppraiserID,
-						ApprLevel: "1",
+						ApprLevel: AppraiserLevel+'',
 						Toempmarks: {
 							results: marksList
 						},
@@ -275,7 +277,8 @@ sap.ui.define([
 							results: [comments]
 						}
 					}
-					//console.log(marksData);
+					console.log('Saving details: ');	
+					console.log(marksData);
 
 				var saveMarksURI = "/empSet";
 				var saveCommentsURI = "";
@@ -439,6 +442,16 @@ sap.ui.define([
 
 					var recommendations = [{
 						Appraiser: "1st Appraiser",
+						ApprCommIncr: comments.ApprCommIncr,
+						ApprCommProm: comments.ApprCommProm,
+						ApprCommJob: comments.ApprCommJob
+					},{
+						Appraiser: "2nd Appraiser",
+						ApprCommIncr: comments.ApprCommIncr,
+						ApprCommProm: comments.ApprCommProm,
+						ApprCommJob: comments.ApprCommJob
+					},{
+						Appraiser: "3rd Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
 						ApprCommJob: comments.ApprCommJob

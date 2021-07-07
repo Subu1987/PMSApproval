@@ -45,11 +45,11 @@ sap.ui.define([
 						factors[item].M2 = '0';
 						factors[item].M3 = '0';
 						
-						if(slNo%2==0){
+						/*if(slNo%2==0){
 							factors[item].FactorType='B';
 						}else if(slNo%5==0){
 							factors[item].FactorType='C'
-						}
+						}*/
 
 						if (factors[item].FactorType === 'A') {
 							factCounts.c1 += 1;
@@ -78,6 +78,7 @@ sap.ui.define([
 							dataModel = _self.getView().getModel('dataSet');
 							var marksList = response.Toempmarks.results;
 
+							console.log('Marks list received: ');
 							console.log(marksList);
 							for (let i in marksList) {
 								if (AppraiserLevel === "1") {
@@ -132,23 +133,31 @@ sap.ui.define([
 				TypeC_M2: 0,
 				TypeC_M3: 0,
 			};
+			
+			/*var allMarks=[];
+			for(let item of factors){
+				allMarks.append(
+					{
+						M1:isNaN(item.M1)?0:item.M1,
+						M2:isNaN(item.M1)?0:item.M1,
+						M3:0
+					}
+				);
+			}*/
 
 			for (let item of factors) {
-				if (item.M1 == '') {
-					item.M1 = 0;
-				}
 				if (item.FactorType === 'A') {
-					totalSet.TypeA_M1 += parseInt(item.M1);
-					totalSet.TypeA_M2 += parseInt(item.M2);
-					totalSet.TypeA_M3 += parseInt(item.M3);
+					totalSet.TypeA_M1 += parseInt(item.M1==''?'0':item.M1);
+					totalSet.TypeA_M2 += parseInt(item.M2==''?'0':item.M2);
+					totalSet.TypeA_M3 += parseInt(item.M3==''?'0':item.M3);
 				} else if (item.FactorType === 'B') {
-					totalSet.TypeB_M1 += parseInt(item.M1);
-					totalSet.TypeB_M2 += parseInt(item.M2);
-					totalSet.TypeB_M3 += parseInt(item.M3);
+					totalSet.TypeB_M1 += parseInt(item.M1==''?'0':item.M1);
+					totalSet.TypeB_M2 += parseInt(item.M2==''?'0':item.M2);
+					totalSet.TypeB_M3 += parseInt(item.M3==''?'0':item.M3);
 				} else if (item.FactorType === 'C') {
-					totalSet.TypeC_M1 += parseInt(item.M1);
-					totalSet.TypeC_M2 += parseInt(item.M2);
-					totalSet.TypeC_M3 += parseInt(item.M3);
+					totalSet.TypeC_M1 += parseInt(item.M1==''?'0':item.M1);
+					totalSet.TypeC_M2 += parseInt(item.M2==''?'0':item.M2);
+					totalSet.TypeC_M3 += parseInt(item.M3==''?'0':item.M3);
 				}
 			}
 			console.log(totalSet);
@@ -160,7 +169,9 @@ sap.ui.define([
 			var a1Total = totalSet.TypeA_M1 + totalSet.TypeB_M1 + totalSet.TypeC_M1;
 			var a2Total = totalSet.TypeA_M2 + totalSet.TypeB_M2 + totalSet.TypeC_M2;
 			var a3Total = totalSet.TypeA_M3 + totalSet.TypeB_M3 + totalSet.TypeC_M3;
-
+			
+	
+			dataModel.setProperty('/GrandTotalFullMarks',(totalSet.TypeA+totalSet.TypeB+totalSet.TypeC));
 			dataModel.setProperty('/TotalSet', totalSet);
 			dataModel.setProperty('/GrandTotalMarks', level == 1 ? a1Total : a2Total);
 		},
