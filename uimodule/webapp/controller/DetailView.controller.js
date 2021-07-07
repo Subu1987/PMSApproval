@@ -440,6 +440,18 @@ sap.ui.define([
 						comments.ApprCommJob = "";
 					}
 
+					if (!comments.ApprCommIncr) {
+						comments.ApprCommIncr = "";
+					}
+
+					if (!comments.ApprCommProm) {
+						comments.ApprCommProm = "";
+					}
+
+					if (!comments.ApprCommJob) {
+						comments.ApprCommJob = "";
+					}
+
 					var recommendations = [{
 						Appraiser: "1st Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,

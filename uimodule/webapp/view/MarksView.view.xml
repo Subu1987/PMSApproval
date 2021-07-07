@@ -102,7 +102,11 @@
 		</Table>
 		<Table id="factorsTable2" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'B'} ] }" selectionMode="None"
+<<<<<<< HEAD
 			ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeB}" visibleRowCount="{dataSet>/factCounts/c2}">
+=======
+			visibleRowCount="8" ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeB}">
+>>>>>>> branch 'main' of https://github.com/dharabhaskar/PMSApproval.git
 			<toolbar>
 				<m:Toolbar>
 					<m:Title text="Factors for Potential Evaluation"></m:Title>
@@ -202,7 +206,11 @@
 		</Table>
 		<Table id="factorsTable3" class="pt4"
 			rows="{ path : 'dataSet>/factors', filters : [ { path : 'FactorType', operator : 'EQ', value1 : 'C'} ] }" selectionMode="None"
+<<<<<<< HEAD
 			ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeC}" visibleRowCount="{dataSet>/factCounts/c3}">
+=======
+			visibleRowCount="1" ariaLabelledBy="title" visible="{dataSet>/factCounts/showTypeC}">
+>>>>>>> branch 'main' of https://github.com/dharabhaskar/PMSApproval.git
 			<!--<toolbar>
 				<m:Toolbar>
 					<m:Title text="Factors for Potential Evaluation"></m:Title>
