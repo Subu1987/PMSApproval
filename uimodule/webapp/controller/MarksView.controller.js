@@ -132,10 +132,8 @@ sap.ui.define([
 									f.M3=marks[2].Marks;
 								}
 							}
-							
-							
-							dataModel.setProperty("/factors", factors);
 						}
+						dataModel.setProperty("/factors", factors);
 
 						_self.calcTotalFactorsByType();
 					},
@@ -215,15 +213,15 @@ sap.ui.define([
 			var p = (marksObt / gt) * 100;
 			p = isNaN(p) ? 0 : p;
 			var grade = ''
-			if (p >= 68) {
+			if(p >= 68){
 				grade = 'A';
-			} else if (p >= 53) {
+			}else if(p >= 53){
 				grade = 'B';
-			} else if (p >= 38) {
+			}else if(p >= 38){
 				grade = 'C';
-			} else if (p >= 27) {
+			}else if( p >= 27){
 				grade = 'D';
-			} else {
+			}else{
 				grade = 'E';
 			}
 			dataModel.setProperty('/Grade', grade);
@@ -235,7 +233,7 @@ sap.ui.define([
 			var fBox = new sap.m.FlexBox( /*flbID, */ {
 				height: "30px",
 				alignItems: "Center",
-				justifyContent: "End"
+				justifyContent: "End"																																									
 			});
 			fBox.addItem(new sap.m.Label({
 				text: msg,
