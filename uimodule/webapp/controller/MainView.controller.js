@@ -132,10 +132,10 @@ sap.ui.define([
 					oList.setSelectedItem(oList.getItems()[0], true);
 					_self.publishToDetailView(response.results[0]);
 
-					var eventBus = sap.ui.getCore().getEventBus();
+					/*var eventBus = sap.ui.getCore().getEventBus();
 					eventBus.publish("MarksView", "showFactors", {
 						message: 'MODEL INITIALIZED....'
-					});
+					});*/
 				},
 				error: function(error) {
 					console.log('Error in fetching employeeset...');
