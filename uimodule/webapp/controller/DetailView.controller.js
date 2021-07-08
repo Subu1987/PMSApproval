@@ -54,7 +54,7 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			data.CurrAssgnLvl = 2;
+			//data.CurrAssgnLvl = 2;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
 			dataModel.setProperty("/EmpID", data.Pernr);
@@ -213,6 +213,11 @@ sap.ui.define([
 		publishApproverLevelToMarksView: function(data) {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.publish("DetailsView", "updateApproverLevel", data);
+
+			var eventBus = sap.ui.getCore().getEventBus();
+			eventBus.publish("MarksView", "fetchMarksFromServerByEmpID", {
+				message: 'MODEL INITIALIZED....'
+			});
 		},
 		handleSaveAppraisalPress: function() {
 			//Calling the save data function.
@@ -267,18 +272,18 @@ sap.ui.define([
 				}
 
 				var marksData = {
-						Pernr: empID,
-						ApprId: AppraiserID,
-						ApprLevel: AppraiserLevel+'',
-						Toempmarks: {
-							results: marksList
-						},
-						Tocomments: {
-							results: [comments]
-						}
+					Pernr: empID,
+					ApprId: AppraiserID,
+					ApprLevel: AppraiserLevel + '',
+					Toempmarks: {
+						results: marksList
+					},
+					Tocomments: {
+						results: [comments]
 					}
-					console.log('Saving details: ');	
-					console.log(marksData);
+				}
+				console.log('Saving details: ');
+				console.log(marksData);
 
 				var saveMarksURI = "/empSet";
 				var saveCommentsURI = "";
@@ -457,12 +462,12 @@ sap.ui.define([
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
 						ApprCommJob: comments.ApprCommJob
-					},{
+					}, {
 						Appraiser: "2nd Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
 						ApprCommJob: comments.ApprCommJob
-					},{
+					}, {
 						Appraiser: "3rd Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
