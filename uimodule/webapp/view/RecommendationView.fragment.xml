@@ -56,19 +56,19 @@
 				<Column hAlign="Center">
 					<m:Label text="Job Rotation"/>
 					<template>
-						<m:Input value="{dataSet>ApprCommJob}" textAlign="Center"/>
+						<m:Input value="{dataSet>ApprCommJob}" editable="{dataSet>Editable}" textAlign="Center"/>
 					</template>
 				</Column>
 				<Column hAlign="Center">
 					<m:Label text="Promotion"/>
 					<template>
-						<m:Input value="{dataSet>ApprCommProm}" textAlign="Center"/>
+						<m:Input value="{dataSet>ApprCommProm}" editable="{dataSet>Editable}" textAlign="Center"/>
 					</template>
 				</Column>
 				<Column hAlign="Center">
 					<m:Label text="Increment"/>
 					<template>
-						<m:Input value="{dataSet>ApprCommIncr}" textAlign="Center"/>
+						<m:Input value="{dataSet>ApprCommIncr}" editable="{dataSet>Editable}" textAlign="Center"/>
 					</template>
 				</Column>
 				<!--<Column>

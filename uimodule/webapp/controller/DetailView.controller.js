@@ -54,7 +54,7 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			//data.CurrAssgnLvl = 2;
+			data.CurrAssgnLvl = 3;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
 			dataModel.setProperty("/EmpID", data.Pernr);
@@ -461,18 +461,32 @@ sap.ui.define([
 						Appraiser: "1st Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
-						ApprCommJob: comments.ApprCommJob
+						ApprCommJob: comments.ApprCommJob,
 					}, {
 						Appraiser: "2nd Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
-						ApprCommJob: comments.ApprCommJob
+						ApprCommJob: comments.ApprCommJob,
 					}, {
 						Appraiser: "3rd Appraiser",
 						ApprCommIncr: comments.ApprCommIncr,
 						ApprCommProm: comments.ApprCommProm,
-						ApprCommJob: comments.ApprCommJob
+						ApprCommJob: comments.ApprCommJob,
 					}];
+					
+					for(let i=recommendations.length-1;i>=AppraiserLevel;i--){
+						console.log('i='+i+' appLvl='+AppraiserLevel);
+						recommendations.splice(i,1);
+					}
+					
+					for(let i in recommendations){
+						if(i==AppraiserLevel-1){
+							recommendations[i].Editable=true;
+						}else{
+							recommendations[i].Editable=false;
+						}
+					}
+					
 					dataModel.setProperty('/recommendations', recommendations);
 				},
 				error: function() {

@@ -121,16 +121,27 @@ sap.ui.define([
 							}*/
 							
 							for(let f of factors){
-								const marks=marksList.filter(m=>m.FactorId==f.FactorId);
-								if(marks[0]){
-									f.M1=marks[0].Marks;
+								const marks1=marksList.filter(m=>m.FactorId==f.FactorId && m.AppraiserLevel==1);
+								if(marks1.length>0){
+									f.M1=marks1[0].Marks;
+								}else{
+									f.M1="0";
 								}
-								if(marks[1]){
-									f.M2=marks[1].Marks;
+								const marks2=marksList.filter(m=>m.FactorId==f.FactorId && m.AppraiserLevel==2);
+								if(marks2.length>0){
+									f.M2=marks2[0].Marks;
+								}else{
+									f.M2="0";
 								}
-								if(marks[2]){
-									f.M3=marks[2].Marks;
+								const marks3=marksList.filter(m=>m.FactorId==f.FactorId && m.AppraiserLevel==3)                  ;
+								if(marks3.length>0){
+									f.M3=marks3[0].Marks;
+								}else{
+									f.M3="0";
 								}
+								/*console.log(marks1);
+								console.log(marks2);
+								console.log(marks3);*/
 							}
 						}
 						dataModel.setProperty("/factors", factors);
