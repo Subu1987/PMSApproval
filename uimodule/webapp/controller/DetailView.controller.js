@@ -54,7 +54,7 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			data.CurrAssgnLvl = 3;
+			//data.CurrAssgnLvl = 3;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
 			dataModel.setProperty("/EmpID", data.Pernr);
@@ -423,70 +423,57 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					console.log('Comments received:');
 					console.log(response);
-					var comments = response.Tocomments.results[0];
+					var recommendations = response.Tocomments.results;
+					recommendations.sort((a, b) => {
+						return parseInt(a.AppraiserLevel) - parseInt(b.AppraiserLevel)
+					});
+
+					var comments = recommendations[AppraiserLevel - 1];
 					if (!comments) {
 						comments = {
 							ApprCommIncr: "",
 							ApprCommProm: "",
 							ApprCommJob: "",
 						};
+					} else {
+						comments = {
+							ApprCommConcern: comments.ApprCommConcern,
+							ApprCommMta1: comments.ApprCommMta1,
+							ApprCommMta2: comments.ApprCommMta2,
+							ApprCommMta3: comments.ApprCommMta3,
+							ApprCommPotential: comments.ApprCommPotential,
+							ApprCommWork: comments.ApprCommWork
+						}
 					}
 					dataModel.setProperty('/comments', comments);
 
-					if (!comments.ApprCommIncr) {
-						comments.ApprCommIncr = "";
+					for (let i = recommendations.length; i < 3; i++) {
+						recommendations.push({
+							ApprCommIncr: "",
+							ApprCommProm: "",
+							ApprCommJob: ""
+						});
 					}
 
-					if (!comments.ApprCommProm) {
-						comments.ApprCommProm = "";
+					var levels = ["1st Appraiser", "2nd Appraiser", "3rd Appraiser"];
+					var i = 0;
+					for (let rec of recommendations) {
+						rec.Appraiser = levels[i++];
 					}
 
-					if (!comments.ApprCommJob) {
-						comments.ApprCommJob = "";
+					for (let i = recommendations.length - 1; i >= AppraiserLevel; i--) {
+						console.log('i=' + i + ' appLvl=' + AppraiserLevel);
+						recommendations.splice(i, 1);
 					}
 
-					if (!comments.ApprCommIncr) {
-						comments.ApprCommIncr = "";
-					}
-
-					if (!comments.ApprCommProm) {
-						comments.ApprCommProm = "";
-					}
-
-					if (!comments.ApprCommJob) {
-						comments.ApprCommJob = "";
-					}
-
-					var recommendations = [{
-						Appraiser: "1st Appraiser",
-						ApprCommIncr: comments.ApprCommIncr,
-						ApprCommProm: comments.ApprCommProm,
-						ApprCommJob: comments.ApprCommJob,
-					}, {
-						Appraiser: "2nd Appraiser",
-						ApprCommIncr: comments.ApprCommIncr,
-						ApprCommProm: comments.ApprCommProm,
-						ApprCommJob: comments.ApprCommJob,
-					}, {
-						Appraiser: "3rd Appraiser",
-						ApprCommIncr: comments.ApprCommIncr,
-						ApprCommProm: comments.ApprCommProm,
-						ApprCommJob: comments.ApprCommJob,
-					}];
-					
-					for(let i=recommendations.length-1;i>=AppraiserLevel;i--){
-						console.log('i='+i+' appLvl='+AppraiserLevel);
-						recommendations.splice(i,1);
-					}
-					
-					for(let i in recommendations){
-						if(i==AppraiserLevel-1){
-							recommendations[i].Editable=true;
-						}else{
-							recommendations[i].Editable=false;
+					for (let i in recommendations) {
+						if (i == AppraiserLevel - 1) {
+							recommendations[i].Editable = true;
+						} else {
+							recommendations[i].Editable = false;
 						}
 					}
-					
+
 					dataModel.setProperty('/recommendations', recommendations);
 				},
 				error: function() {
