@@ -11,7 +11,7 @@ sap.ui.define([
 
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("MarksView", "showFactors", this.onShowFactors, this);
-			eventBus.subscribe("MarksView", "fetchMarksFromServerByEmpID", this.fetchMarksFromServerByEmpID, this);
+			//eventBus.subscribe("MarksView", "fetchMarksFromServerByEmpID", this.fetchMarksFromServerByEmpID, this);
 			eventBus.subscribe("DetailsView", "updateApproverLevel", this.updateAppraiserLevel, this);
 
 		},
@@ -19,13 +19,21 @@ sap.ui.define([
 			var _self = this;
 			var _model = _self.getView().getModel();
 			var dataModel = _self.getView().getModel('dataSet');
+			var formType = dataModel.getProperty('/FormType');
 
 			sap.ui.core.BusyIndicator.show();
+			//var factorSetURI = "/FactorSet?$filter=PmsForm eq '" + formType + "'";
 			var factorSetURI = "/FactorSet";
+
 			_model.read(factorSetURI, {
+				urlParameters: {
+					"$filter": "PmsForm eq '" + formType + "'"
+				},
 				success: function(response) {
 					sap.ui.core.BusyIndicator.hide();
 					var factors = response.results;
+					/*console.log('Factor set received: ');
+					console.log(response);*/
 
 					var slNo = 1;
 					var factCounts = {
@@ -33,6 +41,17 @@ sap.ui.define([
 						c2: 0,
 						c3: 0
 					};
+					
+					factors.sort((f1,f2)=>{
+						if(f1.FactorType>f2.FactorType){
+							return 1; 
+						}
+						if(f2.FactorType>f1.FactorType){
+							return -1; 
+						}
+						return 0;
+					});
+					
 					for (let item in factors) {
 						factors[item].SlNo = slNo;
 						slNo += 1;
@@ -89,72 +108,71 @@ sap.ui.define([
 			var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
 			var factorMarksAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
 			var factors = dataModel.getProperty("/factors");
-			console.log(factorMarksAPI);
-			console.log(factors);
 
-			if (!factors) {
+			/*if (formType!=fetchedFormType) {
+				dataModel.setProperty('/FetchedFormType',formType);  
 				_self.onShowFactors();
-			} else {
-				console.log('Fetching marks...');
-				sap.ui.core.BusyIndicator.show();
-				_model.read(factorMarksAPI, {
-					urlParameters: {
-						"$expand": "Toempmarks"
-					},
-					success: function(response) {
-						sap.ui.core.BusyIndicator.hide();
-						dataModel = _self.getView().getModel('dataSet');
-						var marksList = response.Toempmarks.results;
+			} else {*/
+			console.log('Fetching marks...');
+			sap.ui.core.BusyIndicator.show();
+			_model.read(factorMarksAPI, {
+				urlParameters: {
+					"$expand": "Toempmarks"
+				},
+				success: function(response) {
+					sap.ui.core.BusyIndicator.hide();
+					dataModel = _self.getView().getModel('dataSet');
+					var marksList = response.Toempmarks.results;
 
-						console.log('Marks list received: ');
-						console.log(marksList);
-						if (marksList.length > 0) {
-							
-							/*for (let i in marksList) {
-								if (AppraiserLevel == "1") {
-									factors[i].M1 = marksList[i].Marks;
-								} else if (AppraiserLevel == "2") {
-									factors[i].M2 = marksList[i].Marks;
-								} else if (AppraiserLevel == "3") {
-									factors[i].M3 = marksList[i].Marks;
-								}
-							}*/
-							
-							for(let f of factors){
-								const marks1=marksList.filter(m=>m.FactorId==f.FactorId && m.AppraiserLevel==1);
-								if(marks1.length>0){
-									f.M1=marks1[0].Marks;
-								}else{
-									f.M1="0";
-								}
-								const marks2=marksList.filter(m=>m.FactorId==f.FactorId && m.AppraiserLevel==2);
-								if(marks2.length>0){
-									f.M2=marks2[0].Marks;
-								}else{
-									f.M2="0";
-								}
-								const marks3=marksList.filter(m=>m.FactorId==f.FactorId && m.AppraiserLevel==3)                  ;
-								if(marks3.length>0){
-									f.M3=marks3[0].Marks;
-								}else{
-									f.M3="0";
-								}
-								/*console.log(marks1);
-								console.log(marks2);
-								console.log(marks3);*/
+					console.log('Marks list received: ');
+					console.log(marksList);
+					if (marksList.length > 0) {
+
+						/*for (let i in marksList) {
+							if (AppraiserLevel == "1") {
+								factors[i].M1 = marksList[i].Marks;
+							} else if (AppraiserLevel == "2") {
+								factors[i].M2 = marksList[i].Marks;
+							} else if (AppraiserLevel == "3") {
+								factors[i].M3 = marksList[i].Marks;
 							}
-						}
-						dataModel.setProperty("/factors", factors);
+						}*/
 
-						_self.calcTotalFactorsByType();
-					},
-					error: function() {
-						sap.ui.core.BusyIndicator.hide();
-						console.log('Error on /empSet set GET');
-						console.log(error);
+						for (let f of factors) {
+							const marks1 = marksList.filter(m => m.FactorId == f.FactorId && m.AppraiserLevel == 1);
+							if (marks1.length > 0) {
+								f.M1 = marks1[0].Marks;
+							} else {
+								f.M1 = "0";
+							}
+							const marks2 = marksList.filter(m => m.FactorId == f.FactorId && m.AppraiserLevel == 2);
+							if (marks2.length > 0) {
+								f.M2 = marks2[0].Marks;
+							} else {
+								f.M2 = "0";
+							}
+							const marks3 = marksList.filter(m => m.FactorId == f.FactorId && m.AppraiserLevel == 3);
+							if (marks3.length > 0) {
+								f.M3 = marks3[0].Marks;
+							} else {
+								f.M3 = "0";
+							}
+							/*console.log(marks1);
+							console.log(marks2);
+							console.log(marks3);*/
+						}
 					}
-				});
-			}
+					dataModel.setProperty("/factors", factors);
+
+					_self.calcTotalFactorsByType();
+				},
+				error: function() {
+					sap.ui.core.BusyIndicator.hide();
+					console.log('Error on /empSet set GET');
+					console.log(error);
+				}
+			});
+			//}
 
 		},
 		calcTotalFactorsByType: function() {
@@ -172,7 +190,7 @@ sap.ui.define([
 				TypeB_M1: 0,
 				TypeB_M2: 0,
 				TypeB_M3: 0,
-				TypeC: dataModel.getProperty('/factCounts/c3') * 5,
+				TypeC: dataModel.getProperty('/factCounts/c3') * 20,
 				TypeC_M1: 0,
 				TypeC_M2: 0,
 				TypeC_M3: 0,
@@ -224,15 +242,15 @@ sap.ui.define([
 			var p = (marksObt / gt) * 100;
 			p = isNaN(p) ? 0 : p;
 			var grade = ''
-			if(p >= 68){
+			if (p >= 68) {
 				grade = 'A';
-			}else if(p >= 53){
+			} else if (p >= 53) {
 				grade = 'B';
-			}else if(p >= 38){
+			} else if (p >= 38) {
 				grade = 'C';
-			}else if( p >= 27){
+			} else if (p >= 27) {
 				grade = 'D';
-			}else{
+			} else {
 				grade = 'E';
 			}
 			dataModel.setProperty('/Grade', grade);
@@ -244,7 +262,7 @@ sap.ui.define([
 			var fBox = new sap.m.FlexBox( /*flbID, */ {
 				height: "30px",
 				alignItems: "Center",
-				justifyContent: "End"																																									
+				justifyContent: "End"
 			});
 			fBox.addItem(new sap.m.Label({
 				text: msg,
@@ -490,11 +508,24 @@ sap.ui.define([
 				this.calcTotalFactorsByType();
 			}
 		},
+		handleMarksInput20: function(oEvent) {
+			var _oInput = oEvent.getSource();
+			var val = _oInput.getValue();
+			val = val.replace(/[^\d]/g, '');
+			_oInput.setValue(val);
+			var isNotValid = val < 0 || val > 20;
+			if (isNotValid) {
+				_oInput.setValueState(sap.ui.core.ValueState.Error);
+			} else {
+				_oInput.setValueState(sap.ui.core.ValueState.Success);
+				this.calcTotalFactorsByType();
+			}
+		},
 		onExit: function() {
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.unsubscribe("MarksView", "showFactors", this.onShowFactors, this);
-			eventBus.unsubscribe("MarksView", "fetchMarksFromServerByEmpID", this.fetchMarksFromServerByEmpID, this);
-			eventBus.subscribe("DetailsView", "updateApproverLevel", this.updateAppraiserLevel, this);
+			//eventBus.unsubscribe("MarksView", "fetchMarksFromServerByEmpID", this.fetchMarksFromServerByEmpID, this);
+			eventBus.unsubscribe("DetailsView", "updateApproverLevel", this.updateAppraiserLevel, this);
 		}
 	});
 });

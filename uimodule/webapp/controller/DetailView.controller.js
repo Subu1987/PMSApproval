@@ -54,13 +54,11 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
+
 			//data.CurrAssgnLvl = 3;
 			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
 			dataModel.setProperty("/EmpID", data.Pernr);
-			_self.publishApproverLevelToMarksView({
-				approverLevel: data.CurrAssgnLvl
-			});
 
 			var empDetailsURI = "/ConcurrentEmploymentSet('" + data.Pernr + "')";
 			sap.ui.core.BusyIndicator.show();
@@ -74,9 +72,16 @@ sap.ui.define([
 					console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
 					dataSetModel.setProperty("/EmpData", response);
+
+					dataModel.setProperty("/FormType", response.ExFormType);
+					console.log('Form Type: ' + response.ExFormType);
 					_self.formatAllEmpData(response);
 
 					_self.fetchAllCommentsAndRecommendation();
+
+					_self.publishApproverLevelToMarksView({
+						approverLevel: data.CurrAssgnLvl
+					});
 				},
 				error: function(error) {
 					sap.ui.core.BusyIndicator.hide();
@@ -215,7 +220,7 @@ sap.ui.define([
 			eventBus.publish("DetailsView", "updateApproverLevel", data);
 
 			var eventBus = sap.ui.getCore().getEventBus();
-			eventBus.publish("MarksView", "fetchMarksFromServerByEmpID", {
+			eventBus.publish("MarksView", "showFactors", {
 				message: 'MODEL INITIALIZED....'
 			});
 		},
