@@ -18,7 +18,7 @@
 					</content>
 				</Panel>
 				<Panel id="_IDGenPanel2" height="100%" class="sapUiNoContentPadding">
-				<mvc:XMLView  id="DetailView" height="100%" viewName="com.infocus.PMSApproval.view.DetailView"/>
+					<mvc:XMLView  id="DetailView" height="100%" viewName="com.infocus.PMSApproval.view.DetailView"/>
 				</Panel>
 			</l:contentAreas>
 		</l:Splitter>

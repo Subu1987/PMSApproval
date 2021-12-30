@@ -152,11 +152,11 @@ sap.ui.define([
 			eventBus.publish("DetailView", "ShowDetailView", data);
 		},
 		onSearch: function(oEvent) {
-			// add filter for search
+			// add filter for search 
 			var aFilters = [];
 			var sQuery = oEvent.getSource().getValue();
 			if (sQuery && sQuery.length > 0) {
-				var filter = new Filter("EmpName", FilterOperator.Contains, sQuery);
+				var filter = new Filter("Ename", FilterOperator.Contains, sQuery);
 				aFilters.push(filter);
 			}
 
