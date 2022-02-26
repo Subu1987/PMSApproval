@@ -304,7 +304,11 @@
 			<m:FlexBox height="50px" alignItems="Center" justifyContent="Center">
 				<m:Label class="thick" text="Grand Total (out of {dataSet>/GrandTotalFullMarks}):"/>
 				<m:Label class="thick" text="{dataSet>/GrandTotalMarks}"></m:Label>
-				<m:Label class="thick" width="12rem"></m:Label>
+				<m:Label class="thick" width="6rem"></m:Label>
+				<m:Label class="thick" text="Overall Average Marks:"/>
+				<m:Label class="thick" text="{dataSet>/AvgMarks}"></m:Label>
+				<m:Label class="thick" width="6rem"></m:Label>
+				
 				<m:Label class="thick" text="Overall Assesment Grade:"/>
 				<m:Label class="thick" text="{dataSet>/Grade}"></m:Label>
 			</m:FlexBox>
