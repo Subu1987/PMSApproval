@@ -62,13 +62,27 @@
 				<Column hAlign="Center">
 					<m:Label text="Promotion"/>
 					<template>
-						<m:Input value="{dataSet>ApprCommProm}" editable="{dataSet>Editable}" textAlign="Center"/>
+						<!--<m:Input value="{dataSet>ApprCommProm}" editable="{dataSet>Editable}" textAlign="Center"/>-->
+						<m:Select  width="100%" selectedKey="{dataSet>ApprCommProm}"
+								items="{
+									path: 'dataSet>/dropSet',
+									sorter: { path: 'dataSet>No' }
+								}">
+							<core:Item key="{dataSet>No_0}" text="{dataSet>No}"/>
+						</m:Select>
 					</template>
 				</Column>
 				<Column hAlign="Center">
 					<m:Label text="Increment"/>
 					<template>
-						<m:Input value="{dataSet>ApprCommIncr}" editable="{dataSet>Editable}" textAlign="Center"/>
+					<!--<m:Input value="{dataSet>ApprCommIncr}" editable="{dataSet>Editable}" textAlign="Center"/>-->
+						<m:Select width="100%" selectedKey="{dataSet>ApprCommProm}"
+								items="{
+									path: 'dataSet>/dropSet',
+									sorter: { path: 'dataSet>No' }
+								}">
+							<core:Item key="{dataSet>No_0}" text="{dataSet>No}"/>
+						</m:Select>
 					</template>
 				</Column>
 				<!--<Column>

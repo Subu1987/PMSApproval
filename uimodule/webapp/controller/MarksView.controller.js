@@ -233,13 +233,17 @@ sap.ui.define([
 			var a3Total = totalSet.TypeA_M3 + totalSet.TypeB_M3 + totalSet.TypeC_M3;
 
 			var gt = (totalSet.TypeA + totalSet.TypeB + totalSet.TypeC);
-			var marksObt = level == 1 ? a1Total : a2Total;
-			dataModel.setProperty('/GrandTotalFullMarks', gt);
+			//var gt = a1Total + a2Total + a3Total;
+			//var marksObt = level == 1 ? a1Total : level == 2 ? (a1Total+a2Total)/;
+			var gtText=gt*level;
+			var marksObt = a1Total + a2Total + a3Total;
+			var marksObtAvg = (a1Total + a2Total + a3Total)/level;
+			dataModel.setProperty('/GrandTotalFullMarks', gtText);
 			dataModel.setProperty('/TotalSet', totalSet);
 
 			dataModel.setProperty('/GrandTotalMarks', marksObt);
 			// 75 ----------- 40/75
-			var p = (marksObt / gt) * 100;
+			var p = (marksObtAvg / gt) * 100;
 			p = isNaN(p) ? 0 : p;
 			var grade = ''
 			if (p >= 68) {
@@ -254,6 +258,7 @@ sap.ui.define([
 				grade = 'E';
 			}
 			dataModel.setProperty('/Grade', grade);
+			dataModel.setProperty('/AvgMarks', marksObtAvg);
 
 		},
 		addTotal: function(tableID, value, msg) {
@@ -402,7 +407,7 @@ sap.ui.define([
 				});
 				var col2 = new sap.m.Column("col2", {
 					header: new sap.m.Label({
-						text: "Grade"
+						text: "Marks"
 					})
 				});
 
