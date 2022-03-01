@@ -234,6 +234,7 @@ sap.ui.define([
 
 			var gt = (totalSet.TypeA + totalSet.TypeB + totalSet.TypeC);
 			//var gt = a1Total + a2Total + a3Total;
+
 			//var marksObt = level == 1 ? a1Total : level == 2 ? (a1Total+a2Total)/;
 			var gtText=gt*level;
 			var marksObt = a1Total + a2Total + a3Total;

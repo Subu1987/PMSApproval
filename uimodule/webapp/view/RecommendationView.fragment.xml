@@ -76,13 +76,13 @@
 					<m:Label text="Increment"/>
 					<template>
 					<!--<m:Input value="{dataSet>ApprCommIncr}" editable="{dataSet>Editable}" textAlign="Center"/>-->
-						<m:Select width="100%" selectedKey="{dataSet>ApprCommProm}"
+							<m:Select width="100%" selectedKey="{dataSet>ApprCommProm}"
 								items="{
 									path: 'dataSet>/dropSet',
 									sorter: { path: 'dataSet>No' }
 								}">
 							<core:Item key="{dataSet>No_0}" text="{dataSet>No}"/>
-						</m:Select>
+						</m:Select>				
 					</template>
 				</Column>
 				<!--<Column>

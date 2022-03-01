@@ -21,7 +21,7 @@ sap.ui.define([
 	return Controller.extend("com.infocus.PMSApproval.controller.DetailView", {
 		onInit: function() {
 			var _self=this;
-			
+
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
 
@@ -57,7 +57,7 @@ sap.ui.define([
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
-			
+
 			var dataModel = _self.getView().getModel("dataSet");
 			console.log(dataModel);
 			var dropSet=[
@@ -84,46 +84,46 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					console.log(response);
 
-					data.CurrAssgnLvl = response.AppraiserLevel;
-					dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
-					dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
-					dataModel.setProperty("/EmpID", data.Pernr);
+			data.CurrAssgnLvl = response.AppraiserLevel;
+			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
+			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
+			dataModel.setProperty("/EmpID", data.Pernr);
 
-					var empDetailsURI = "/ConcurrentEmploymentSet('" + data.Pernr + "')";
-					sap.ui.core.BusyIndicator.show();
-					_self.getView().getModel().read(empDetailsURI, {
-						urlParameters: {
-							"$expand": "ToItems"
-						},
-						success: function(response) {
-							sap.ui.core.BusyIndicator.hide();
-							console.log("Emp full Details Service Response...");
-							console.log(response);
-							var dataSetModel = _self.getView().getModel("dataSet");
-							dataSetModel.setProperty("/EmpData", response);
+			var empDetailsURI = "/ConcurrentEmploymentSet('" + data.Pernr + "')";
+			sap.ui.core.BusyIndicator.show();
+			_self.getView().getModel().read(empDetailsURI, {
+				urlParameters: {
+					"$expand": "ToItems"
+				},
+				success: function(response) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log("Emp full Details Service Response...");
+					console.log(response);
+					var dataSetModel = _self.getView().getModel("dataSet");
+					dataSetModel.setProperty("/EmpData", response);
 
-							dataModel.setProperty("/FormType", response.ExFormType);
-							console.log('Form Type: ' + response.ExFormType);
-							_self.formatAllEmpData(response);
+					dataModel.setProperty("/FormType", response.ExFormType);
+					console.log('Form Type: ' + response.ExFormType);
+					_self.formatAllEmpData(response);
 
-							_self.fetchAllCommentsAndRecommendation();
+					_self.fetchAllCommentsAndRecommendation();
 
-							_self.publishApproverLevelToMarksView({
-								approverLevel: data.CurrAssgnLvl
-							});
-						},
-						error: function(error) {
-							sap.ui.core.BusyIndicator.hide();
-							console.log('Error in fetching employeeset...');
-							console.log(error);
-						}
-
+					_self.publishApproverLevelToMarksView({
+						approverLevel: data.CurrAssgnLvl
 					});
 				},
-				error: function(err) {
-					console.log('Error in fetching appriser details...');
-					console.log(err)
+				error: function(error) {
+					sap.ui.core.BusyIndicator.hide();
+					console.log('Error in fetching employeeset...');
+					console.log(error);
 				}
+				
+			});
+		},
+		error: function(err) {
+			console.log('Error in fetching appriser details...');
+			console.log(err)
+		}
 			});
 		},
 		formatAllEmpData: function(emp) {
