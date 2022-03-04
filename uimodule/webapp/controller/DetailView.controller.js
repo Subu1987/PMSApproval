@@ -20,7 +20,7 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("com.infocus.PMSApproval.controller.DetailView", {
 		onInit: function() {
-			var _self=this;
+			var _self = this;
 
 			var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.subscribe("DetailView", "ShowDetailView", this.onShowDetailView, this);
@@ -60,21 +60,30 @@ sap.ui.define([
 
 			var dataModel = _self.getView().getModel("dataSet");
 			console.log(dataModel);
-			var dropSet=[
-				{	
-					"No_0":0,
-					"No": 0
-				},
-				{
-					"No_0":1,
-					"No": 1
-				},
-				{
-					"No_0":2,
-					"No": 2
-				}
-			];
-			dataModel.setProperty("/dropSet", dropSet);
+			var dropSet1 = [{
+				"No_1": 0,
+				"No1": 0
+			}, {
+				"No_1": 1,
+				"No1": 1
+			}, {
+				"No_1": 2,
+				"No1": 2
+			}];
+
+			var dropSet2 = [{
+				"No_2": 0,
+				"No2": 0
+			}, {
+				"No_2": 1,
+				"No2": 1
+			}, {
+				"No_2": 2,
+				"No2": 2
+			}];
+
+			dataModel.setProperty("/dropSet1", dropSet1);
+			dataModel.setProperty("/dropSet2", dropSet2);
 
 			var currAppraiserURI = "/currappraiserSet('" + data.Pernr + "')";
 			sap.ui.core.BusyIndicator.show();
@@ -84,46 +93,46 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					console.log(response);
 
-			data.CurrAssgnLvl = response.AppraiserLevel;
-			dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
-			dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
-			dataModel.setProperty("/EmpID", data.Pernr);
+					data.CurrAssgnLvl = response.AppraiserLevel;
+					dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
+					dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);
+					dataModel.setProperty("/EmpID", data.Pernr);
 
-			var empDetailsURI = "/ConcurrentEmploymentSet('" + data.Pernr + "')";
-			sap.ui.core.BusyIndicator.show();
-			_self.getView().getModel().read(empDetailsURI, {
-				urlParameters: {
-					"$expand": "ToItems"
-				},
-				success: function(response) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log("Emp full Details Service Response...");
-					console.log(response);
-					var dataSetModel = _self.getView().getModel("dataSet");
-					dataSetModel.setProperty("/EmpData", response);
+					var empDetailsURI = "/ConcurrentEmploymentSet('" + data.Pernr + "')";
+					sap.ui.core.BusyIndicator.show();
+					_self.getView().getModel().read(empDetailsURI, {
+						urlParameters: {
+							"$expand": "ToItems"
+						},
+						success: function(response) {
+							sap.ui.core.BusyIndicator.hide();
+							console.log("Emp full Details Service Response...");
+							console.log(response);
+							var dataSetModel = _self.getView().getModel("dataSet");
+							dataSetModel.setProperty("/EmpData", response);
 
-					dataModel.setProperty("/FormType", response.ExFormType);
-					console.log('Form Type: ' + response.ExFormType);
-					_self.formatAllEmpData(response);
+							dataModel.setProperty("/FormType", response.ExFormType);
+							console.log('Form Type: ' + response.ExFormType);
+							_self.formatAllEmpData(response);
 
-					_self.fetchAllCommentsAndRecommendation();
+							_self.fetchAllCommentsAndRecommendation();
 
-					_self.publishApproverLevelToMarksView({
-						approverLevel: data.CurrAssgnLvl
+							_self.publishApproverLevelToMarksView({
+								approverLevel: data.CurrAssgnLvl
+							});
+						},
+						error: function(error) {
+							sap.ui.core.BusyIndicator.hide();
+							console.log('Error in fetching employeeset...');
+							console.log(error);
+						}
+
 					});
 				},
-				error: function(error) {
-					sap.ui.core.BusyIndicator.hide();
-					console.log('Error in fetching employeeset...');
-					console.log(error);
+				error: function(err) {
+					console.log('Error in fetching appriser details...');
+					console.log(err)
 				}
-				
-			});
-		},
-		error: function(err) {
-			console.log('Error in fetching appriser details...');
-			console.log(err)
-		}
 			});
 		},
 		formatAllEmpData: function(emp) {
@@ -193,7 +202,7 @@ sap.ui.define([
 				var oTable = new sap.m.Table("tab-pos", {
 					inset: true,
 					mode: sap.m.ListMode.None,
-					includeItemInSelection: false,
+					includeItemInSelection: false
 				});
 				var col1 = new sap.m.Column("col1-pos", {
 					header: new sap.m.Label({
@@ -309,6 +318,14 @@ sap.ui.define([
 						Marks: marks,
 						Pernr: empID
 					});
+					
+					console.log(marks);
+					console.log(marksList);
+					
+/*					if(marks){
+						marksList.Editable= false;
+					}
+					dataModel.setProperty('/marksList',marksList);*/
 				}
 
 				var marksData = {
@@ -324,6 +341,7 @@ sap.ui.define([
 				}
 				console.log('Saving details: ');
 				console.log(marksData);
+				
 
 				var saveMarksURI = "/empSet";
 				var saveCommentsURI = "";
@@ -331,8 +349,10 @@ sap.ui.define([
 				rootModel.create(saveMarksURI, marksData, {
 					success: function(response) {
 						sap.ui.core.BusyIndicator.hide();
-						//console.log(response);
+						console.log(response);
+						console.log(response.ApprId);
 						MessageBox.success('The appraisal saved correctly.');
+						
 					},
 					error: function(error) {
 						sap.ui.core.BusyIndicator.hide();
@@ -473,7 +493,7 @@ sap.ui.define([
 						comments = {
 							ApprCommIncr: "",
 							ApprCommProm: "",
-							ApprCommJob: "",
+							ApprCommJob: ""
 						};
 					} else {
 						comments = {

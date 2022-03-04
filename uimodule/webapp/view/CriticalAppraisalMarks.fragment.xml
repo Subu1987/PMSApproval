@@ -31,7 +31,7 @@
 				<Column width="6rem" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
-						<m:Input value="{M1}"/>
+						<m:Input value="{M1}" editable="{dataSet>Editable}"/>
 					</template>
 				</Column>
 				<Column width="6rem" hAlign="Center">

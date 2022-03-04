@@ -160,6 +160,10 @@ sap.ui.define([
 							/*console.log(marks1);
 							console.log(marks2);
 							console.log(marks3);*/
+							
+/*							console.log(f.M1);
+							console.log(f.M2);
+							console.log(f.M3);*/
 						}
 					}
 					dataModel.setProperty("/factors", factors);
@@ -507,8 +511,10 @@ sap.ui.define([
 			val = val.replace(/[^\d]/g, '');
 			_oInput.setValue(val);
 			var isNotValid = val < 0 || val > 5;
+			
 			if (isNotValid) {
-				_oInput.setValueState(sap.ui.core.ValueState.Error);
+				_oInput.setValueState(sap.ui.core.ValueState.Error,MessageBox.alert('Marks should be between 0 to 5'));
+
 			} else {
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
 				this.calcTotalFactorsByType();

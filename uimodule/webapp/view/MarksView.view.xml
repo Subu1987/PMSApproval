@@ -300,7 +300,7 @@
 				</m:Table>
 			</footer>
 		</Table>
-		<m:Panel>
+<!--		<m:Panel>
 			<m:FlexBox height="50px" alignItems="Center" justifyContent="Center">
 				<m:Label class="thick" text="Grand Total (out of {dataSet>/GrandTotalFullMarks}):"/>
 				<m:Label class="thick" text="{dataSet>/GrandTotalMarks}"></m:Label>
@@ -308,6 +308,6 @@
 				<m:Label class="thick" text="Overall Assesment Grade:"/>
 				<m:Label class="thick" text="{dataSet>/Grade}"></m:Label>
 			</m:FlexBox>
-		</m:Panel>
+		</m:Panel>-->
 	</m:VBox>
 </core:View>
