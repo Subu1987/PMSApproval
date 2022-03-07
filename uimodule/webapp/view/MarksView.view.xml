@@ -91,9 +91,9 @@
 						<m:ColumnListItem>
 							<m:cells>
 								<m:Text text="Total (out of {dataSet>/TotalSet/TypeA})"/>
-								<m:Text text="{dataSet>/TotalSet/TypeA_M1}"/>
-								<m:Text text="{dataSet>/TotalSet/TypeA_M2}"/>
-								<m:Text text="{dataSet>/TotalSet/TypeA_M3}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeA_M1} {dataSet>/GradeByMarks1}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeA_M2} {dataSet>/GradeByMarks2}"/>
+								<m:Text text="{dataSet>/TotalSet/TypeA_M3} {dataSet>/GradeByMarks3}"/>
 							</m:cells>
 						</m:ColumnListItem>
 					</m:items>

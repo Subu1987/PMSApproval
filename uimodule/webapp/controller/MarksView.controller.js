@@ -227,6 +227,71 @@ sap.ui.define([
 				}
 			}
 			console.log(totalSet);
+			console.log(totalSet.TypeA_M1);
+			console.log(totalSet.TypeA_M2);
+			console.log(totalSet.TypeA_M3);
+			
+			var gradeByMarks1= ''
+			
+			if(totalSet.TypeA_M1 >=68){
+				gradeByMarks1= 'A';
+			}
+			else if(totalSet.TypeA_M1 >=53){
+				gradeByMarks1= 'B';
+			}
+			else if(totalSet.TypeA_M1 >=38){
+				gradeByMarks1= 'C';
+			}
+			else if(totalSet.TypeA_M1 >=27){
+				gradeByMarks1= 'D';
+			}
+			else{
+				gradeByMarks1= 'E';	
+			}
+			dataModel.setProperty("/GradeByMarks1",gradeByMarks1);
+			
+			
+			
+			var gradeByMarks2= ''
+			if(totalSet.TypeA_M2 >=68){
+				gradeByMarks2= 'A';
+			}
+			else if(totalSet.TypeA_M2 >=53){
+				gradeByMarks2= 'B';
+			}
+			else if(totalSet.TypeA_M2 >=38){
+				gradeByMarks2= 'C';
+			}
+			else if(totalSet.TypeA_M2 >=27){
+				gradeByMarks2= 'D';
+			}
+			else{
+				gradeByMarks2= 'E';	
+			}
+			
+			dataModel.setProperty("/GradeByMarks2",gradeByMarks2);
+			
+			
+			
+			var gradeByMarks3= ''
+			if(totalSet.TypeA_M3 >=68){
+				gradeByMarks3= 'A';
+			}
+			else if(totalSet.TypeA_M3 >=53){
+				gradeByMarks3= 'B';
+			}
+			else if(totalSet.TypeA_M3 >=38){
+				gradeByMarks3= 'C';
+			}
+			else if(totalSet.TypeA_M3 >=27){
+				gradeByMarks3= 'D';
+			}
+			else{
+				gradeByMarks3= 'E';	
+			}
+			
+			dataModel.setProperty("/GradeByMarks3",gradeByMarks3);
+
 
 			/*_self.addTotal('factorsTable', total1, 'Total Marks (out of 40)');
 			_self.addTotal('factorsTable2', total2, 'Total Marks (out of 40)');
