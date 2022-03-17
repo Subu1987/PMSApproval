@@ -245,8 +245,11 @@ sap.ui.define([
 			else if(totalSet.TypeA_M1 >=27){
 				gradeByMarks1= 'D';
 			}
+			else if(totalSet.TypeA_M1 >=1){
+				gradeByMarks1= 'E';
+			}
 			else{
-				gradeByMarks1= 'E';	
+				gradeByMarks1= '';	
 			}
 			dataModel.setProperty("/GradeByMarks1",gradeByMarks1);
 			
@@ -265,8 +268,11 @@ sap.ui.define([
 			else if(totalSet.TypeA_M2 >=27){
 				gradeByMarks2= 'D';
 			}
+			else if(totalSet.TypeA_M2 >=1){
+				gradeByMarks2= 'E';
+			}
 			else{
-				gradeByMarks2= 'E';	
+				gradeByMarks2= '';	
 			}
 			
 			dataModel.setProperty("/GradeByMarks2",gradeByMarks2);
@@ -286,8 +292,11 @@ sap.ui.define([
 			else if(totalSet.TypeA_M3 >=27){
 				gradeByMarks3= 'D';
 			}
+			else if(totalSet.TypeA_M3 >=1){
+				gradeByMarks3= 'E';
+			}
 			else{
-				gradeByMarks3= 'E';	
+				gradeByMarks3= '';	
 			}
 			
 			dataModel.setProperty("/GradeByMarks3",gradeByMarks3);
@@ -415,14 +424,19 @@ sap.ui.define([
 			if (!_self.dataSet.gradeSet) {
 				sap.ui.core.BusyIndicator.show();
 				_model.read(gradeSetURI, {
+					urlParameters:{
+						"$filter":"Pernr eq '40000039'"
+					},
 					success: function(response) {
 						sap.ui.core.BusyIndicator.hide();
 						_self.dataSet.gradeSet = response.results;
+						console.log(_self.dataSet.gradeSet);
 						for (let item in _self.dataSet.gradeSet) {
 							var min = _self.dataSet.gradeSet[item].Minmarks;
 							var max = _self.dataSet.gradeSet[item].Maxmarks;
 							_self.dataSet.gradeSet[item].TotalMarks = min + " - " + max;
 						}
+
 						_self.getView().getModel("dataSet").setProperty("/gradeSet", _self.dataSet.gradeSet);
 						_self.showGradeTable();
 					},

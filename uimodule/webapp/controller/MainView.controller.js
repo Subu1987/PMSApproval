@@ -129,9 +129,10 @@ sap.ui.define([
 
 					//application-zpms_approval-approve-component---app
 					var oList = _self.byId('idList');
-					//console.log(oList);
+					console.log(oList);
 					oList.setSelectedItem(oList.getItems()[0], true);
 					_self.publishToDetailView(response.results[0]);
+					console.log(response.results[0]);
 
 					/*var eventBus = sap.ui.getCore().getEventBus();
 					eventBus.publish("MarksView", "showFactors", {
@@ -185,9 +186,13 @@ sap.ui.define([
 			// var sText = oList._oSelectedItem.mProperties.title;
 
 			var oSelectedItem = oEvent.getParameter("listItem");
+			console.log(oSelectedItem);
 			var selectedEmpData = oSelectedItem.getBindingContext("dataSet").getObject();
+			
+			console.log(oSelectedItem.getBindingContext("dataSet").getObject());
 
 			this.publishToDetailView(selectedEmpData);
+
 
 			/*var eventBus = sap.ui.getCore().getEventBus();
 			eventBus.publish("DetailView", "ShowDetailView", selectedEmpData);*/
