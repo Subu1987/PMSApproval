@@ -60,6 +60,9 @@ sap.ui.define([
 
 			var dataModel = _self.getView().getModel("dataSet");
 			console.log(dataModel);
+			
+			console.log(data.Pernr);
+			
 			var dropSet1 = [{
 				"No_1": 0,
 				"No1": 0
@@ -92,7 +95,7 @@ sap.ui.define([
 				success: function(response) {
 					sap.ui.core.BusyIndicator.hide();
 					console.log(response);
-
+					
 					data.CurrAssgnLvl = response.AppraiserLevel;
 					dataModel.setProperty("/AppraiserLevel", data.CurrAssgnLvl);
 					dataModel.setProperty("/AppraiserID", data.CurrAssgnTo);

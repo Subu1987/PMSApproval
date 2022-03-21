@@ -31,10 +31,10 @@ sap.ui.define([
 				},
 				success: function(response) {
 					sap.ui.core.BusyIndicator.hide();
+					
 					var factors = response.results;
 					/*console.log('Factor set received: ');
 					console.log(response);*/
-
 					var slNo = 1;
 					var factCounts = {
 						c1: 0,
@@ -120,8 +120,14 @@ sap.ui.define([
 					"$expand": "Toempmarks"
 				},
 				success: function(response) {
+					console.log(response);
+					console.log(response.Pernr);
+					
+
+					
 					sap.ui.core.BusyIndicator.hide();
 					dataModel = _self.getView().getModel('dataSet');
+
 					var marksList = response.Toempmarks.results;
 
 					console.log('Marks list received: ');
@@ -361,6 +367,7 @@ sap.ui.define([
 			table1.setFooter(fBox);
 		},
 		updateAppraiserLevel: function(source, event, data) {
+			console.log(data);
 			var approverLevel = parseInt(data.approverLevel);
 			var factTable = this.byId("factor-table");
 			var dataModel = this.getView().getModel("dataSet");
@@ -420,16 +427,20 @@ sap.ui.define([
 			var gradeSetURI = "/GradeSet";
 
 			_self.dataSet = _self.getView().getModel("dataSet").getProperty("/");
+			
+			_self.Pernr=_self.getView().getModel("dataSet").getProperty("/EmpID");
+			console.log(_self.Pernr);
 
-			if (!_self.dataSet.gradeSet) {
+			if (_self.Pernr) {
 				sap.ui.core.BusyIndicator.show();
 				_model.read(gradeSetURI, {
 					urlParameters:{
-						"$filter":"Pernr eq '40000039'"
+						"$filter": "Pernr eq '"+ _self.Pernr +"'"
 					},
 					success: function(response) {
 						sap.ui.core.BusyIndicator.hide();
 						_self.dataSet.gradeSet = response.results;
+						
 						console.log(_self.dataSet.gradeSet);
 						for (let item in _self.dataSet.gradeSet) {
 							var min = _self.dataSet.gradeSet[item].Minmarks;
@@ -439,6 +450,7 @@ sap.ui.define([
 
 						_self.getView().getModel("dataSet").setProperty("/gradeSet", _self.dataSet.gradeSet);
 						_self.showGradeTable();
+
 					},
 					error: function(error) {
 						sap.ui.core.BusyIndicator.hide();
