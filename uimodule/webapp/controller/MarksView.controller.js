@@ -187,8 +187,11 @@ sap.ui.define([
 		},
 		calcTotalFactorsByType: function() {
 			var _self = this;
-
 			var dataModel = this.getView().getModel('dataSet');
+			
+			// Pernr of master
+			var Pernr=dataModel.getProperty("/EmpID");
+			console.log(Pernr);
 			var level = dataModel.getProperty("/AppraiserLevel");
 			var factors = dataModel.getProperty('/factors');
 			var totalSet = {
@@ -237,75 +240,80 @@ sap.ui.define([
 			console.log(totalSet.TypeA_M2);
 			console.log(totalSet.TypeA_M3);
 			
-			var gradeByMarks1= ''
+			// for test1 & test3
+			if(Pernr!=40000039 ){
+				
+				var gradeByMarks1= ''
+				
+				if(totalSet.TypeA_M1 >=68){
+					gradeByMarks1= 'A';
+				}
+				else if(totalSet.TypeA_M1 >=53){
+					gradeByMarks1= 'B';
+				}
+				else if(totalSet.TypeA_M1 >=38){
+					gradeByMarks1= 'C';
+				}
+				else if(totalSet.TypeA_M1 >=27){
+					gradeByMarks1= 'D';
+				}
+				else if(totalSet.TypeA_M1 >=1){
+					gradeByMarks1= 'E';
+				}
+				else{
+					gradeByMarks1= '';	
+				}
+				dataModel.setProperty("/GradeByMarks1",gradeByMarks1);
+				
+				
+				var gradeByMarks2= ''
+				if(totalSet.TypeA_M2 >=68){
+					gradeByMarks2= 'A';
+				}
+				else if(totalSet.TypeA_M2 >=53){
+					gradeByMarks2= 'B';
+				}
+				else if(totalSet.TypeA_M2 >=38){
+					gradeByMarks2= 'C';
+				}
+				else if(totalSet.TypeA_M2 >=27){
+					gradeByMarks2= 'D';
+				}
+				else if(totalSet.TypeA_M2 >=1){
+					gradeByMarks2= 'E';
+				}
+				else{
+					gradeByMarks2= '';	
+				}
+				
+				dataModel.setProperty("/GradeByMarks2",gradeByMarks2);
 			
-			if(totalSet.TypeA_M1 >=68){
-				gradeByMarks1= 'A';
-			}
-			else if(totalSet.TypeA_M1 >=53){
-				gradeByMarks1= 'B';
-			}
-			else if(totalSet.TypeA_M1 >=38){
-				gradeByMarks1= 'C';
-			}
-			else if(totalSet.TypeA_M1 >=27){
-				gradeByMarks1= 'D';
-			}
-			else if(totalSet.TypeA_M1 >=1){
-				gradeByMarks1= 'E';
-			}
-			else{
-				gradeByMarks1= '';	
-			}
-			dataModel.setProperty("/GradeByMarks1",gradeByMarks1);
 			
 			
-			
-			var gradeByMarks2= ''
-			if(totalSet.TypeA_M2 >=68){
-				gradeByMarks2= 'A';
-			}
-			else if(totalSet.TypeA_M2 >=53){
-				gradeByMarks2= 'B';
-			}
-			else if(totalSet.TypeA_M2 >=38){
-				gradeByMarks2= 'C';
-			}
-			else if(totalSet.TypeA_M2 >=27){
-				gradeByMarks2= 'D';
-			}
-			else if(totalSet.TypeA_M2 >=1){
-				gradeByMarks2= 'E';
-			}
-			else{
-				gradeByMarks2= '';	
-			}
-			
-			dataModel.setProperty("/GradeByMarks2",gradeByMarks2);
-			
-			
-			
-			var gradeByMarks3= ''
-			if(totalSet.TypeA_M3 >=68){
-				gradeByMarks3= 'A';
-			}
-			else if(totalSet.TypeA_M3 >=53){
-				gradeByMarks3= 'B';
-			}
-			else if(totalSet.TypeA_M3 >=38){
-				gradeByMarks3= 'C';
-			}
-			else if(totalSet.TypeA_M3 >=27){
-				gradeByMarks3= 'D';
-			}
-			else if(totalSet.TypeA_M3 >=1){
-				gradeByMarks3= 'E';
-			}
-			else{
-				gradeByMarks3= '';	
+				var gradeByMarks3= ''
+				if(totalSet.TypeA_M3 >=68){
+					gradeByMarks3= 'A';
+				}
+				else if(totalSet.TypeA_M3 >=53){
+					gradeByMarks3= 'B';
+				}
+				else if(totalSet.TypeA_M3 >=38){
+					gradeByMarks3= 'C';
+				}
+				else if(totalSet.TypeA_M3 >=27){
+					gradeByMarks3= 'D';
+				}
+				else if(totalSet.TypeA_M3 >=1){
+					gradeByMarks3= 'E';
+				}
+				else{
+					gradeByMarks3= '';	
+				}
+				
+				dataModel.setProperty("/GradeByMarks3",gradeByMarks3);
+				
 			}
 			
-			dataModel.setProperty("/GradeByMarks3",gradeByMarks3);
 
 
 			/*_self.addTotal('factorsTable', total1, 'Total Marks (out of 40)');
@@ -317,33 +325,46 @@ sap.ui.define([
 			var a3Total = totalSet.TypeA_M3 + totalSet.TypeB_M3 + totalSet.TypeC_M3;
 
 			var gt = (totalSet.TypeA + totalSet.TypeB + totalSet.TypeC);
+			console.log(gt);
 			//var gt = a1Total + a2Total + a3Total;
 
 			//var marksObt = level == 1 ? a1Total : level == 2 ? (a1Total+a2Total)/;
 			var gtText=gt*level;
+			console.log(gtText);
 			var marksObt = a1Total + a2Total + a3Total;
+			console.log(marksObt);
 			var marksObtAvg = (a1Total + a2Total + a3Total)/level;
+			console.log(marksObtAvg);
 			dataModel.setProperty('/GrandTotalFullMarks', gtText);
 			dataModel.setProperty('/TotalSet', totalSet);
 
 			dataModel.setProperty('/GrandTotalMarks', marksObt);
 			// 75 ----------- 40/75
-			var p = (marksObtAvg / gt) * 100;
-			p = isNaN(p) ? 0 : p;
+/*			var p = (marksObtAvg / gt) * 100;*/
+		
+		
+		
+		// test3 marks total	
+			var p = marksObt;
+			
 			var grade = ''
-			if (p >= 68) {
+			if (p >= 91) {
 				grade = 'A';
-			} else if (p >= 53) {
+			} else if (p >= 71) {
 				grade = 'B';
-			} else if (p >= 38) {
+			} else if (p >= 51) {
 				grade = 'C';
-			} else if (p >= 27) {
+			} else if (p >= 36) {
 				grade = 'D';
-			} else {
+			}
+			else if(p>=1){
 				grade = 'E';
 			}
+			else {
+				grade = '';
+			}
 			dataModel.setProperty('/Grade', grade);
-			dataModel.setProperty('/AvgMarks', marksObtAvg);
+/*			dataModel.setProperty('/AvgMarks', marksObtAvg);*/
 
 		},
 		addTotal: function(tableID, value, msg) {

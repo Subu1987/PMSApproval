@@ -90,10 +90,10 @@
 					<m:items>
 						<m:ColumnListItem>
 							<m:cells>
-								<m:Text text="Total (out of {dataSet>/TotalSet/TypeA})"/>
-								<m:Text text="{dataSet>/TotalSet/TypeA_M1} {dataSet>/GradeByMarks1}"/>
-								<m:Text text="{dataSet>/TotalSet/TypeA_M2} {dataSet>/GradeByMarks2}"/>
-								<m:Text text="{dataSet>/TotalSet/TypeA_M3} {dataSet>/GradeByMarks3}"/>
+								<m:Text class="thick" text="Total (out of {dataSet>/TotalSet/TypeA})"/>
+								<m:Text class="thick" text="{dataSet>/TotalSet/TypeA_M1} {dataSet>/GradeByMarks1}"/>
+								<m:Text class="thick" text="{dataSet>/TotalSet/TypeA_M2} {dataSet>/GradeByMarks2}"/>
+								<m:Text class="thick" text="{dataSet>/TotalSet/TypeA_M3} {dataSet>/GradeByMarks3}"/>
 							</m:cells>
 						</m:ColumnListItem>
 					</m:items>
@@ -297,16 +297,22 @@
 							</m:cells>
 						</m:ColumnListItem>
 					</m:items>
+					
+					<m:items>
+						<m:ColumnListItem>
+							<m:cells >
+								<m:Label class="thick" text="Total (out of {dataSet>/GrandTotalFullMarks}):"/>
+								<m:Label class="thick" text="{dataSet>/GrandTotalMarks} {dataSet>/Grade}"/>
+							</m:cells>
+						</m:ColumnListItem>
+					</m:items>
 				</m:Table>
 			</footer>
 		</Table>
 <!--		<m:Panel>
-			<m:FlexBox height="50px" alignItems="Center" justifyContent="Center">
-				<m:Label class="thick" text="Grand Total (out of {dataSet>/GrandTotalFullMarks}):"/>
-				<m:Label class="thick" text="{dataSet>/GrandTotalMarks}"></m:Label>
-				<m:Label class="thick" width="12rem"></m:Label>
-				<m:Label class="thick" text="Overall Assesment Grade:"/>
-				<m:Label class="thick" text="{dataSet>/Grade}"></m:Label>
+			<m:FlexBox height="50px" alignItems="Center" justifyContent="End" class="right">
+				<m:Label class="thick" text="Total (out of {dataSet>/GrandTotalFullMarks}):"/>
+				<m:Label class="thick" text="{dataSet>/GrandTotalMarks} {dataSet>/Grade}"></m:Label>
 			</m:FlexBox>
 		</m:Panel>-->
 	</m:VBox>
