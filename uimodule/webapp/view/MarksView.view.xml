@@ -190,10 +190,10 @@
 					<m:items>
 						<m:ColumnListItem>
 							<m:cells>
-								<m:Text text="Total (out of {dataSet>/TotalSet/TypeB})"/>
-								<m:Text text="{dataSet>/TotalSet/TypeB_M1}"/>
-								<m:Text text="{dataSet>/TotalSet/TypeB_M2}"/>
-								<m:Text text="{dataSet>/TotalSet/TypeB_M3}"/>
+								<m:Text class="thick" text="Total (out of {dataSet>/TotalSet/TypeB})"/>
+								<m:Text class="thick" text="{dataSet>/TotalSet/TypeB_M1}"/>
+								<m:Text class="thick" text="{dataSet>/TotalSet/TypeB_M2}"/>
+								<m:Text class="thick" text="{dataSet>/TotalSet/TypeB_M3}"/>
 							</m:cells>
 						</m:ColumnListItem>
 					</m:items>
@@ -251,7 +251,7 @@
 				<Column id="app-2-marks-C" width="7rem" visible="false" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
-						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput20"/>
 					</template>
 				</Column>
 				<Column id="app-2-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
@@ -263,7 +263,7 @@
 				<Column id="app-3-marks-C" width="7rem" visible="false" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
-						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
+						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput20"/>
 					</template>
 				</Column>
 				<Column id="app-3-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
@@ -302,7 +302,9 @@
 						<m:ColumnListItem>
 							<m:cells >
 								<m:Label class="thick" text="Total (out of {dataSet>/GrandTotalFullMarks}):"/>
-								<m:Label class="thick" text="{dataSet>/GrandTotalMarks} {dataSet>/Grade}"/>
+								<m:Label class="thick" text="{dataSet>/GrandTotalMarks1} {dataSet>/Grade1}"/>
+								<m:Label class="thick" text="{dataSet>/GrandTotalMarks2} {dataSet>/Grade2}"/>
+								<m:Label class="thick" text="{dataSet>/GrandTotalMarks3} {dataSet>/Grade3}"/>
 							</m:cells>
 						</m:ColumnListItem>
 					</m:items>

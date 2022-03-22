@@ -238,6 +238,10 @@ sap.ui.define([
 			console.log(totalSet);
 			console.log(totalSet.TypeA_M1);
 			console.log(totalSet.TypeA_M2);
+			console.log(totalSet.TypeB_M1);
+			console.log(totalSet.TypeB_M2);
+			console.log(totalSet.TypeC_M1);
+			console.log(totalSet.TypeC_M2);
 			console.log(totalSet.TypeA_M3);
 			
 			// for test1 & test3
@@ -323,48 +327,100 @@ sap.ui.define([
 			var a1Total = totalSet.TypeA_M1 + totalSet.TypeB_M1 + totalSet.TypeC_M1;
 			var a2Total = totalSet.TypeA_M2 + totalSet.TypeB_M2 + totalSet.TypeC_M2;
 			var a3Total = totalSet.TypeA_M3 + totalSet.TypeB_M3 + totalSet.TypeC_M3;
-
+			
+			console.log(a1Total);
+			console.log(a2Total);
+			console.log(a3Total);
+			
 			var gt = (totalSet.TypeA + totalSet.TypeB + totalSet.TypeC);
 			console.log(gt);
 			//var gt = a1Total + a2Total + a3Total;
 
 			//var marksObt = level == 1 ? a1Total : level == 2 ? (a1Total+a2Total)/;
-			var gtText=gt*level;
+/*			var gtText=gt*level;
 			console.log(gtText);
 			var marksObt = a1Total + a2Total + a3Total;
 			console.log(marksObt);
 			var marksObtAvg = (a1Total + a2Total + a3Total)/level;
-			console.log(marksObtAvg);
-			dataModel.setProperty('/GrandTotalFullMarks', gtText);
+			console.log(marksObtAvg);*/
+			
+			dataModel.setProperty('/GrandTotalFullMarks', gt);
 			dataModel.setProperty('/TotalSet', totalSet);
-
-			dataModel.setProperty('/GrandTotalMarks', marksObt);
+			
+			dataModel.setProperty('/GrandTotalMarks1',a1Total);
+			dataModel.setProperty('/GrandTotalMarks2',a2Total);
+			dataModel.setProperty('/GrandTotalMarks3',a3Total);
+			
+/*			dataModel.setProperty('/GrandTotalMarks', marksObt);*/
 			// 75 ----------- 40/75
 /*			var p = (marksObtAvg / gt) * 100;*/
 		
 		
 		
-		// test3 marks total	
-			var p = marksObt;
-			
-			var grade = ''
-			if (p >= 91) {
-				grade = 'A';
-			} else if (p >= 71) {
-				grade = 'B';
-			} else if (p >= 51) {
-				grade = 'C';
-			} else if (p >= 36) {
-				grade = 'D';
+		// test3 marks for 1st appraisal	
+			var p1 = a1Total;
+
+			var grade1 = ''
+			if (p1 >= 91) {
+				grade1 = 'A';
+			} else if (p1 >= 71) {
+				grade1 = 'B';
+			} else if (p1 >= 51) {
+				grade1 = 'C';
+			} else if (p1 >= 36) {
+				grade1 = 'D';
 			}
-			else if(p>=1){
-				grade = 'E';
+			else if(p1 >=1){
+				grade1 = 'E';
 			}
 			else {
-				grade = '';
+				grade1 = '';
 			}
-			dataModel.setProperty('/Grade', grade);
-/*			dataModel.setProperty('/AvgMarks', marksObtAvg);*/
+			dataModel.setProperty('/Grade1', grade1);
+			
+			// test3 marks for 2nd appraisal
+			var p2 = a2Total;
+
+			var grade2 = ''
+			if (p2 >= 91) {
+				grade2 = 'A';
+			} else if (p2 >= 71) {
+				grade2 = 'B';
+			} else if (p2 >= 51) {
+				grade2 = 'C';
+			} else if (p2 >= 36) {
+				grade2 = 'D';
+			}
+			else if(p2 >=1){
+				grade2 = 'E';
+			}
+			else {
+				grade2 = '';
+			}
+			dataModel.setProperty('/Grade2', grade2);
+			
+			
+			// test3 marks for 3rd appraisal
+			var p3 = a3Total;
+			
+			var grade3 = ''
+			if (p3 >= 91) {
+				grade3 = 'A';
+			} else if (p3 >= 71) {
+				grade3 = 'B';
+			} else if (p3 >= 51) {
+				grade3 = 'C';
+			} else if (p3 >= 36) {
+				grade3 = 'D';
+			}
+			else if(p3 >=1){
+				grade3 = 'E';
+			}
+			else {
+				grade3 = '';
+			}
+			dataModel.setProperty('/Grade3', grade3);
+
 
 		},
 		addTotal: function(tableID, value, msg) {
@@ -626,7 +682,7 @@ sap.ui.define([
 			
 			if (isNotValid) {
 				_oInput.setValueState(sap.ui.core.ValueState.Error,MessageBox.alert('Marks should be between 0 to 5'));
-
+				_oInput.setValue("");
 			} else {
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
 				this.calcTotalFactorsByType();
@@ -639,7 +695,8 @@ sap.ui.define([
 			_oInput.setValue(val);
 			var isNotValid = val < 0 || val > 20;
 			if (isNotValid) {
-				_oInput.setValueState(sap.ui.core.ValueState.Error);
+				_oInput.setValueState(sap.ui.core.ValueState.Error,MessageBox.alert('Marks should be between 0 to 20'));
+				_oInput.setValue("");
 			} else {
 				_oInput.setValueState(sap.ui.core.ValueState.Success);
 				this.calcTotalFactorsByType();
