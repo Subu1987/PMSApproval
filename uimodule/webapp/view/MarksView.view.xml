@@ -36,37 +36,37 @@
 						<m:Text text="{dataSet>CriticalAttr}"/>
 					</template>
 				</Column>
-				<Column id="app-1-marks" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-1-marks" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeA_M1_E}" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M1}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
-				<Column id="app-1-marks-noneditable" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-1-marks-noneditable" visible="{dataSet>/MarksVisibleSet/TypeA_M1}" width="7rem" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M1}"/>
 					</template>
 				</Column>
-				<Column id="app-2-marks" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-2-marks" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeA_M2_E}" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
-				<Column id="app-2-marks-noneditable" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-2-marks-noneditable" visible="{dataSet>/MarksVisibleSet/TypeA_M2}" width="7rem" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M2}"/>
 					</template>
 				</Column>
-				<Column id="app-3-marks" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-3-marks" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeA_M3_E}" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
-				<Column id="app-3-marks-noneditable" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-3-marks-noneditable" visible="{dataSet>/MarksVisibleSet/TypeA_M3}" width="7rem" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M3}"/>
@@ -136,37 +136,37 @@
 						<m:Text text="{dataSet>CriticalAttr}"/>
 					</template>
 				</Column>
-				<Column id="app-1-marks-B" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-1-marks-B" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeB_M1_E}" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M1}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
-				<Column id="app-1-marks-noneditable-B" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-1-marks-noneditable-B" visible="{dataSet>/MarksVisibleSet/TypeB_M1}" width="7rem" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M1}"/>
 					</template>
 				</Column>
-				<Column id="app-2-marks-B" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-2-marks-B" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeB_M2_E}" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
-				<Column id="app-2-marks-noneditable-B" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-2-marks-noneditable-B" visible="{dataSet>/MarksVisibleSet/TypeB_M2}" width="7rem" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M2}"/>
 					</template>
 				</Column>
-				<Column id="app-3-marks-B" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-3-marks-B" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeB_M3_E}" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput"/>
 					</template>
 				</Column>
-				<Column id="app-3-marks-noneditable-B" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-3-marks-noneditable-B" visible="{dataSet>/MarksVisibleSet/TypeB_M3}" width="7rem" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M3}"/>
@@ -236,37 +236,37 @@
 						<m:Text text="{dataSet>CriticalAttr}"/>
 					</template>
 				</Column>
-				<Column id="app-1-marks-C" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-1-marks-C" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeC_M1_E}" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M1}" textAlign="Center" type="Number" liveChange="handleMarksInput20"/>
 					</template>
 				</Column>
-				<Column id="app-1-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-1-marks-noneditable-C" visible="{dataSet>/MarksVisibleSet/TypeC_M1}" width="7rem" hAlign="Center">
 					<m:Label text="1st Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M1}"/>
 					</template>
 				</Column>
-				<Column id="app-2-marks-C" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-2-marks-C" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeC_M2_E}" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M2}" textAlign="Center" type="Number" liveChange="handleMarksInput20"/>
 					</template>
 				</Column>
-				<Column id="app-2-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-2-marks-noneditable-C" visible="{dataSet>/MarksVisibleSet/TypeC_M2}" width="7rem" hAlign="Center">
 					<m:Label text="2nd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M2}"/>
 					</template>
 				</Column>
-				<Column id="app-3-marks-C" width="7rem" visible="false" hAlign="Center">
+				<Column id="app-3-marks-C" width="7rem" visible="{dataSet>/MarksVisibleSet/TypeC_M3_E}" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Input value="{dataSet>M3}" textAlign="Center" type="Number" liveChange="handleMarksInput20"/>
 					</template>
 				</Column>
-				<Column id="app-3-marks-noneditable-C" visible="false" width="7rem" hAlign="Center">
+				<Column id="app-3-marks-noneditable-C" visible="{dataSet>/MarksVisibleSet/TypeC_M3}" width="7rem" hAlign="Center">
 					<m:Label text="3rd Appraiser"/>
 					<template>
 						<m:Text text="{dataSet>M3}"/>

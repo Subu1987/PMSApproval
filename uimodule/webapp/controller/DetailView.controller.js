@@ -53,7 +53,7 @@ sap.ui.define([
 				}
 			});*/
 			//--------------------------------------------------------------------------------
-
+			console.log(data);
 			var _self = this;
 			var dataModel = _self.getView().getModel("dataSet");
 			dataModel.setProperty("/SelfAppraisal", data.ToDetails.results[0]);
@@ -374,8 +374,10 @@ sap.ui.define([
 			var factors = _dataModel.getProperty("/factors");
 			var appraiserLevel = _dataModel.getProperty("/AppraiserLevel");
 			for (let item of factors) {
+				console.log(item);
 				var val = appraiserLevel == 1 ? item.M1 : appraiserLevel == 2 ? item.M2 : item.M3;
-				if (val < 0 || val > 5) {
+				console.log(val);
+				if (val < 0 || val >20) {
 					return false;
 				}
 			}
@@ -384,7 +386,7 @@ sap.ui.define([
 			var isFormValid = true;
 			while (i <= 3) {
 				var selfAppraisal = _dataModel.getProperty("/comments/ApprCommMta" + i);
-				//console.log('Comment data: '+selfAppraisal);
+				console.log('Comment data: '+selfAppraisal);
 				var fragId = this.getView().createId("comments");;
 				console.log('Fragment id:' + fragId);
 				var commControl = sap.ui.core.Fragment.byId(fragId, 'comment' + i);
@@ -394,9 +396,9 @@ sap.ui.define([
 					commControl.setValueState(sap.ui.core.ValueState.Error);
 					isFormValid = false;
 				} else {
-					commControl.setValueState(sap.ui.core.ValueState.Syccess);
+					commControl.setValueState(sap.ui.core.ValueState.Success);
 				}
-				//console.log(commControl);
+				console.log(commControl);
 				i += 1;
 			}
 
@@ -538,6 +540,7 @@ sap.ui.define([
 					}
 
 					dataModel.setProperty('/recommendations', recommendations);
+					console.log(recommendations);
 				},
 				error: function() {
 					sap.ui.core.BusyIndicator.hide();

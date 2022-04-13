@@ -33,8 +33,8 @@ sap.ui.define([
 					sap.ui.core.BusyIndicator.hide();
 					
 					var factors = response.results;
-					/*console.log('Factor set received: ');
-					console.log(response);*/
+					console.log('Factor set received: ');
+					console.log(response);
 					var slNo = 1;
 					var factCounts = {
 						c1: 0,
@@ -108,6 +108,7 @@ sap.ui.define([
 			var AppraiserLevel = dataModel.getProperty("/AppraiserLevel");
 			var factorMarksAPI = "/empSet('" + dataModel.getProperty('/EmpID') + "')";
 			var factors = dataModel.getProperty("/factors");
+			console.log(factors);
 
 			/*if (formType!=fetchedFormType) {
 				dataModel.setProperty('/FetchedFormType',formType);  
@@ -163,13 +164,13 @@ sap.ui.define([
 							} else {
 								f.M3 = "0";
 							}
-							/*console.log(marks1);
+							console.log(marks1);
 							console.log(marks2);
-							console.log(marks3);*/
+							console.log(marks3);
 							
-/*							console.log(f.M1);
+							console.log(f.M1);
 							console.log(f.M2);
-							console.log(f.M3);*/
+							console.log(f.M3);
 						}
 					}
 					dataModel.setProperty("/factors", factors);
@@ -446,8 +447,80 @@ sap.ui.define([
 		updateAppraiserLevel: function(source, event, data) {
 			console.log(data);
 			var approverLevel = parseInt(data.approverLevel);
+			console.log(approverLevel);
 			var factTable = this.byId("factor-table");
 			var dataModel = this.getView().getModel("dataSet");
+			console.log(dataModel);
+			var marksColumnVisibilityApp1={
+				TypeA_M1: false,
+				TypeA_M2: false,
+				TypeA_M3: false,
+				TypeA_M1_E: true,
+				TypeA_M2_E: false,
+				TypeA_M3_E: false,
+				
+				TypeB_M1: false,
+				TypeB_M2: false,
+				TypeB_M3: false,
+				TypeB_M1_E: true,
+				TypeB_M2_E: false,
+				TypeB_M3_E: false,
+				
+				TypeC_M1: false,
+				TypeC_M2: false,
+				TypeC_M3: false,
+				TypeC_M1_E: true,
+				TypeC_M2_E: false,
+				TypeC_M3_E: false,
+			}
+			
+			var marksColumnVisibilityApp2={
+				TypeA_M1: true,
+				TypeA_M2: false,
+				TypeA_M3: false,
+				TypeA_M1_E: false,
+				TypeA_M2_E: true,
+				TypeA_M3_E: false,
+				
+				TypeB_M1: true,
+				TypeB_M2: false,
+				TypeB_M3: false,
+				TypeB_M1_E: false,
+				TypeB_M2_E: true,
+				TypeB_M3_E: false,
+				
+				TypeC_M1: true,
+				TypeC_M2: false,
+				TypeC_M3: false,
+				TypeC_M1_E: false,
+				TypeC_M2_E: true,
+				TypeC_M3_E: false,
+			}
+			
+			
+			var marksColumnVisibilityApp3={
+				TypeA_M1: true,
+				TypeA_M2: true,
+				TypeA_M3: false,
+				TypeA_M1_E: false,
+				TypeA_M2_E: false,
+				TypeA_M3_E: true,
+				
+				TypeB_M1: true,
+				TypeB_M2: true,
+				TypeB_M3: false,
+				TypeB_M1_E: false,
+				TypeB_M2_E: false,
+				TypeB_M3_E: true,
+				
+				TypeC_M1: true,
+				TypeC_M2: true,
+				TypeC_M3: false,
+				TypeC_M1_E: false,
+				TypeC_M2_E: false,
+				TypeC_M3_E: true,
+			}
+			
 			var totalVisibleSet = {
 				TypeA_M1: true,
 				TypeA_M2: true,
@@ -472,8 +545,19 @@ sap.ui.define([
 				totalVisibleSet.TypeC_M3 = false;
 			}
 			dataModel.setProperty("/TotalVisibleSet", totalVisibleSet);
+			
+			if(approverLevel ==1){
+				dataModel.setProperty("/MarksVisibleSet", marksColumnVisibilityApp1);
+			}
+			else if(approverLevel ==2){
+				dataModel.setProperty("/MarksVisibleSet", marksColumnVisibilityApp2);
+			}
+			else if(approverLevel ==3){
+				dataModel.setProperty("/MarksVisibleSet", marksColumnVisibilityApp3);
+			}
+			
 
-			var c = 1;
+/*			var c = 1;
 			while (c <= 3) {
 				var id = "app-" + c + "-marks-noneditable";
 				if (approverLevel == c) {
@@ -482,7 +566,7 @@ sap.ui.define([
 				var col1 = this.byId(id);
 				var col2 = this.byId(id + "-B");
 				var col3 = this.byId(id + "-C");
-				if (approverLevel >= c) {
+				if (c<=approverLevel) {
 					//console.log("app=" + approverLevel + " c=" + c + " True...");
 					col1.setVisible(true);
 					col2.setVisible(true);
@@ -493,10 +577,9 @@ sap.ui.define([
 					col2.setVisible(false);
 					col3.setVisible(false);
 				}
-
 				c++;
-			}
-
+			}*/
+			
 		},
 		onGuideLineForGradePressed: function() {
 			var _self = this;

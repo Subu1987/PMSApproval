@@ -123,6 +123,7 @@ sap.ui.define([
 					console.log("Emp Details Service Response...");
 					console.log(response);
 					var dataSetModel = _self.getView().getModel("dataSet");
+					console.log(dataSetModel);
 					dataSetModel.setProperty("/employees", response.results);
 
 					//console.log(_self.byId('idList'));
